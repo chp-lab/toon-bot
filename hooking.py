@@ -234,6 +234,8 @@ class Hooking(Resource):
         if(msg_type == "text"):
             my_msg = data["message"]["text"]
             print(TAG, "my_msg=", my_msg)
+            if(my_msg == "hi"):
+                self.send_msg(one_id, "อายุเท่าไหร่คะ")
 
         # user_exist = self.is_user_exist(email)
         # if (user_exist):
