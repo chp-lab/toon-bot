@@ -1,0 +1,7 @@
+db_param:
+  host: 'localhost'
+  user: 'admin'
+  passwd: '0x00ff0000'
+  database: 'singleme'
+  use_unicode: True
+  charset: 'utf8'
