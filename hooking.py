@@ -257,15 +257,17 @@ class Hooking(Resource):
         if(msg_type == "text"):
             my_msg = data["message"]["text"]
             print(TAG, "my_msg=", my_msg)
-            if(my_msg == "hi"):
-                print(TAG, "hi recv")
-                select = self.select_data(user_id, bot_id)
-                self.send_quick_reply(one_id, select)
-                if("select_color" in data['message']['data']):
-                    color = data['message']['data']['select_color']
-                    if(color == "pink"):
-                        print(TAG, "color_select=",color)
-                        self.send_msg(one_id, "ชอบสีชมพู")
+            if(my_msg == "pink"):
+                print(TAG, "I like pink!!")
+            if(my_msg == "green"):
+                print(TAG,"I like green!!")
+                # select = self.select_data(user_id, bot_id)
+                # self.send_quick_reply(one_id, select)
+                # if("select_color" in data['message']['data']):
+                #     color = data['message']['data']['select_color']
+                #     if(color == "pink"):
+                #         print(TAG, "color_select=",color)
+                #         self.send_msg(one_id, "ชอบสีชมพู")
 
         # user_exist = self.is_user_exist(email)
         # if (user_exist):
