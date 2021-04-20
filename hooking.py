@@ -8,7 +8,7 @@ from module import Module
 
 class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
-    onechat_dev_token = "Bearer Af58c5450f3b45c71a97bc51c05373ecefabc49bd2cd94f3c88d5b844813e69a17e26a828c2b64ef889ef0c10e2aee347"
+    onechat_dev_token = "Bearer A75817cf7dfd75dbabbc72a05dcabc48dd461161461394afb914f5e3a06eb7d0201f0e90d89534e56949dc870e0e54618"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
     def menu_send(self, user_id, bot_id):
         TAG = "menu_send:"
