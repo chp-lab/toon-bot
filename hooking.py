@@ -229,139 +229,145 @@ class Hooking(Resource):
         print(TAG, "user_id=", user_id)
         print(TAG, "one email=", email)
 
-        user_exist = self.is_user_exist(email)
-        if (user_exist):
-            print(TAG, "### user exist!")
-            if ('data' in data['message']):
-                if ("gen" in data['message']['data']):
-                    gen = data['message']['data']["gen"]
-                    print(TAG, "gen=", gen)
-                    cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gen, email)
-                    update = self.update_data(cmd)
-                    print("gen update=", update)
-                    self.send_msg(one_id, "อายุเท่าไหร่คะ")
-                elif ("interested_gen" in data['message']['data']):
-                    interested_gen = data['message']['data']['interested_gen']
-                    print(TAG, "interested_gen=", interested_gen)
-                    cmd = """UPDATE `users` SET `interested_in` = '%s' WHERE `users`.`one_email` = '%s'""" % (
-                    interested_gen, email)
-                    update = self.update_data(cmd)
-                    print(TAG, "interested_gen_update=", update)
-                    req_body = self.show_profile_data(user_id, bot_id)
-                    self.send_quick_reply(one_id, req_body)
-                elif ("profile_confirm" in data['message']['data']):
-                    profile_confirm = data['message']['data']['profile_confirm']
-                    if (profile_confirm == "confirm"):
-                        update = """UPDATE `users` SET `data_valid` = '%s' WHERE `users`.`one_email` = '%s'""" % (
-                        True, email)
-                        res = database.insertData(update)
-                        print(TAG, "profile confirm=", res)
-                        self.send_msg(one_id, "ผู้คนยินดีที่รู้จักคุณ")
-                        self.menu_send(user_id, bot_id)
-                        return module.success()
-                    elif (profile_confirm == "eject"):
-                        print(TAG, "delete record")
-                        cmd = """DELETE FROM `users` WHERE users.one_email='%s'""" % (email)
-                        res = database.insertData(cmd)
-                        print(TAG, "delete data=", res)
-                        self.send_msg(one_id, "ไว้คุยกันใหม่นะ")
-                        return module.unauthorized()
-                elif ("action" in data['message']['data']):
-                    action = data['message']['data']['action']
-                    if (action == "find_single"):
-                        self.send_msg(one_id, "พบกันเร็วๆ นี้ค่ะ")
-                        return module.success()
-                    elif (action == "image_rec"):
-                        self.send_msg(one_id, "ส่งรูปของคุณมาได้เลย")
-                        return module.success()
-                else:
-                    print(TAG, "unnown message data in quick reply")
-            elif('type' in data['message']):
-                msg_type = data['message']["type"]
-                print(TAG, "msg_type=", msg_type)
-                if (msg_type == "image"):
-                    self.send_msg(one_id, "กำลังพัฒนาระบบบันทึกรูป")
-                    return module.success()
-                elif (msg_type == "text"):
-                    cmd = """SELECT users.age FROM users WHERE users.one_email='%s'""" % (email)
-                    res = database.getData(cmd)
-                    print(TAG, "check_age_dat=", res)
-                    if (res[0]['result'][0]['age'] is None):
-                        age = data['message']['text']
+        msg_type = data["message"]["type"]
 
-                        if (not age.isnumeric()):
-                            self.send_msg(one_id, "อายุเท่าไหร่คะ กระรุณาระบุเป็นตัวเลขค่ะ")
-                            return module.wrongAPImsg()
+        if(msg_type == "text"):
+            my_msg = data["message"]["text"]
+            print(TAG, "my_msg=", my_msg)
 
-                        age = int(age)
-
-                        if (age == 0):
-                            self.send_msg(one_id, "อายุเท่าไหร่คะ กระรุณาระบุเป็นตัวเลขที่ถูกต้องค่ะ")
-                            return module.wrongAPImsg()
-                        print(TAG, "age=", age)
-
-                        if (age < 18 or age > 100):
-                            self.send_msg(one_id, "อายุของคุณไม่อยู่ในช่วงที่กำหนด")
-                            return module.unauthorized()
-                        cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-                        update = self.update_data(cmd)
-                        print(TAG, "update=", update)
-                        if (update[1] == 200):
-                            print(TAG, "set age")
-                            return module.success()
-                        else:
-                            self.send_msg(one_id, "อายุเท่าไหร่คะ ระบุเป็นตัวเลข")
-                            module.success()
-                    else:
-                        print("age valid")
-                        self.menu_send(user_id, bot_id)
-                        print(TAG, "menu sending")
-                else:
-                    self.send_msg(one_id, "ยังไม่รองรับข้อความประเภท " + msg_type)
-                    return module.success()
-            else:
-                cmd = """SELECT users.name, users.gender, users.age, users.interested_in , users.data_valid 
-                FROM users WHERE users.one_email='%s'""" % (email)
-
-                res = database.getData(cmd)
-
-                if(res[1] == 200):
-                    tmp_data = res[0]['result'][0]
-                    if(tmp_data['gender'] is None):
-                        req_body = self.gender_quest(user_id, bot_id)
-                        self.send_quick_reply(one_id, req_body)
-                        return module.success()
-                    elif(tmp_data['age'] is None):
-                        print(TAG, "ask age")
-                        self.send_msg(one_id, "อายุเท่าไหร่")
-                        return module.success()
-                    elif(tmp_data['interested_in'] is None):
-                        print(TAG, "ask interested_in")
-                        req_body = self.interested_quest(user_id, bot_id)
-                        self.send_quick_reply(one_id, req_body)
-                        return module.success()
-                    elif(tmp_data['data_valid'] is None):
-                        print(TAG, "profile not confirm")
-                        tmp_msg = "ยินดีที่ได้รู้จักคุณ %s อายุ %s สนใจใน %s ยืนยันข้อมูลถูกต้อง" %(tmp_data['name'], tmp_data['age'], tmp_data['interested_in'])
-                        self.send_msg(one_id, tmp_msg)
-                        req_body = self.data_valid_quest(user_id, bot_id)
-                        self.send_quick_reply(one_id, req_body)
-                        return module.success()
-                    else:
-                        print(TAG, "user data valid")
-                else:
-                    print(TAG, "fail on check user data_valid")
-                    return module.serveErrMsg()
-        #first meet
-        else:
-            print(TAG, "usr not exist!")
-            self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
-            req_body = self.gender_quest(bot_id, user_id)
-            self.send_quick_reply(one_id, req_body)
-            add_user = self.add_new_user(email, name, one_id)
-            print(TAG, "add=new_user=", add_user)
-
-            return module.success()
+        # user_exist = self.is_user_exist(email)
+        # if (user_exist):
+        #     print(TAG, "### user exist!")
+        #     if ('data' in data['message']):
+        #         if ("gen" in data['message']['data']):
+        #             gen = data['message']['data']["gen"]
+        #             print(TAG, "gen=", gen)
+        #             cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gen, email)
+        #             update = self.update_data(cmd)
+        #             print("gen update=", update)
+        #             self.send_msg(one_id, "อายุเท่าไหร่คะ")
+        #         elif ("interested_gen" in data['message']['data']):
+        #             interested_gen = data['message']['data']['interested_gen']
+        #             print(TAG, "interested_gen=", interested_gen)
+        #             cmd = """UPDATE `users` SET `interested_in` = '%s' WHERE `users`.`one_email` = '%s'""" % (
+        #             interested_gen, email)
+        #             update = self.update_data(cmd)
+        #             print(TAG, "interested_gen_update=", update)
+        #             req_body = self.show_profile_data(user_id, bot_id)
+        #             self.send_quick_reply(one_id, req_body)
+        #         elif ("profile_confirm" in data['message']['data']):
+        #             profile_confirm = data['message']['data']['profile_confirm']
+        #             if (profile_confirm == "confirm"):
+        #                 update = """UPDATE `users` SET `data_valid` = '%s' WHERE `users`.`one_email` = '%s'""" % (
+        #                 True, email)
+        #                 res = database.insertData(update)
+        #                 print(TAG, "profile confirm=", res)
+        #                 self.send_msg(one_id, "ผู้คนยินดีที่รู้จักคุณ")
+        #                 self.menu_send(user_id, bot_id)
+        #                 return module.success()
+        #             elif (profile_confirm == "eject"):
+        #                 print(TAG, "delete record")
+        #                 cmd = """DELETE FROM `users` WHERE users.one_email='%s'""" % (email)
+        #                 res = database.insertData(cmd)
+        #                 print(TAG, "delete data=", res)
+        #                 self.send_msg(one_id, "ไว้คุยกันใหม่นะ")
+        #                 return module.unauthorized()
+        #         elif ("action" in data['message']['data']):
+        #             action = data['message']['data']['action']
+        #             if (action == "find_single"):
+        #                 self.send_msg(one_id, "พบกันเร็วๆ นี้ค่ะ")
+        #                 return module.success()
+        #             elif (action == "image_rec"):
+        #                 self.send_msg(one_id, "ส่งรูปของคุณมาได้เลย")
+        #                 return module.success()
+        #         else:
+        #             print(TAG, "unnown message data in quick reply")
+        #     elif('type' in data['message']):
+        #         msg_type = data['message']["type"]
+        #         print(TAG, "msg_type=", msg_type)
+        #         if (msg_type == "image"):
+        #             self.send_msg(one_id, "กำลังพัฒนาระบบบันทึกรูป")
+        #             return module.success()
+        #         elif (msg_type == "text"):
+        #             cmd = """SELECT users.age FROM users WHERE users.one_email='%s'""" % (email)
+        #             res = database.getData(cmd)
+        #             print(TAG, "check_age_dat=", res)
+        #             if (res[0]['result'][0]['age'] is None):
+        #                 age = data['message']['text']
+        #
+        #                 if (not age.isnumeric()):
+        #                     self.send_msg(one_id, "อายุเท่าไหร่คะ กระรุณาระบุเป็นตัวเลขค่ะ")
+        #                     return module.wrongAPImsg()
+        #
+        #                 age = int(age)
+        #
+        #                 if (age == 0):
+        #                     self.send_msg(one_id, "อายุเท่าไหร่คะ กระรุณาระบุเป็นตัวเลขที่ถูกต้องค่ะ")
+        #                     return module.wrongAPImsg()
+        #                 print(TAG, "age=", age)
+        #
+        #                 if (age < 18 or age > 100):
+        #                     self.send_msg(one_id, "อายุของคุณไม่อยู่ในช่วงที่กำหนด")
+        #                     return module.unauthorized()
+        #                 cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+        #                 update = self.update_data(cmd)
+        #                 print(TAG, "update=", update)
+        #                 if (update[1] == 200):
+        #                     print(TAG, "set age")
+        #                     return module.success()
+        #                 else:
+        #                     self.send_msg(one_id, "อายุเท่าไหร่คะ ระบุเป็นตัวเลข")
+        #                     module.success()
+        #             else:
+        #                 print("age valid")
+        #                 self.menu_send(user_id, bot_id)
+        #                 print(TAG, "menu sending")
+        #         else:
+        #             self.send_msg(one_id, "ยังไม่รองรับข้อความประเภท " + msg_type)
+        #             return module.success()
+        #     else:
+        #         cmd = """SELECT users.name, users.gender, users.age, users.interested_in , users.data_valid
+        #         FROM users WHERE users.one_email='%s'""" % (email)
+        #
+        #         res = database.getData(cmd)
+        #
+        #         if(res[1] == 200):
+        #             tmp_data = res[0]['result'][0]
+        #             if(tmp_data['gender'] is None):
+        #                 req_body = self.gender_quest(user_id, bot_id)
+        #                 self.send_quick_reply(one_id, req_body)
+        #                 return module.success()
+        #             elif(tmp_data['age'] is None):
+        #                 print(TAG, "ask age")
+        #                 self.send_msg(one_id, "อายุเท่าไหร่")
+        #                 return module.success()
+        #             elif(tmp_data['interested_in'] is None):
+        #                 print(TAG, "ask interested_in")
+        #                 req_body = self.interested_quest(user_id, bot_id)
+        #                 self.send_quick_reply(one_id, req_body)
+        #                 return module.success()
+        #             elif(tmp_data['data_valid'] is None):
+        #                 print(TAG, "profile not confirm")
+        #                 tmp_msg = "ยินดีที่ได้รู้จักคุณ %s อายุ %s สนใจใน %s ยืนยันข้อมูลถูกต้อง" %(tmp_data['name'], tmp_data['age'], tmp_data['interested_in'])
+        #                 self.send_msg(one_id, tmp_msg)
+        #                 req_body = self.data_valid_quest(user_id, bot_id)
+        #                 self.send_quick_reply(one_id, req_body)
+        #                 return module.success()
+        #             else:
+        #                 print(TAG, "user data valid")
+        #         else:
+        #             print(TAG, "fail on check user data_valid")
+        #             return module.serveErrMsg()
+        # #first meet
+        # else:
+        #     print(TAG, "usr not exist!")
+        #     self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
+        #     req_body = self.gender_quest(bot_id, user_id)
+        #     self.send_quick_reply(one_id, req_body)
+        #     add_user = self.add_new_user(email, name, one_id)
+        #     print(TAG, "add=new_user=", add_user)
+        #
+        #     return module.success()
 
 
         return {
