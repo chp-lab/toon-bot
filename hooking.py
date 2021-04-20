@@ -194,27 +194,25 @@ class Hooking(Resource):
                 ]
         }
         return this_quest
-
+    # core api
     def post(self):
         TAG = "Hooking:"
-        data = request.json
-        print(TAG, "data=", data)
-        print(TAG, request.headers)
 
         database = Database()
         module = Module()
         # onechat_uri = self.onechat_uri
-        data = request.json
+
         # onechat_dev_token = "Bearer Af58c5450f3b45c71a97bc51c05373ecefabc49bd2cd94f3c88d5b844813e69a17e26a828c2b64ef889ef0c10e2aee347"
         # headers = {"Authorization": onechat_dev_token}
 
+        data = request.json
         print(TAG, "data=", data)
         print(TAG, request.headers)
 
         if('event' not in data):
             print(TAG, "event not found!")
             # assum OneChat iBeacon event detected
-            print(TAG, "OneChat iBeacon detected")
+            print(TAG, "my custom data")
             return module.success()
             # return module.wrongAPImsg()
 
