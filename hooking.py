@@ -45,7 +45,7 @@ class Hooking(Resource):
         print(TAG, result.text)
     def send_msg(self, one_id, reply_msg):
         TAG = "send_msg:"
-        bot_id = "B37913f508a675e7db24970fdb7c191f8"
+        bot_id = "Bab44da092865594fb367ff3933461af1"
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
         payload = {
             "to": one_id,
