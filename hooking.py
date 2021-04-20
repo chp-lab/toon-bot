@@ -194,6 +194,29 @@ class Hooking(Resource):
                 ]
         }
         return this_quest
+
+    def select_data(self, user_id, bot_id):
+        this_quest = {
+            "to": user_id,
+            "bot_id": bot_id,
+            "message": "กรุณาเลือกสีที่ชอบ",
+            "quick_reply":
+                [
+                    {
+                        "label": "สีชมพู",
+                        "type": "text",
+                        "message": "สีชมพู",
+                        "payload": {"select_color": "pink"}
+                    },
+                    {
+                        "label": "สีเขียว",
+                        "type": "text",
+                        "message": "สีเขียว",
+                        "payload": {"select_color": "green"}
+                    }
+                ]
+        }
+
     # core api
     def post(self):
         TAG = "Hooking:"
@@ -236,7 +259,13 @@ class Hooking(Resource):
             print(TAG, "my_msg=", my_msg)
             if(my_msg == "hi"):
                 print(TAG, "hi recv")
-                self.send_msg(one_id, "hello")
+                select = self.select_data(user_id, bot_id)
+                self.send_quick_reply(one_id, select)
+                if("select_color" in data['message']['data']):
+                    color = data['message']['data']['select_color']
+                    if(color == "pink"):
+                        print(TAG, "color_select=",color)
+                        self.send_msg(one_id, "ชอบสีชมพู")
 
         # user_exist = self.is_user_exist(email)
         # if (user_exist):
