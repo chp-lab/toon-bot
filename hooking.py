@@ -236,7 +236,7 @@ class Hooking(Resource):
             print(TAG, "my_msg=", my_msg)
             if(my_msg == "hi"):
                 print(TAG, "hi recv")
-                self.send_msg(one_id, "อายุเท่าไหร่คะ")
+                self.send_msg(one_id, "hello")
 
         # user_exist = self.is_user_exist(email)
         # if (user_exist):
