@@ -258,9 +258,8 @@ class Hooking(Resource):
             my_msg = data["message"]["text"]
             print(TAG, "my_msg=", my_msg)
             if(my_msg == "pink"):
-                print(TAG, "I like pink!!")
-            if(my_msg == "green"):
-                print(TAG,"I like green!!")
+                print(TAG, "hi recv")
+                self.send_msg(one_id,"I like Pink!!")
                 # select = self.select_data(user_id, bot_id)
                 # self.send_quick_reply(one_id, select)
                 # if("select_color" in data['message']['data']):
