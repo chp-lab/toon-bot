@@ -242,7 +242,7 @@ class Hooking(Resource):
 
             print(TAG, result.status_code)
             print(TAG, userprofile)
-            print(TAG, userprofile.user_data)
+            print(TAG, userprofile['user_data'])
             # print(TAG, result.json()["oneid"])
             # print(TAG, result.json()["id"])
 
