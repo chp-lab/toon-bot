@@ -5,6 +5,8 @@ from flask import request
 import requests
 from database import Database
 from module import Module
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
