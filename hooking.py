@@ -262,19 +262,8 @@ class Hooking(Resource):
                 print(TAG, "hi recv")
                 self.send_msg(one_id,"I like Pink!!")
 
-        # if("select_color" in data['message']['data']):
-        #     select_color = data['message']['data']['select_color']
-        #     if(select_color == "pink"):
-        #         print(TAG,"select_color=",select_color)
-        #         self.send_msg(one_id,"Pink Pink!!")
-        #         return module.success()
-        #     elif(select_color == "green"):
-        #         print(TAG,"select_color=",select_color)
-        #         self.send_msg(one_id,"Green Green!!")
-        #         return  module.success()
-
-
-        # user_exist = self.is_user_exist(email)
+        user_exist = self.is_user_exist(email)
+        
         # if (user_exist):
         #     print(TAG, "### user exist!")
         #     if ('data' in data['message']):
