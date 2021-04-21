@@ -73,8 +73,8 @@ class Hooking(Resource):
         TAG = "add_new_user:"
         database = Database()
         print(TAG, "add user to our system")
-        sql = """INSERT INTO `users` (`one_email`, `name`, `one_id`) VALUES ('%s', '%s', '%s')""" \
-              % (email, name, one_id)
+        sql = """INSERT INTO `users` (`one_email`, `one_id`, `name`, `role`, `gender`, `birth_date`, `created_at`) 
+        VALUES ('%s', '%s', '%s', NULL, NULL, NULL, CURRENT_TIMESTAMP)""" % (email, name, one_id)
         insert = database.insertData(sql)
         return insert
 
@@ -253,17 +253,29 @@ class Hooking(Resource):
         print(TAG, "user_id=", user_id)
         print(TAG, "one email=", email)
 
-        msg_type = data["message"]["type"]
-
-        if(msg_type == "text"):
-            my_msg = data["message"]["text"]
-            print(TAG, "my_msg=", my_msg)
-            if(my_msg == "pink"):
-                print(TAG, "hi recv")
-                self.send_msg(one_id,"I like Pink!!")
+        # msg_type = data["message"]["type"]
+        #
+        # if(msg_type == "text"):
+        #     my_msg = data["message"]["text"]
+        #     print(TAG, "my_msg=", my_msg)
+        #     if(my_msg == "pink"):
+        #         print(TAG, "hi recv")
+        #         self.send_msg(one_id,"I like Pink!!")
 
         user_exist = self.is_user_exist(email)
-        
+        if(user_exist):
+            print(TAG, "user already exist")
+        else:
+            print(TAG, "usr not exist!")
+            add_user = self.add_new_user(email, name, one_id)
+            print(TAG, "add=new_user=", add_user)
+
+            self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
+            req_body = self.gender_quest(bot_id, user_id)
+            self.send_quick_reply(one_id, req_body)
+
+
+
         # if (user_exist):
         #     print(TAG, "### user exist!")
         #     if ('data' in data['message']):
