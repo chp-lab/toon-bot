@@ -229,7 +229,7 @@ class Hooking(Resource):
             getprofile_body = {'one_id': data['oneid']}
             result = requests.post(getprofile_url, json=getprofile_body, verify=False)
             print(TAG, result.status_code)
-            print(TAG, result.json)
+            print(TAG, result.json())
 
         # if(data['event'] != "message"):
         #     print(TAG, "event not support")
