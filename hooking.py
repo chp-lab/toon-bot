@@ -283,9 +283,10 @@ class Hooking(Resource):
                 #         req_body = self.blood_data(user_id, bot_id)
                 #         self.send_quick_reply(one_id, req_body)
                 #         return module.success()
+
+                req_body = self.gender_quest(user_id, bot_id)
+                self.send_quick_reply(one_id, req_body)
                 if ('data' in data['message']):
-                    req_body = self.gender_quest(user_id, bot_id)
-                    self.send_quick_reply(one_id, req_body)
                     if ("gender" in data['message']['data']):
                         gender = data['message']['data']["gender"]
                         print(TAG, "gen=", gender)
