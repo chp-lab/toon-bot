@@ -292,14 +292,18 @@ class Hooking(Resource):
                 #         return module.success()
 
                 req_body = self.gender_quest(user_id, bot_id)
+
                 self.send_quick_reply(one_id, req_body)
                 if ('data' in data['message']):
-                    if ("gender" in data['message']['data']):
-                        gender = data['message']['data']["gender"]
-                        print(TAG, "gen=", gender)
-                        cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
-                        update = self.update_data(cmd)
-                        print("gen update=", update)
+                    cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" %(email)
+                    res = database.getData(cmd)
+                    print(TAG, "res=", res)
+                    # if ("gender" in data['message']['data']):
+                    #     gender = data['message']['data']["gender"]
+                    #     print(TAG, "gen=", gender)
+                    #     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+                    #     update = self.update_data(cmd)
+                    #     print("gen update=", update)
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
