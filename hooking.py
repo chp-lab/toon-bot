@@ -32,12 +32,12 @@ class Hooking(Resource):
                     #     "message": "มีใครโสดอยู่บ้าง",
                     #     "payload": {"action": "find_single"}
                     # },
-                    # {
-                    #     "label": "อัพเดทโปรไฟล์",
-                    #     "type": "text",
-                    #     "message": "ขออัพเดทโปรไฟล์หน่อยครับ",
-                    #     "payload": {"action": "profile_update"}
-                    # }
+                    {
+                        "label": "อัพเดทโปรไฟล์",
+                        "type": "text",
+                        "message": "อัพเดทโปรไฟล์",
+                        "payload": {"action": "profile_update"}
+                    }
                 ]
         }
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
@@ -275,14 +275,24 @@ class Hooking(Resource):
             print(TAG, "msg=",msg_type)
             if(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
-                req_body = self.menu_send(user_id, bot_id)
+                # req_body = self.menu_send(user_id, bot_id)
+                # self.send_quick_reply(one_id, req_body)
+                # if("action" in data['message']['data']):
+                #     action = data['message']['data']['action']
+                #     if (action == "blood_type"):
+                #         req_body = self.blood_data(user_id, bot_id)
+                #         self.send_quick_reply(one_id, req_body)
+                #         return module.success()
+                req_body = self.gender_quest(user_id, bot_id)
                 self.send_quick_reply(one_id, req_body)
-                if("action" in data['message']['data']):
-                    action = data['message']['data']['action']
-                    if (action == "blood_type"):
-                        req_body = self.blood_data(user_id, bot_id)
-                        self.send_quick_reply(one_id, req_body)
-                        return module.success()
+                if ('data' in data['message']):
+                    if ("gender" in data['message']['data']):
+                        gender = data['message']['data']["gender"]
+                        print(TAG, "gen=", gender)
+                        cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+                        update = self.update_data(cmd)
+                        print("gen update=", update)
+
 
         else:
             print(TAG, "usr not exist!")
