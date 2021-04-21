@@ -280,7 +280,20 @@ class Hooking(Resource):
             print(TAG, "user already exist")
             msg_type = data["message"]["type"]
             print(TAG, "msg=",msg_type)
-            if(msg_type == "text"):
+
+            # quick reply
+            if ('data' in data['message']):
+                cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" % (email)
+                res = database.getData(cmd)
+                print(TAG, "res=", res)
+                # if ("gender" in data['message']['data']):
+                #     gender = data['message']['data']["gender"]
+                #     print(TAG, "gen=", gender)
+                #     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+                #     update = self.update_data(cmd)
+                #     print("gen update=", update)
+
+            elif(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
                 # req_body = self.menu_send(user_id, bot_id)
                 # self.send_quick_reply(one_id, req_body)
@@ -294,16 +307,10 @@ class Hooking(Resource):
                 req_body = self.gender_quest(user_id, bot_id)
 
                 self.send_quick_reply(one_id, req_body)
-                if ('data' in data['message']):
-                    cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" %(email)
-                    res = database.getData(cmd)
-                    print(TAG, "res=", res)
-                    # if ("gender" in data['message']['data']):
-                    #     gender = data['message']['data']["gender"]
-                    #     print(TAG, "gen=", gender)
-                    #     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
-                    #     update = self.update_data(cmd)
-                    #     print("gen update=", update)
+
+            else:
+                print(TAG, "message support!")
+
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
