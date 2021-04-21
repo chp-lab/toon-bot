@@ -253,25 +253,25 @@ class Hooking(Resource):
         print(TAG, "user_id=", user_id)
         print(TAG, "one email=", email)
 
-        # msg_type = data["message"]["type"]
-        #
-        # if(msg_type == "text"):
-        #     my_msg = data["message"]["text"]
-        #     print(TAG, "my_msg=", my_msg)
-        #     if(my_msg == "pink"):
-        #         print(TAG, "hi recv")
-        #         self.send_msg(one_id,"I like Pink!!")
+        msg_type = data["message"]["type"]
 
-        if("select_color" in data['message']['data']):
-            select_color = data['message']['data']['select_color']
-            if(select_color == "pink"):
-                print(TAG,"select_color=",select_color)
-                self.send_msg(one_id,"Pink Pink!!")
-                return module.success()
-            elif(select_color == "green"):
-                print(TAG,"select_color=",select_color)
-                self.send_msg(one_id,"Green Green!!")
-                return  module.success()
+        if(msg_type == "text"):
+            my_msg = data["message"]["text"]
+            print(TAG, "my_msg=", my_msg)
+            if(my_msg == "pink"):
+                print(TAG, "hi recv")
+                self.send_msg(one_id,"I like Pink!!")
+
+        # if("select_color" in data['message']['data']):
+        #     select_color = data['message']['data']['select_color']
+        #     if(select_color == "pink"):
+        #         print(TAG,"select_color=",select_color)
+        #         self.send_msg(one_id,"Pink Pink!!")
+        #         return module.success()
+        #     elif(select_color == "green"):
+        #         print(TAG,"select_color=",select_color)
+        #         self.send_msg(one_id,"Green Green!!")
+        #         return  module.success()
 
 
         # user_exist = self.is_user_exist(email)
