@@ -119,30 +119,36 @@ class Hooking(Resource):
                     }
         return this_quest
 
-    def interested_quest(self, user_id, bot_id):
+    def blood_data(self, user_id, bot_id):
         this_quest = {
                         "to": user_id,
                         "bot_id": bot_id,
-                        "message": "สนใจในเพศไหน",
+                        "message": "คุณกรุ๊ปเลือดอะไร?",
                         "quick_reply":
                             [
                                 {
-                                    "label": "ชาย",
+                                    "label": "A",
                                     "type": "text",
-                                    "message": "ผู้ชายค่ะ",
-                                    "payload": {"interested_gen": "man"}
+                                    "message": "A",
+                                    "payload": {"blood_data": "A"}
                                 },
                                 {
-                                    "label": "หญิง",
+                                    "label": "O",
                                     "type": "text",
-                                    "message": "ผู้หญิงครับ",
-                                    "payload": {"interested_gen": "woman"}
+                                    "message": "O",
+                                    "payload": {"blood_data": "O"}
                                 },
                                 {
-                                    "label": "ไม่ระบุ",
+                                    "label": "B",
                                     "type": "text",
-                                    "message": "ไม่ระบุ",
-                                    "payload": {"interested_gen": "not_specified"}
+                                    "message": "B",
+                                    "payload": {"blood_data": "B"}
+                                },
+                                {
+                                    "label": "AB",
+                                    "type": "text",
+                                    "message": "AB",
+                                    "payload": {"blood_data": "AB"}
                                 }
                             ]
                     }
@@ -271,6 +277,12 @@ class Hooking(Resource):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
                 req_body = self.menu_send(user_id, bot_id)
                 self.send_quick_reply(one_id, req_body)
+                if("action" in data['message']['data']):
+                    action = data['message']['data']['action']
+                    if (action == "blood_type"):
+                        req_body = self.blood_data(user_id, bot_id)
+                        self.send_quick_reply(one_id, req_body)
+                        return module.success()
 
         else:
             print(TAG, "usr not exist!")
