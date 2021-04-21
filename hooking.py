@@ -237,8 +237,12 @@ class Hooking(Resource):
             getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
             getprofile_body = {'one_id': data['oneid']}
             result = requests.post(getprofile_url, json=getprofile_body, verify=False)
+
+            userprofile = result.json()
+
             print(TAG, result.status_code)
-            print(TAG, result.json)
+            print(TAG, userprofile)
+            print(TAG, userprofile.oneid)
             # print(TAG, result.json()["oneid"])
             # print(TAG, result.json()["id"])
 
