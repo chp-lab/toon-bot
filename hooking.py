@@ -319,7 +319,7 @@ class Hooking(Resource):
             print(TAG, "add=new_user=", add_user)
 
             self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
-            req_body = self.gender_quest(bot_id, user_id)
+            req_body = self.gender_quest(user_id, bot_id)
             self.send_quick_reply(one_id, req_body)
 
 
@@ -450,7 +450,7 @@ class Hooking(Resource):
         # else:
         #     print(TAG, "usr not exist!")
         #     self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
-        #     req_body = self.gender_quest(bot_id, user_id)
+        #     req_body = self.gender_quest(user_id, bot_id)
         #     self.send_quick_reply(one_id, req_body)
         #     add_user = self.add_new_user(email, name, one_id)
         #     print(TAG, "add=new_user=", add_user)
