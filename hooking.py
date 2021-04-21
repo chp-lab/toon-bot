@@ -231,6 +231,11 @@ class Hooking(Resource):
             print(TAG, result.status_code)
             print(TAG, result.json())
 
+            cmd = "INSERT INTO `map_uuid`(collar_uuid, one_id, user_id) VALUES (data['uuid'], result.json().oneid, result.json().id);"
+            update = self.update_data(cmd)
+            print('++++++++++++++++++++++++++++++++++++++++++')
+            print(update)
+
         # if(data['event'] != "message"):
         #     print(TAG, "event not support")
         #     return module.wrongAPImsg()
@@ -251,7 +256,7 @@ class Hooking(Resource):
         #         if ("gen" in data['message']['data']):
         #             gen = data['message']['data']["gen"]
         #             print(TAG, "gen=", gen)
-        #             cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gen, email)
+                    # cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gen, email)
         #             update = self.update_data(cmd)
         #             print("gen update=", update)
         #             self.send_msg(one_id, "อายุเท่าไหร่คะ")
