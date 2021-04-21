@@ -246,7 +246,7 @@ class Hooking(Resource):
             print(TAG, userprofile['id'])
 
 
-            # add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
+            add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
             print('++++++++++++++++++++++++++++++++++++++++++')
             # print(add_collar)
 
