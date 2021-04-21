@@ -266,7 +266,7 @@ class Hooking(Resource):
         if(user_exist):
             print(TAG, "user already exist")
             msg_type = data["message"]["type"]
-            print(TAG, "msg=",msg)
+            print(TAG, "msg=",msg_type)
             if(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
                 req_body = self.menu_send(user_id, bot_id)
