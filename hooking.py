@@ -73,12 +73,12 @@ class Hooking(Resource):
         else:
             return False
 
-    def add_new_user(self, email, name, one_id):
+    def add_new_user(self, email, name, one_id, lat, lng):
         TAG = "add_new_user:"
         database = Database()
         print(TAG, "add user to our system")
-        sql = """INSERT INTO `users` (`one_email`, `name`, `one_id`) VALUES ('%s', '%s', '%s')""" \
-              % (email, name, one_id)
+        sql = """INSERT INTO `users` (`one_email`, `name`, `one_id`, `lat`, `lng`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+              % (email, name, one_id, lat, lng)
         insert = database.insertData(sql)
         return insert
 
