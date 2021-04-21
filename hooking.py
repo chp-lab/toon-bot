@@ -269,8 +269,8 @@ class Hooking(Resource):
             print(TAG, "msg=",msg)
             if(msg == "hi"):
                 self.send_msg(one_id, "สวัสดีค่ะ")
-                req_body = self.gender_quest(bot_id, user_id)
-                self.send_quick_reply(one_id, req_body)
+                # req_body = self.gender_quest(bot_id, user_id)
+                # self.send_quick_reply(one_id, req_body)
 
         else:
             print(TAG, "usr not exist!")
