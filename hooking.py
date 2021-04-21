@@ -276,6 +276,7 @@ class Hooking(Resource):
         #         self.send_msg(one_id,"I like Pink!!")
 
         user_exist = self.is_user_exist(email)
+
         if(user_exist):
             print(TAG, "user already exist")
             msg_type = data["message"]["type"]
@@ -312,7 +313,6 @@ class Hooking(Resource):
 
             else:
                 print(TAG, "message support!")
-
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
