@@ -7,9 +7,6 @@ from database import Database
 from module import Module
 
 class Hooking(Resource):
-    getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
-    getprofile_body = {'one_id': data['oneid']}
-
     onechat_uri = "https://chat-api.one.th"
     
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
@@ -226,7 +223,9 @@ class Hooking(Resource):
 
         if('uuid' in data):
             print(TAG, data['uuid'])
-            result = requests.post(self.getprofile_url, json=self.getprofile_body)
+            getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
+            getprofile_body = {'one_id': data['oneid']}
+            result = requests.post(getprofile_url, json=getprofile_body)
             print(TAG, result.status_code)
             print(TAG, result.json)
 
