@@ -238,15 +238,15 @@ class Hooking(Resource):
             getprofile_body = {'one_id': data['oneid']}
             result = requests.post(getprofile_url, json=getprofile_body, verify=False)
 
-            userprofile = result.json()
+            userprofile = result.json()['user_data'][0]
 
             print(TAG, result.status_code)
             print(TAG, userprofile)
-            print(TAG, userprofile['user_data'][0]['oneid'])
-            # print(TAG, result.json()["oneid"])
-            # print(TAG, result.json()["id"])
+            print(TAG, userprofile['oneid'])
+            print(TAG, userprofile['id'])
 
-            # add_collar = self.add_new_pair(data['uuid'], result.json()["oneid"], result.json()["id"])
+
+            add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
             print('++++++++++++++++++++++++++++++++++++++++++')
             # print(add_collar)
 
