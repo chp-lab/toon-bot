@@ -82,6 +82,15 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
+    def add_new_pair(self, collar_uuid, one_id, user_id):
+        TAG = "add_new_pair:"
+        database = Database()
+        print(TAG, "add user to our system")
+        sql = """INSERT INTO `map_uuid` (`collar_uuid`, `one_id`, `user_id`) VALUES ('%s', '%s', '%s')""" \
+              % (collar_uuid, one_id, user_id)
+        insert = database.insertData(sql)
+        return insert
+
     def update_data(self, cmd):
         TAG = "update_data"
         database = Database()
@@ -231,10 +240,9 @@ class Hooking(Resource):
             print(TAG, result.status_code)
             print(TAG, result.json())
 
-            cmd = "INSERT INTO `map_uuid`(collar_uuid, one_id, user_id) VALUES (data['uuid'], result.json().oneid, result.json().id);"
-            update = self.update_data(cmd)
+            add_collar = self.add_new_pair('jjjj', 123, 7789)
             print('++++++++++++++++++++++++++++++++++++++++++')
-            print(update)
+            print(add_collar)
 
         # if(data['event'] != "message"):
         #     print(TAG, "event not support")
