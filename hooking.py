@@ -283,15 +283,12 @@ class Hooking(Resource):
 
             # quick reply
             if ('data' in data['message']):
-                cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" % (email)
-                res = database.getData(cmd)
-                print(TAG, "res=", res)
-                # if ("gender" in data['message']['data']):
-                #     gender = data['message']['data']["gender"]
-                #     print(TAG, "gen=", gender)
-                #     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
-                #     update = self.update_data(cmd)
-                #     print("gen update=", update)
+                if ("gender" in data['message']['data']):
+                    gender = data['message']['data']["gender"]
+                    print(TAG, "gen=", gender)
+                    cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+                    update = self.update_data(cmd)
+                    print("gen update=", update)
 
             elif(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
@@ -303,10 +300,15 @@ class Hooking(Resource):
                 #         req_body = self.blood_data(user_id, bot_id)
                 #         self.send_quick_reply(one_id, req_body)
                 #         return module.success()
+                cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" % (email)
+                res = database.getData(cmd)
+                print(TAG, "res=", res)
 
-                req_body = self.gender_quest(user_id, bot_id)
-
-                self.send_quick_reply(one_id, req_body)
+                gender = res[0]['result'][0]['gender']
+                if (gender is None):
+                    req_body = self.gender_quest(user_id, bot_id)
+                    self.send_quick_reply(one_id, req_body)
+                    return module.success()
 
             else:
                 print(TAG, "message support!")
