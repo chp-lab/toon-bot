@@ -240,9 +240,9 @@ class Hooking(Resource):
             print(TAG, result.status_code)
             print(TAG, result.json())
 
-            add_collar = self.add_new_pair('jjjj', 123, 7789)
+            # add_collar = self.add_new_pair('jjjj', 123, 7789)
             print('++++++++++++++++++++++++++++++++++++++++++')
-            print(add_collar)
+            # print(add_collar)
 
         # if(data['event'] != "message"):
         #     print(TAG, "event not support")
