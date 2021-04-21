@@ -285,7 +285,6 @@ class Hooking(Resource):
                 #         return module.success()
                 req_body = self.gender_quest(user_id, bot_id)
                 self.send_quick_reply(one_id, req_body)
-                print(TAG, "gen=", gender)
                 cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                 update = self.update_data(cmd)
                 print("gen update=", update)
