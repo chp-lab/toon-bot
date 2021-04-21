@@ -267,7 +267,7 @@ class Hooking(Resource):
             print(TAG, "user already exist")
             msg_type = data["message"]["type"]
             print(TAG, "msg=",msg)
-            if(msg == "text"):
+            if(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
                 req_body = self.menu_send(user_id, bot_id)
                 self.send_quick_reply(one_id, req_body)
