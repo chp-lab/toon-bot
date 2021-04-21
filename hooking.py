@@ -265,16 +265,18 @@ class Hooking(Resource):
         user_exist = self.is_user_exist(email)
         if(user_exist):
             print(TAG, "user already exist")
-            msg = data["message"]
+            msg = data["message"]["text"]
             print(TAG, "msg=",msg)
+            if(msg == "text"):
+
             # if('data' in data['message']):
-            #     if("gender" in data['message']['data']):
-            #         gender = data['message']['data']['gender']
-            #         print(TAG, "gen=", gender)
-            #         cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
-            #         update = self.update_data(cmd)
-            #         print(TAG,"gender update=",update)
-            #         self.send_msg(one_id,"คุณเพศอะไร?")
+                if("gender" in data['message']['data']):
+                    gender = data['message']['data']['gender']
+                    print(TAG, "gen=", gender)
+                    cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+                    update = self.update_data(cmd)
+                    print(TAG,"gender update=",update)
+                    self.send_msg(one_id,"คุณเพศอะไร?")
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
