@@ -5,6 +5,7 @@ from module import Module
 
 class Check_perm(Resource):
     def post(self, room_num):
+        print(123456789)
         TAG = "Check_perm:"
         module = Module()
         database = Database()
