@@ -101,19 +101,19 @@ class Hooking(Resource):
                                     "label": "ชาย",
                                     "type": "text",
                                     "message": "ผู้ชายครับ",
-                                    "payload": {"gen": "man"}
+                                    "payload": {"gender": "man"}
                                 },
                                 {
                                     "label": "หญิง",
                                     "type": "text",
                                     "message": "ผู้หญิงค่ะ",
-                                    "payload": {"gen": "woman"}
+                                    "payload": {"gender": "woman"}
                                 },
                                 {
                                     "label": "ไม่ระบุ",
                                     "type": "text",
                                     "message": "ไม่ระบุ",
-                                    "payload": {"gen": "not_specified"}
+                                    "payload": {"gender": "not_specified"}
                                 }
                             ]
                     }
@@ -267,7 +267,7 @@ class Hooking(Resource):
             print(TAG, "user already exist")
             msg = data["message"]["text"]
             print(TAG, "msg=",msg)
-            if(msg == "text"):
+            if(msg == "hi"):
                 self.send_msg(one_id, "สวัสดีค่ะ")
                 req_body = self.gender_quest(bot_id, user_id)
                 self.send_quick_reply(one_id, req_body)
