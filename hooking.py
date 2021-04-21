@@ -223,7 +223,7 @@ class Hooking(Resource):
         if('uuid' in data):
             print(TAG, data['uuid'])
             getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
-            getprofile_body = data['oneid']
+            getprofile_body = {'one_id': data['oneid']}
             result = requests.post(self.getprofile_url, json=getprofile_body)
             print(TAG, result.status_code)
             print(TAG, result.json)
