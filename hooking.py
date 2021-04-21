@@ -239,8 +239,10 @@ class Hooking(Resource):
             result = requests.post(getprofile_url, json=getprofile_body, verify=False)
             print(TAG, result.status_code)
             print(TAG, result.json())
+            print(TAG, result.json().oneid)
+            print(TAG, result.json().id)
 
-            # add_collar = self.add_new_pair('jjjj', 123, 7789)
+            add_collar = self.add_new_pair(data['uuid'], result.json().oneid, result.json().id)
             print('++++++++++++++++++++++++++++++++++++++++++')
             # print(add_collar)
 
