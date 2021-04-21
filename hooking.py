@@ -220,6 +220,14 @@ class Hooking(Resource):
             return module.success()
             # return module.wrongAPImsg()
 
+        if('uuid' in data):
+            print(TAG, data['uuid'])
+            getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
+            getprofile_body = data['oneid']
+            result = requests.post(self.getprofile_url, json=getprofile_body)
+            print(TAG, result.status_code)
+            print(TAG, result.json)
+
         # if(data['event'] != "message"):
         #     print(TAG, "event not support")
         #     return module.wrongAPImsg()
