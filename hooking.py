@@ -94,7 +94,7 @@ class Hooking(Resource):
         this_quest = {
                         "to": user_id,
                         "bot_id": bot_id,
-                        "message": "เพศอะไร",
+                        "message": "คุณเพศอะไร",
                         "quick_reply":
                             [
                                 {
