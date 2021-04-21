@@ -81,9 +81,16 @@ class Hooking(Resource):
     def update_data(self, cmd):
         TAG = "update_data"
         database = Database()
-        print(TAG, "cmd=", cmd)
+        print(TAG, "update=", cmd)
         update = database.insertData(cmd)
         return update
+
+    def delete_data(self, cmd):
+        TAG = "delete_data"
+        database = Database()
+        delete = database.insertData(cmd)
+        print(TAG, "delete=", delete)
+        return delete
     def send_quick_reply(self, one_id, req_body):
         TAG = "quick_reply"
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
@@ -293,8 +300,6 @@ class Hooking(Resource):
                         cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                         update = self.update_data(cmd)
                         print("gen update=", update)
-
-
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
