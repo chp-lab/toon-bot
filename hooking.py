@@ -17,27 +17,27 @@ class Hooking(Resource):
         req_body = {
             "to": user_id,
             "bot_id": bot_id,
-            "message": "ให้ช่วยอะไรดี",
+            "message": "อยากทราบเรื่องอะไรคะ?",
             "quick_reply":
                 [
                     {
-                        "label": "อัพโหลดรูป",
+                        "label": "นิสัยตามกรุ๊ปเลือด",
                         "type": "text",
-                        "message": "อัพโหลดรูป",
-                        "payload": {"action": "image_rec"}
+                        "message": "นิสัยตามกรุ๊ปเลือด",
+                        "payload": {"action": "blood_type"}
                     },
-                    {
-                        "label": "ทำความรู้จักผู้คน",
-                        "type": "text",
-                        "message": "มีใครโสดอยู่บ้าง",
-                        "payload": {"action": "find_single"}
-                    },
-                    {
-                        "label": "อัพเดทโปรไฟล์",
-                        "type": "text",
-                        "message": "ขออัพเดทโปรไฟล์หน่อยครับ",
-                        "payload": {"action": "profile_update"}
-                    }
+                    # {
+                    #     "label": "ทำความรู้จักผู้คน",
+                    #     "type": "text",
+                    #     "message": "มีใครโสดอยู่บ้าง",
+                    #     "payload": {"action": "find_single"}
+                    # },
+                    # {
+                    #     "label": "อัพเดทโปรไฟล์",
+                    #     "type": "text",
+                    #     "message": "ขออัพเดทโปรไฟล์หน่อยครับ",
+                    #     "payload": {"action": "profile_update"}
+                    # }
                 ]
         }
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
@@ -253,7 +253,7 @@ class Hooking(Resource):
         print(TAG, "user_id=", user_id)
         print(TAG, "one email=", email)
 
-        # msg_type = data["message"]["type"]
+
         #
         # if(msg_type == "text"):
         #     my_msg = data["message"]["text"]
@@ -265,11 +265,11 @@ class Hooking(Resource):
         user_exist = self.is_user_exist(email)
         if(user_exist):
             print(TAG, "user already exist")
-            msg = data["message"]["text"]
+            msg_type = data["message"]["type"]
             print(TAG, "msg=",msg)
-            if(msg == "hi"):
-                self.send_msg(one_id, "สวัสดีค่ะ")
-                req_body = self.gender_quest(user_id, bot_id)
+            if(msg == "text"):
+                self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
+                req_body = self.menu_send(user_id, bot_id)
                 self.send_quick_reply(one_id, req_body)
 
         else:
