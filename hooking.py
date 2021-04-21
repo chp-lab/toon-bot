@@ -293,7 +293,6 @@ class Hooking(Resource):
                         cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                         update = self.update_data(cmd)
                         print("gen update=", update)
-                        res = database.insertData(update)
                         print(TAG, "check_gender=", res)
 
 
