@@ -321,8 +321,8 @@ class Hooking(Resource):
                     return module.success()
                 elif(age is None):
                     age = data['message']['text']
-                    age = int(age)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่? กรุณาระบุเป็นตัวเลข")
+                    age = int(age)
                     if(age > 0):
                         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                         update = self.update_data(cmd)
