@@ -297,8 +297,8 @@ class Hooking(Resource):
                     print(TAG,"res in age=",res)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
 
-                    # age = data['message']['text']
-                    age = int(msg_type)
+                    age = data['message']['text']
+                    age = int(age)
                     if(age >0):
                         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                         update = self.update_data(cmd)
