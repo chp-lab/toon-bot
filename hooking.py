@@ -292,33 +292,33 @@ class Hooking(Resource):
                 res = database.getData(cmd)
                 print(TAG, "res=", res)
 
-                gender = res[0]['result'][0]['gender']
-                age = res[0]['result'][0]['age']
+                # gender = res[0]['result'][0]['gender']
+                # age = res[0]['result'][0]['age']
 
-                if(age is None or gender is None):
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    age = data['message']['text']
-                    age = int(age)
-                    if(age > 0):
+                # if(age is None or gender is None):
+                #     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                #     age = data['message']['text']
+                #     age = int(age)
+                #     if(age > 0):
                         # req_body = self.gender_quest(user_id, bot_id)
                         # self.send_quick_reply(one_id, req_body)
-                        cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-                        update = self.update_data(cmd)
-                        print("update=", update)
+                        # cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+                        # update = self.update_data(cmd)
+                        # print("update=", update)
                         # return module.success()
-                elif(gender is None):
-                    req_body = self.gender_quest(user_id, bot_id)
-                    self.send_quick_reply(one_id, req_body)
-                    return module.success()
-                elif(age is None):
-                    age = data['message']['text']
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่? กรุณาระบุเป็นตัวเลข")
-                    age = int(age)
-                    if(age > 0):
-                        cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-                        update = self.update_data(cmd)
-                        print(TAG, "update=", update)
-                    return module.success()
+                # if(gender is None):
+                #     req_body = self.gender_quest(user_id, bot_id)
+                #     self.send_quick_reply(one_id, req_body)
+                #     # return module.success()
+                # elif(age is None):
+                #     age = data['message']['text']
+                #     self.send_msg(one_id, "คุณอายุเท่าไหร่? กรุณาระบุเป็นตัวเลข")
+                #     age = int(age)
+                #     if(age > 0):
+                #         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+                #         update = self.update_data(cmd)
+                #         print(TAG, "update=", update)
+                #     return module.success()
             else:
                 print(TAG, "message not support!")
         else:
