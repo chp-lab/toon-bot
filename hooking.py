@@ -297,7 +297,7 @@ class Hooking(Resource):
                 if (gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
-                    return module.success()
+                    # return module.success()
                 elif(res[0]['result'][0]['age'] is None):
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                     age = data['message']['text']
