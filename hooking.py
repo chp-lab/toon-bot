@@ -295,7 +295,7 @@ class Hooking(Resource):
                 gender = res[0]['result'][0]['gender']
                 age = res[0]['result'][0]['age']
 
-                if(age is None and gender is None):
+                if(age is None or gender is None):
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                     age = data['message']['text']
                     age = int(age)
