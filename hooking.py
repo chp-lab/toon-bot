@@ -300,9 +300,16 @@ class Hooking(Resource):
                     return module.success()
                 elif(age is None):
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    # cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
-                    # update = self.update_data(cmd)
-                    # print("gen update=", update)
+                    age_type = data['message']['text']
+                    if (not age_type.isnumeric()):
+                        self.send_msg(one_id, "อายุเท่าไหร่คะ กระรุณาระบุเป็นตัวเลขค่ะ")
+                        return module.wrongAPImsg()
+
+                        age_type = int(age_type)
+                    if(age_type > 0):
+                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                        update = self.update_data(cmd)
+                        print("age update=", update)
 
 
             else:
