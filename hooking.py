@@ -266,15 +266,6 @@ class Hooking(Resource):
         print(TAG, "user_id=", user_id)
         print(TAG, "one email=", email)
 
-
-        #
-        # if(msg_type == "text"):
-        #     my_msg = data["message"]["text"]
-        #     print(TAG, "my_msg=", my_msg)
-        #     if(my_msg == "pink"):
-        #         print(TAG, "hi recv")
-        #         self.send_msg(one_id,"I like Pink!!")
-
         user_exist = self.is_user_exist(email)
 
         if(user_exist):
@@ -290,39 +281,42 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                     update = self.update_data(cmd)
                     print("gen update=", update)
+                elif("birt_date" in data['message']['data']):
+                    print(TAG, "record bd")
+                    # send birth date question
 
             elif(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
-                # req_body = self.menu_send(user_id, bot_id)
-                # self.send_quick_reply(one_id, req_body)
-                # if("action" in data['message']['data']):
-                #     action = data['message']['data']['action']
-                #     if (action == "blood_type"):
-                #         req_body = self.blood_data(user_id, bot_id)
-                #         self.send_quick_reply(one_id, req_body)
-                #         return module.success()
-                cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" % (email)
+                cmd = """SELECT users.name, users.gender, users.birth_date FROM `users` WHERE users.one_email='%s'""" % (email)
                 res = database.getData(cmd)
                 print(TAG, "res=", res)
 
                 gender = res[0]['result'][0]['gender']
+                age = res[0]['result'][0]['age']
+
                 if (gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
                     return module.success()
+                elif(age is None):
+                    age = data["message"]["text"]
+                    age = int(age)
+                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                    if(age > 0):
+                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                        update = self.update_data(cmd)
+                        print("gen update=", update)
+
 
             else:
-                print(TAG, "message support!")
+                print(TAG, "message not support!")
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
             print(TAG, "add=new_user=", add_user)
-
-            self.send_msg(one_id, "สวัสดีค่ะ แนะนำตัวเองเเบื้องต้นพื่อหาผู้คนที่คุณสนใจ")
+            self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
             req_body = self.gender_quest(user_id, bot_id)
             self.send_quick_reply(one_id, req_body)
-
-
 
         # if (user_exist):
         #     print(TAG, "### user exist!")
