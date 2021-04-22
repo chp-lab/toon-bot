@@ -298,16 +298,19 @@ class Hooking(Resource):
 
 
                     age = data['message']['text']
+
+                    if(not age.isnumeric()):
+                        self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                        print(TAG,"message not support")
+
                     age = int(age)
-                    if(age >0):
+
+                    if (age > 0):
                         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                         update = self.update_data(cmd)
                         print("update=", update)
-                        self.send_msg(one_id,"เสร็จเรียบร้อย")
+                        self.send_msg(one_id, "เสร็จเรียบร้อย")
                         return module.success()
-                    elif(not age.isnumeric()):
-                        self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                        print(TAG,"message not support")
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
