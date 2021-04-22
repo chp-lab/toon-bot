@@ -290,20 +290,23 @@ class Hooking(Resource):
                     update = self.update_data(cmd)
                     print("gen update=", update)
 
-            elif(age is None):
-                res = database.getData(cmd)
-                print(TAG,"res in age=",res)
-                self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                age = data['message']['text']
-                age = int(age)
-                if(age >0):
-                    cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-                    update = self.update_data(cmd)
-                    print("update=", update)
-                    self.send_msg(one_id,"เสร็จเรียบร้อย")
-                    return module.success()
-                else:
-                    print(TAG,"message not support")
+            elif(msg_type == "text"):
+
+                if(age is None):
+                    res = database.getData(cmd)
+                    print(TAG,"res in age=",res)
+                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+
+                    # age = data['message']['text']
+                    age = int(msg_type)
+                    if(age >0):
+                        cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+                        update = self.update_data(cmd)
+                        print("update=", update)
+                        self.send_msg(one_id,"เสร็จเรียบร้อย")
+                        return module.success()
+                    else:
+                        print(TAG,"message not support")
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
