@@ -295,7 +295,7 @@ class Hooking(Resource):
                 if(age is None):
                     res = database.getData(cmd)
                     print(TAG,"res in age=",res)
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+
 
                     age = data['message']['text']
                     age = int(age)
@@ -306,6 +306,7 @@ class Hooking(Resource):
                         self.send_msg(one_id,"เสร็จเรียบร้อย")
                         return module.success()
                     else:
+                        self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                         print(TAG,"message not support")
 
             # if(msg_type == "text"):
