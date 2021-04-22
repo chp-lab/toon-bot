@@ -300,9 +300,9 @@ class Hooking(Resource):
                     return module.success()
                 elif(age is None):
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
-                    update = self.update_data(cmd)
-                    print("gen update=", update)
+                    # cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                    # update = self.update_data(cmd)
+                    # print("gen update=", update)
 
 
             else:
