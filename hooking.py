@@ -287,7 +287,7 @@ class Hooking(Resource):
 
             elif(msg_type == "text"):
                 self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
-                cmd = """SELECT users.name, users.gender, users.birth_date FROM `users` WHERE users.one_email='%s'""" % (email)
+                cmd = """SELECT users.name, users.gender FROM `users` WHERE users.one_email='%s'""" % (email)
                 res = database.getData(cmd)
                 print(TAG, "res=", res)
 
@@ -302,10 +302,10 @@ class Hooking(Resource):
                     age = data["message"]["text"]
                     age = int(age)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    if(age > 0):
-                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
-                        update = self.update_data(cmd)
-                        print("gen update=", update)
+                    # if(age > 0):
+                    #     cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                    #     update = self.update_data(cmd)
+                    #     print("gen update=", update)
 
 
             else:
