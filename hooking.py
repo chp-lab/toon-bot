@@ -314,17 +314,20 @@ class Hooking(Resource):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
                     print("update=", update)
+                    return module.success()
                 elif(gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
+                    return module.success()
                 elif(age is None):
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                    self.send_msg(one_id, "คุณอายุเท่าไหร่? กรุณาระบุเป็นตัวเลข")
                     age = data['message']['text']
                     age = int(age)
-                    cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-                    update = self.update_data(cmd)
-                    print(TAG, "update=", update)
-                    
+                    if(age > 0):
+                        cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+                        update = self.update_data(cmd)
+                        print(TAG, "update=", update)
+                        return module.success()
             else:
                 print(TAG, "message not support!")
         else:
