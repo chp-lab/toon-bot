@@ -274,6 +274,12 @@ class Hooking(Resource):
             # self.send_msg(one_id, "ต้องการให้ช่วยอะไร?")
             msg_type = data["message"]["type"]
             print(TAG, "msg=",msg_type)
+            cmd = """SELECT users.name, users.gender , users.age FROM `users` WHERE users.one_email='%s'""" % (email)
+            res = database.getData(cmd)
+            print(TAG, "res=", res)
+
+            gender = res[0]['result'][0]['gender']
+            age = res[0]['result'][0]['age']
 
             # quick reply
             if ('data' in data['message']):
@@ -283,9 +289,13 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                     update = self.update_data(cmd)
                     print("gen update=", update)
-                # elif("birt_date" in data['message']['data']):
-                #     print(TAG, "record bd")
-                    # send birth date question
+
+            elif(age is None):
+                self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                age = data['message']['text']
+                age = int(age)
+                if(age > 0):
+                    self.send_msg(one_id,"เสร็จเรียบร้อย")
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
