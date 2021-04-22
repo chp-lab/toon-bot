@@ -307,12 +307,13 @@ class Hooking(Resource):
                 #     print("age update=", update)
                 if(gender is None or age is None):
                     req_body = self.gender_quest(user_id, bot_id)
-                    self.send_quick_reply(one_id, req_body)
+                    # self.send_quick_reply(one_id, req_body)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                     age = data['message']['text']
                     age = int(age)
                     cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                     update = self.update_data(cmd)
+                    self.send_quick_reply(one_id, req_body)
                     print("age update=", update)
 
 
