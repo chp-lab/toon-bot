@@ -291,6 +291,8 @@ class Hooking(Resource):
                     print("gen update=", update)
 
             elif(age is None):
+                res = database.getData(cmd)
+                print(TAG,"res in age=",res)
                 self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                 age = data['message']['text']
                 age = int(age)
