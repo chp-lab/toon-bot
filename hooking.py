@@ -305,9 +305,9 @@ class Hooking(Resource):
                         print("update=", update)
                         self.send_msg(one_id,"เสร็จเรียบร้อย")
                         return module.success()
-                else:
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    print(TAG,"message not support")
+                    else:
+                        self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                        print(TAG,"message not support")
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
