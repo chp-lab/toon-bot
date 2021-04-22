@@ -303,7 +303,7 @@ class Hooking(Resource):
                     age_type = data['message']['text']
                     age_type = int(age_type)
                     if(age_type > 0):
-                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age_type, email)
                         update = self.update_data(cmd)
                         print("age update=", update)
 
