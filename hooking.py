@@ -327,7 +327,7 @@ class Hooking(Resource):
                         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                         update = self.update_data(cmd)
                         print(TAG, "update=", update)
-                        return module.success()
+                    return module.success()
             else:
                 print(TAG, "message not support!")
         else:
