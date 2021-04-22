@@ -292,7 +292,7 @@ class Hooking(Resource):
                 print(TAG, "res=", res)
 
                 gender = res[0]['result'][0]['gender']
-                # age = res[0]['result'][0]['age']
+                age = res[0]['result'][0]['age']
 
                 # if (gender is None):
                 #     req_body = self.gender_quest(user_id, bot_id)
@@ -305,7 +305,7 @@ class Hooking(Resource):
                 #     cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" %(age, email)
                 #     update = self.update_data(cmd)
                 #     print("age update=", update)
-                if(gender is None and res[0]['result'][0]['age'] is None):
+                if(gender is None or age is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
