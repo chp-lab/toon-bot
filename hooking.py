@@ -305,7 +305,7 @@ class Hooking(Resource):
                         print("update=", update)
                         self.send_msg(one_id,"เสร็จเรียบร้อย")
                         return module.success()
-                    else:
+                    elif(not age.isnumeric()):
                         self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                         print(TAG,"message not support")
 
