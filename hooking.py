@@ -296,10 +296,10 @@ class Hooking(Resource):
                 age = res[0]['result'][0]['age']
 
                 if(age is None and gender is None):
+                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                     age = data['message']['text']
                     age = int(age)
                     if(age > 0):
-                        self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                         # req_body = self.gender_quest(user_id, bot_id)
                         # self.send_quick_reply(one_id, req_body)
                         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
