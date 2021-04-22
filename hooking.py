@@ -74,7 +74,7 @@ class Hooking(Resource):
         database = Database()
         print(TAG, "add user to our system")
         sql = """INSERT INTO `users` (`one_email`, `one_id`, `name`, `role`, `gender`, `age`, `created_at`) 
-        VALUES ('%s', '%s', '%s', NULL, NULL, NULL, CURRENT_TIMESTAMP)""" % (email, name, one_id)
+        VALUES ('%s', '%s', '%s', NULL, NULL, NULL, CURRENT_TIMESTAMP)""" % (email, one_id, name)
         insert = database.insertData(sql)
         return insert
 
@@ -311,6 +311,10 @@ class Hooking(Resource):
                         print("update=", update)
                         self.send_msg(one_id, "เสร็จเรียบร้อย")
                         return module.success()
+                elif(gender is None):
+                    req_body = self.gender_quest(user_id, bot_id)
+                    self.send_quick_reply(one_id, req_body)
+
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
