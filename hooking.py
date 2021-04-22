@@ -292,17 +292,17 @@ class Hooking(Resource):
                 print(TAG, "res=", res)
 
                 gender = res[0]['result'][0]['gender']
-                age = res[0]['result'][0]['age']
+                # age = res[0]['result'][0]['age']
 
                 if (gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
                     return module.success()
-                elif(age is None):
+                elif(res[0]['result'][0]['age'] is None):
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    # age_type = data['message']['text']
-                    age_type = int(age)
-                    if(age_type > 0):
+                    age = data['message']['text']
+                    age = int(age)
+                    if(age > 0):
                         cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age_type, email)
                         update = self.update_data(cmd)
                         print("age update=", update)
