@@ -73,7 +73,7 @@ class Hooking(Resource):
         TAG = "add_new_user:"
         database = Database()
         print(TAG, "add user to our system")
-        sql = """INSERT INTO `users` (`one_email`, `one_id`, `name`, `role`, `gender`, `birth_date`, `created_at`) 
+        sql = """INSERT INTO `users` (`one_email`, `one_id`, `name`, `role`, `gender`, `age`, `created_at`) 
         VALUES ('%s', '%s', '%s', NULL, NULL, NULL, CURRENT_TIMESTAMP)""" % (email, name, one_id)
         insert = database.insertData(sql)
         return insert
@@ -298,10 +298,10 @@ class Hooking(Resource):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
                     return module.success()
-                elif(age is None):
-                    age = data["message"]["text"]
-                    age = int(age)
-                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                # elif(age is None):
+                #     age = data["message"]["text"]
+                #     age = int(age)
+                #     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                     # if(age > 0):
                     #     cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
                     #     update = self.update_data(cmd)
