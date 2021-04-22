@@ -281,8 +281,8 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
                     update = self.update_data(cmd)
                     print("gen update=", update)
-                elif("birt_date" in data['message']['data']):
-                    print(TAG, "record bd")
+                # elif("birt_date" in data['message']['data']):
+                #     print(TAG, "record bd")
                     # send birth date question
 
             elif(msg_type == "text"):
@@ -292,7 +292,7 @@ class Hooking(Resource):
                 print(TAG, "res=", res)
 
                 gender = res[0]['result'][0]['gender']
-                age = res[0]['result'][0]['age']
+                # age = res[0]['result'][0]['age']
 
                 if (gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
