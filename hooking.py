@@ -293,8 +293,8 @@ class Hooking(Resource):
             elif(age is None):
                 self.send_msg(one_id, "คุณอายุเท่าไหร่?")
                 age = data['message']['text']
-                age = int(age)
-                if(age > 0):
+                # age = int(age)
+                if(age == int(age)):
                     self.send_msg(one_id,"เสร็จเรียบร้อย")
 
             # if(msg_type == "text"):
