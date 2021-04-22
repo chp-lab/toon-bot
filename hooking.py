@@ -299,13 +299,10 @@ class Hooking(Resource):
                     self.send_quick_reply(one_id, req_body)
                     return module.success()
                 elif(age is None):
-                    age = data["message"]["text"]
-                    age = int(age)
                     self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-                    if(age > 0):
-                        cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
-                        update = self.update_data(cmd)
-                        print("gen update=", update)
+                    cmd = """UPDATE `users` SET `age` = %s WHERE `users`.`one_email` = '%s'""" %(age, email)
+                    update = self.update_data(cmd)
+                    print("gen update=", update)
 
 
             else:
