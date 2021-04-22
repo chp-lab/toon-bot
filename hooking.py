@@ -325,7 +325,7 @@ class Hooking(Resource):
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
             print(TAG, "add=new_user=", add_user)
-            self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
+            self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :) eiei")
             req_body = self.gender_quest(user_id, bot_id)
             self.send_quick_reply(one_id, req_body)
 
