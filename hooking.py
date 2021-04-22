@@ -300,9 +300,10 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                     update = self.update_data(cmd)
                     print("update=", update)
-                    res = database.getData(cmd)
-                    print(TAG, "res after update=", res)
                     self.send_msg(one_id,"เสร็จเรียบร้อย")
+                    return module.success()
+                else:
+                    print(TAG,"message not support")
 
             # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
