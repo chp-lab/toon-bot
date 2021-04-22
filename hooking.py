@@ -271,26 +271,27 @@ class Hooking(Resource):
 
         if(user_exist):
             print(TAG, "user already exist")
+            # self.send_msg(one_id, "ต้องการให้ช่วยอะไร?")
             msg_type = data["message"]["type"]
             print(TAG, "msg=",msg_type)
-            # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
+
             # quick reply
-            if ('data' in data['message']):
-                if ("gender" in data['message']['data']):
-                    gender = data['message']['data']["gender"]
-                    print(TAG, "gen=", gender)
-                    cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
-                    update = self.update_data(cmd)
-                    print("gen update=", update)
+            # if ('data' in data['message']):
+            #     if ("gender" in data['message']['data']):
+            #         gender = data['message']['data']["gender"]
+            #         print(TAG, "gen=", gender)
+            #         cmd = """UPDATE `users` SET `gender` = '%s' WHERE `users`.`one_email` = '%s'""" % (gender, email)
+            #         update = self.update_data(cmd)
+            #         print("gen update=", update)
                 # elif("birt_date" in data['message']['data']):
                 #     print(TAG, "record bd")
                     # send birth date question
 
-            elif(msg_type == "text"):
+            # if(msg_type == "text"):
                 # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
-                cmd = """SELECT users.name, users.gender , users.age FROM `users` WHERE users.one_email='%s'""" % (email)
-                res = database.getData(cmd)
-                print(TAG, "res=", res)
+            cmd = """SELECT users.name, users.gender , users.age FROM `users` WHERE users.one_email='%s'""" % (email)
+            res = database.getData(cmd)
+            print(TAG, "res=", res)
 
                 # gender = res[0]['result'][0]['gender']
                 # age = res[0]['result'][0]['age']
@@ -319,15 +320,15 @@ class Hooking(Resource):
                 #         update = self.update_data(cmd)
                 #         print(TAG, "update=", update)
                 #     return module.success()
-            else:
-                print(TAG, "message not support!")
+            # else:
+            #     print(TAG, "message not support!")
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
             print(TAG, "add=new_user=", add_user)
             self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :) eiei")
-            req_body = self.gender_quest(user_id, bot_id)
-            self.send_quick_reply(one_id, req_body)
+            # req_body = self.gender_quest(user_id, bot_id)
+            # self.send_quick_reply(one_id, req_body)
 
         # if (user_exist):
         #     print(TAG, "### user exist!")
