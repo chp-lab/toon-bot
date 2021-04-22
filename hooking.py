@@ -273,7 +273,7 @@ class Hooking(Resource):
             print(TAG, "user already exist")
             msg_type = data["message"]["type"]
             print(TAG, "msg=",msg_type)
-            self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
+            # self.send_msg(one_id, "น้องดวงดี สวัสดีค่ะ :)")
             # quick reply
             if ('data' in data['message']):
                 if ("gender" in data['message']['data']):
