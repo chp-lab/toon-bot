@@ -346,11 +346,10 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                     update = self.update_data(cmd)
                     print("update=", update)
+                    self.send_msg(one_id, "เสร็จเรียบร้อย")
+                    # return module.success()
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
-                    self.send_msg(one_id, "เสร็จเรียบร้อย")
-                    return module.success()
-
         # if (user_exist):
         #     print(TAG, "### user exist!")
         #     if ('data' in data['message']):
