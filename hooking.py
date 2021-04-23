@@ -329,7 +329,8 @@ class Hooking(Resource):
             # self.send_quick_reply(one_id, req_body)
 
             age = res[0]['result'][0]['age']
-            if (age is None):
+            gender = res[0]['result'][0]['gender']
+            if (age is None and gender is None):
                 res = database.getData(cmd)
                 print(TAG, "res in age=", res)
 
@@ -345,6 +346,8 @@ class Hooking(Resource):
                     cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
                     update = self.update_data(cmd)
                     print("update=", update)
+                    req_body = self.gender_quest(user_id, bot_id)
+                    self.send_quick_reply(one_id, req_body)
                     self.send_msg(one_id, "เสร็จเรียบร้อย")
                     return module.success()
 
