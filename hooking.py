@@ -325,14 +325,14 @@ class Hooking(Resource):
             res = database.getData(cmd)
             print(TAG, "res=", res)
 
-            # req_body = self.gender_quest(user_id, bot_id)
-            # self.send_quick_reply(one_id, req_body)
-
             age = res[0]['result'][0]['age']
             gender = res[0]['result'][0]['gender']
-            if (age is None):
+            if (age is None and gender is None):
                 res = database.getData(cmd)
                 print(TAG, "res in age=", res)
+                
+                req_body = self.gender_quest(user_id, bot_id)
+                self.send_quick_reply(one_id, req_body)
 
                 age = data['message']['text']
 
@@ -349,9 +349,9 @@ class Hooking(Resource):
                     self.send_msg(one_id, "เสร็จเรียบร้อย")
                     return module.success()
 
-                if(gender is None):
-                    req_body = self.gender_quest(user_id, bot_id)
-                    self.send_quick_reply(one_id, req_body)
+                # if(gender is None):
+                #     req_body = self.gender_quest(user_id, bot_id)
+                #     self.send_quick_reply(one_id, req_body)
         # if (user_exist):
         #     print(TAG, "### user exist!")
         #     if ('data' in data['message']):
