@@ -330,7 +330,7 @@ class Hooking(Resource):
 
             age = res[0]['result'][0]['age']
             gender = res[0]['result'][0]['gender']
-            if (age is None and gender is None):
+            if (age is None):
                 res = database.getData(cmd)
                 print(TAG, "res in age=", res)
 
@@ -347,7 +347,9 @@ class Hooking(Resource):
                     update = self.update_data(cmd)
                     print("update=", update)
                     self.send_msg(one_id, "เสร็จเรียบร้อย")
-                    # return module.success()
+                    return module.success()
+
+                if(gender is None):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
         # if (user_exist):
