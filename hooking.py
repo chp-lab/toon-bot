@@ -315,6 +315,7 @@ class Hooking(Resource):
                     req_body = self.gender_quest(user_id, bot_id)
                     self.send_quick_reply(one_id, req_body)
 
+
         else:
             print(TAG, "usr not exist!")
             add_user = self.add_new_user(email, name, one_id)
@@ -324,28 +325,28 @@ class Hooking(Resource):
             res = database.getData(cmd)
             print(TAG, "res=", res)
 
-            req_body = self.gender_quest(user_id, bot_id)
-            self.send_quick_reply(one_id, req_body)
+            # req_body = self.gender_quest(user_id, bot_id)
+            # self.send_quick_reply(one_id, req_body)
 
-            # age = res[0]['result'][0]['age']
-            # if (age is None):
-            #     res = database.getData(cmd)
-            #     print(TAG, "res in age=", res)
-            #
-            #     age = data['message']['text']
-            #
-            #     if (not age.isnumeric()):
-            #         self.send_msg(one_id, "คุณอายุเท่าไหร่?")
-            #         print(TAG, "message not support")
-            #
-            #     age = int(age)
-            #
-            #     if (age > 0):
-            #         cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
-            #         update = self.update_data(cmd)
-            #         print("update=", update)
-            #         self.send_msg(one_id, "เสร็จเรียบร้อย")
-            #         return module.success()
+            age = res[0]['result'][0]['age']
+            if (age is None):
+                res = database.getData(cmd)
+                print(TAG, "res in age=", res)
+
+                age = data['message']['text']
+
+                if (not age.isnumeric()):
+                    self.send_msg(one_id, "คุณอายุเท่าไหร่?")
+                    print(TAG, "message not support")
+
+                age = int(age)
+
+                if (age > 0):
+                    cmd = """UPDATE `users` SET `age` = '%s' WHERE `users`.`one_email` = '%s'""" % (age, email)
+                    update = self.update_data(cmd)
+                    print("update=", update)
+                    self.send_msg(one_id, "เสร็จเรียบร้อย")
+                    return module.success()
 
         # if (user_exist):
         #     print(TAG, "### user exist!")
