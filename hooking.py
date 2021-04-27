@@ -62,7 +62,7 @@ class Hooking(Resource):
         # headers = {"Authorization": onechat_dev_token}
 
         print(TAG, "data=", data)
-        print(TAG, request.headers)
+        # print(TAG, request.headers)
         print('****************************')
 
         # if('event' not in data):
@@ -74,10 +74,20 @@ class Hooking(Resource):
 
         # if('uuid' in data):
         #     print(TAG, data['uuid'])
+
         #     getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
         #     getprofile_body = {'one_id': data['oneid']}
-        #     result = requests.post(getprofile_url, json=getprofile_body, verify=False)
 
+        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+        #     sendmessage_body = {
+        #                             "to": "U5b1fxxxxxx94fxxxxx594xxxxe763xxxx",
+        #                             "bot_id": "Ba521xx18350a5xxx2bxxxxx",
+        #                             "type": "text",
+        #                             "message": "Hello world!!",
+        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        #                         }
+
+        #     result = requests.post(getprofile_url, json=getprofile_body, verify=False)
         #     userprofile = result.json()['user_data'][0]
 
         #     print(TAG, result.status_code)
