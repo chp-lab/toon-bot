@@ -72,30 +72,30 @@ class Hooking(Resource):
         #     return module.success()
         #     # return module.wrongAPImsg()
 
-        # if('uuid' in data):
-        #     print(TAG, data['uuid'])
+        if('uuid' in data):
+            print(TAG, data['uuid'])
 
-        #     getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
-        #     getprofile_body = {'one_id': data['oneid']}
+            # getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
+            # getprofile_body = {'one_id': data['oneid']}
 
-        #     result = requests.post(getprofile_url, json=getprofile_body, verify=False)
-        #     userprofile = result.json()['user_data'][0]
+            # result = requests.post(getprofile_url, json=getprofile_body, verify=False)
+            # userprofile = result.json()['user_data'][0]
 
-        #     print(TAG, userprofile)
-        #     print(TAG, userprofile['oneid'])
-        #     print(TAG, userprofile['id'])
+            # print(TAG, userprofile)
+            # print(TAG, userprofile['oneid'])
+            # print(TAG, userprofile['id'])
 
-        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-        #     sendmessage_body = {
-        #                             "to": userprofile['id'],
-        #                             "bot_id": "B790a5e0089415d289d064cff06db374a",
-        #                             "type": "text",
-        #                             "message": data['uuid'],
-        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        #                         }
+            sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": "B790a5e0089415d289d064cff06db374a",
+                                    "type": "text",
+                                    "message": data,
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
 
-        #     sendmessage = requests.post(sendmessage_url, json=sendmessage_body, verify=False)
-        #     print(sendmessage.json())
+            sendmessage = requests.post(sendmessage_url, json=sendmessage_body, verify=False)
+            print(sendmessage.json())
 
 
             # add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
