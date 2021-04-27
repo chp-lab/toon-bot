@@ -94,7 +94,7 @@ class Hooking(Resource):
                                     "message": "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + data['rssi'] + "\n" +,
+                                               "rssi : " + data['rssi'] + "\n" +
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
