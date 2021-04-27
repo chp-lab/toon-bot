@@ -63,7 +63,7 @@ class Hooking(Resource):
 
         print(TAG, "data=", data)
         # print(TAG, request.headers)
-        print('****************************')
+        print('********************************')
 
         # if('event' not in data):
         #     print(TAG, "event not found!")
@@ -78,26 +78,28 @@ class Hooking(Resource):
         #     getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
         #     getprofile_body = {'one_id': data['oneid']}
 
-        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-        #     sendmessage_body = {
-        #                             "to": "U5b1fxxxxxx94fxxxxx594xxxxe763xxxx",
-        #                             "bot_id": "Ba521xx18350a5xxx2bxxxxx",
-        #                             "type": "text",
-        #                             "message": "Hello world!!",
-        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        #                         }
-
         #     result = requests.post(getprofile_url, json=getprofile_body, verify=False)
         #     userprofile = result.json()['user_data'][0]
 
-        #     print(TAG, result.status_code)
         #     print(TAG, userprofile)
         #     print(TAG, userprofile['oneid'])
         #     print(TAG, userprofile['id'])
 
+        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+        #     sendmessage_body = {
+        #                             "to": userprofile['id'],
+        #                             "bot_id": "B790a5e0089415d289d064cff06db374a",
+        #                             "type": "text",
+        #                             "message": data['uuid'],
+        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        #                         }
 
-        #     add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
-        #     print('++++++++++++++++++++++++++++++++++++++++++')
+        #     sendmessage = requests.post(sendmessage_url, json=sendmessage_body, verify=False)
+        #     print(sendmessage.json())
+
+
+            # add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
+            # print('++++++++++++++++++++++++++++++++++++++++++')
 
        
 
