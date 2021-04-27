@@ -85,6 +85,7 @@ class Hooking(Resource):
             # print(TAG, userprofile['oneid'])
             # print(TAG, userprofile['id'])
 
+            sendmessage_headers = {"Authorization": 'Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d'}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {
                                     "to": data['oneid'],
@@ -94,7 +95,7 @@ class Hooking(Resource):
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
-            sendmessage = requests.post(sendmessage_url, json=sendmessage_body, verify=False)
+            sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
             print(sendmessage.json())
 
 
