@@ -91,7 +91,7 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": "B790a5e0089415d289d064cff06db374a",
                                     "type": "text",
-                                    "message": data,
+                                    "message": "major : " + data['major'] + " " + "minor : " + data['minor'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
