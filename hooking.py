@@ -87,11 +87,15 @@ class Hooking(Resource):
 
             sendmessage_headers = {"Authorization": 'Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d'}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            if 
             sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": "B790a5e0089415d289d064cff06db374a",
                                     "type": "text",
-                                    "message": "major : " + data['major'] + " " + "minor : " + data['minor'],
+                                    "message": "uuid : " + data['uuid'] + "\n" +
+                                               "major : " + data['major'] + "\n" + 
+                                               "minor : " + data['minor'] + "\n" +
+                                               "rssi : " + data['rssi'] + "\n" +,
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
