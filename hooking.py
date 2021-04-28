@@ -88,7 +88,7 @@ class Hooking(Resource):
 
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-            if data['platform'] === "ios":
+            if data['platform'] == "android":
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
