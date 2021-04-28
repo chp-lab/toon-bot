@@ -88,7 +88,22 @@ class Hooking(Resource):
 
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-            sendmessage_body = {
+            if data['platform'] === "ios":
+                sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "สวัสดี" + "\n" + 
+                                                "scan success !!" + "\n" +
+                                                "---------------------------" + "\n" +
+                                                "uuid : " + data['uuid'] + "\n" +
+                                                "major : " + data['major'] + "\n" + 
+                                                "minor : " + data['minor'] + "\n" +
+                                                "rssi : " + str(data['rssi']) + "\n" ,
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                    }
+            if data['platform'] === "ios":
+                sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
