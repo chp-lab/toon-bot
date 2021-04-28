@@ -91,7 +91,10 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": "B790a5e0089415d289d064cff06db374a",
                                     "type": "text",
-                                    "message": "uuid : " + data['uuid'] + "\n" +
+                                    "message": "สวัสดี" + 
+                                               "scan success !!" +
+                                               "---------------------------" +
+                                               "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
                                                "rssi : " + data['rssi'] + "\n" ,
