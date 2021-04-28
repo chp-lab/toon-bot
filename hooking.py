@@ -9,6 +9,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
+    beaconbot_id = "B75f7822f3c3153c699d6599d9b196633"
     onechat_uri = "https://chat-api.one.th"
     
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
@@ -89,7 +90,7 @@ class Hooking(Resource):
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {
                                     "to": data['oneid'],
-                                    "bot_id": "B790a5e0089415d289d064cff06db374a",
+                                    "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": "สวัสดี" + "\n" + 
                                                "scan success !!" + "\n" +
