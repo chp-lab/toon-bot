@@ -90,7 +90,7 @@ class Hooking(Resource):
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {
                                     "to": data['oneid'],
-                                    "bot_id": beaconbot_id,
+                                    "bot_id": "B75f7822f3c3153c699d6599d9b196633",
                                     "type": "text",
                                     "message": "สวัสดี" + "\n" + 
                                                "scan success !!" + "\n" +
