@@ -98,7 +98,8 @@ class Hooking(Resource):
                                                "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" ,
+                                               "rssi : " + str(data['rssi']) + "\n" +
+                                               "event_stage : " + data['event_stage '] + "\n",
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
