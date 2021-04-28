@@ -102,7 +102,7 @@ class Hooking(Resource):
                                                 "rssi : " + str(data['rssi']) + "\n" ,
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                     }
-            if data['platform'] === "ios":
+            if data['platform'] == "ios":
                 sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
