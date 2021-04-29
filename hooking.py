@@ -54,28 +54,10 @@ class Hooking(Resource):
         data = request.json
         print(TAG, "data=", data)
         print(TAG, request.headers)
-
         database = Database()
         module = Module()
-        # onechat_uri = self.onechat_uri
-        data = request.json
-        # onechat_dev_token = "Bearer Af58c5450f3b45c71a97bc51c05373ecefabc49bd2cd94f3c88d5b844813e69a17e26a828c2b64ef889ef0c10e2aee347"
-        # headers = {"Authorization": onechat_dev_token}
-
-        print(TAG, "data=", data)
-        # print(TAG, request.headers)
-        print('********************************')
-
-        # if('event' not in data):
-        #     print(TAG, "event not found!")
-        #     # assum OneChat iBeacon event detected
-        #     print(TAG, "OneChat iBeacon detected")
-        #     return module.success()
-        #     # return module.wrongAPImsg()
 
         if('uuid' in data):
-            print(TAG, data['uuid'])
-
             # getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
             # getprofile_body = {'one_id': data['oneid']}
 
@@ -88,6 +70,7 @@ class Hooking(Resource):
 
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            sendmessage_body = {}
             if data['platform'] == "android":
                 sendmessage_body = {
                                         "to": data['oneid'],
@@ -113,8 +96,8 @@ class Hooking(Resource):
                                                "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage '] + "\n",
+                                               "rssi : " + data['rssi'] + "\n" +
+                                               "event_stage : " + data['event_stage'] + "\n",
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
