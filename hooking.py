@@ -72,7 +72,6 @@ class Hooking(Resource):
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {}
             if data['platform'] == "android":
-                global sendmessage_body
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
@@ -87,7 +86,6 @@ class Hooking(Resource):
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                     }
             if data['platform'] == "ios":
-                global sendmessage_body
                 sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
