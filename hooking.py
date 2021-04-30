@@ -71,7 +71,7 @@ class Hooking(Resource):
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {}
-            if data['platform'] == "android":
+            if 'and' in data['platform']:
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
@@ -82,9 +82,10 @@ class Hooking(Resource):
                                                 "uuid : " + data['uuid'] + "\n" +
                                                 "major : " + data['major'] + "\n" + 
                                                 "minor : " + data['minor'] + "\n" +
-                                                "rssi : " + str(data['rssi']) + "\n" ,
+                                                "rssi : " + str(data['rssi']),
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                     }
+                print(7777777777777777777777777777777777777777777777777777777)
             if data['platform'] == "ios":
                 sendmessage_body = {
                                     "to": data['oneid'],
@@ -97,7 +98,7 @@ class Hooking(Resource):
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
                                                "rssi : " + data['rssi'] + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n",
+                                               "event_stage : " + data['event_stage'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
 
