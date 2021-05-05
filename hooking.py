@@ -53,7 +53,7 @@ class Hooking(Resource):
         TAG = "Hooking:"
         data = request.json
         print(TAG, "data=", data)
-        # print(TAG, request.headers)
+        print(TAG, request.headers)
         database = Database()
         module = Module()
 
