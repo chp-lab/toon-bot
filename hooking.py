@@ -57,21 +57,27 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
+        # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
-            # getprofile_url = 'https://petdy-dev.one.th/api/get_user_by_oneid'
-            # getprofile_body = {'one_id': data['oneid']}
-
-            # result = requests.post(getprofile_url, json=getprofile_body, verify=False)
-            # userprofile = result.json()['user_data'][0]
-
-            # print(TAG, userprofile)
-            # print(TAG, userprofile['oneid'])
-            # print(TAG, userprofile['id'])
+            update_url = '203.151.164.230:9977/api/beacon_update_location'
+            update_body = {
+                                "event_stage":"enter",
+                                "major":data['major'],
+                                "minor":data['minor'],
+                                "platform":data['platform'],
+                                "rssi":data['rssi'],
+                                "timestamp":data['timestamp'],
+                                "user_latitude":data['user_latitude'],
+                                "user_longitude":data['user_longitude'],
+                                "uuid":data['uuid']
+                          }
+            update = requests.post(update_url, json=update_body, verify=False)
+            print("updateLocation response ----->" + update.json())
 
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {}
-            if 'and' in data['platform']:
+            if 'android' in data['platform']:
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
@@ -99,15 +105,8 @@ class Hooking(Resource):
                                                "event_stage : " + data['event_stage'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
-
             sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-            print(sendmessage.json())
-
-
-            # add_collar = self.add_new_pair(data['uuid'], userprofile['oneid'], userprofile['id'])
-            # print('++++++++++++++++++++++++++++++++++++++++++')
-
-       
+            print("debug onechat response ----->" + sendmessage.json())
 
         return {
             "type": True,
