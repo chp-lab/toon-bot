@@ -60,9 +60,18 @@ class Hooking(Resource):
 
         # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
+            print(data['event_stage'])
+            print(data['major'])
+            print(data['minor'])
+            print(data['platform'])
+            print(data['rssi'])
+            print(data['timestamp'])
+            print(data['user_latitude'])
+            print(data['user_longitude'])
+            print(data['uuid'])
             update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
             update_body = {
-                                "event_stage":"enter",
+                                "event_stage":data['event_stage'],
                                 "major":data['major'],
                                 "minor":data['minor'],
                                 "platform":data['platform'],
