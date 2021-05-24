@@ -60,20 +60,20 @@ class Hooking(Resource):
 
         # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
-            update_url = '203.151.164.230:9977/api/beacon_update_location'
-            update_body = {
-                                "event_stage":"enter",
-                                "major":data['major'],
-                                "minor":data['minor'],
-                                "platform":data['platform'],
-                                "rssi":data['rssi'],
-                                "timestamp":data['timestamp'],
-                                "user_latitude":data['user_latitude'],
-                                "user_longitude":data['user_longitude'],
-                                "uuid":data['uuid']
-                          }
-            update = requests.post(update_url, json=update_body, verify=False)
-            print("-----> updateLocation response :" + json.dumps(update.json()))
+            # update_url = '203.151.164.230:9977/api/beacon_update_location'
+            # update_body = {
+            #                     "event_stage":"enter",
+            #                     "major":data['major'],
+            #                     "minor":data['minor'],
+            #                     "platform":data['platform'],
+            #                     "rssi":data['rssi'],
+            #                     "timestamp":data['timestamp'],
+            #                     "user_latitude":data['user_latitude'],
+            #                     "user_longitude":data['user_longitude'],
+            #                     "uuid":data['uuid']
+            #               }
+            # update = requests.post(update_url, json=update_body, verify=False)
+            # print("-----> updateLocation response :" + json.dumps(update.json()))
 
             sendmessage_headers = {"Authorization": self.onechat_dev_token}
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
