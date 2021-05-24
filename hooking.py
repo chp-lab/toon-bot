@@ -106,7 +106,7 @@ class Hooking(Resource):
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
             sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-            print(sendmessage.json())
+            print(type(sendmessage.json()))
 
         return {
             "type": True,
