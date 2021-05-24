@@ -81,6 +81,7 @@ class Hooking(Resource):
                                 "user_longitude":data['user_longitude'],
                                 "uuid":data['uuid']
                           }
+            print(update_body)
             update = requests.post(update_url, json=update_body, verify=False)
             print("updateLocation response :" + json.dumps(update.json()))
 
