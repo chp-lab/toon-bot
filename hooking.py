@@ -6,6 +6,7 @@ import requests
 from database import Database
 from module import Module
 import urllib3
+import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
@@ -106,7 +107,7 @@ class Hooking(Resource):
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
             sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-            print(type(sendmessage.json()))
+            print("debug onechat response ----->" + json.dumps(sendmessage.json()))
 
         return {
             "type": True,
