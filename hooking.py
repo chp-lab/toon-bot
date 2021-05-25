@@ -81,8 +81,6 @@ class Hooking(Resource):
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {}
             if 'android' in data['platform']:
-                print(data['event_stage'])
-                print(type(data['event_stage']))
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
@@ -92,9 +90,7 @@ class Hooking(Resource):
                                                 "---------------------------" + "\n" +
                                                 "uuid : " + data['uuid'] + "\n" +
                                                 "major : " + data['major'] + "\n" + 
-                                                "minor : " + data['minor'] + "\n" +
-                                                "rssi : " + data['rssi'] + "\n" +
-                                                "event_stage : " + data['event_stage'],
+                                                "minor : " + data['minor'] + "\n",
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                     }
             if 'ios' in data['platform']:
