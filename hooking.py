@@ -81,6 +81,8 @@ class Hooking(Resource):
             sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
             sendmessage_body = {}
             if 'android' in data['platform']:
+                print(data['event_stage'])
+                print(type(data['event_stage']))
                 sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
