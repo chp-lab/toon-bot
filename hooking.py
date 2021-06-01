@@ -58,7 +58,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        print("this is data" + json.dumps(data))
+        print("this is data :" + json.dumps(data))
 
         # if ('event' in data):
         #     print(data['event'])
