@@ -50,7 +50,7 @@ class Hooking(Resource):
         result = requests.post(self.onechat_url1, json=req_body, headers=headers)
         print(TAG, result.text)
 
-    def post(self):
+    def post(self, request):
         TAG = "Hooking:"
         data = request.json
         print(TAG, "data=", data)
@@ -59,6 +59,7 @@ class Hooking(Resource):
         module = Module()
 
         print("this is data" + json.dumps(data))
+        print(request)
 
         sendmessage_headers = {"Authorization": self.onechat_dev_token}
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
@@ -69,7 +70,6 @@ class Hooking(Resource):
                                     "message": data['payload'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
-
         sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
         print("debug onechat response :" + json.dumps(sendmessage.json()))
 
