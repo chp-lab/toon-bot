@@ -1,5 +1,6 @@
 # -- coding: utf-8 --
 
+from logging import log
 from flask_restful import Resource
 from flask import request
 import requests
@@ -58,9 +59,10 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
-        if('uuid' in data):
-            
+        print("this is data" + data)
+
+    #petdy_iBEACON
+        # if('uuid' in data):
             # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
             # update_body = {
             #                     "event_stage":data['event_stage'],
@@ -77,41 +79,41 @@ class Hooking(Resource):
             # update = requests.post(update_url, json=update_body, verify=False)
             # print("updateLocation response :" + json.dumps(update.json()))
 
-            sendmessage_headers = {"Authorization": self.onechat_dev_token}
-            sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-            sendmessage_body = {}
-            if 'android' in data['platform']:
-                sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": "สวัสดี" + "\n" + 
-                                               "scan success !!" + "\n" +
-                                               "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                    }
-            if 'ios' in data['platform']:
-                sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "สวัสดี" + "\n" + 
-                                               "scan success !!" + "\n" +
-                                               "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + data['rssi'] + "\n" +
-                                               "event_stage : " + data['event_stage'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-            sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-            print("debug onechat response :" + json.dumps(sendmessage.json()))
+            # sendmessage_headers = {"Authorization": self.onechat_dev_token}
+            # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            # sendmessage_body = {}
+            # if 'android' in data['platform']:
+            #     sendmessage_body = {
+            #                             "to": data['oneid'],
+            #                             "bot_id": self.beaconbot_id,
+            #                             "type": "text",
+            #                             "message": "สวัสดี" + "\n" + 
+            #                                    "scan success !!" + "\n" +
+            #                                    "---------------------------" + "\n" +
+            #                                    "uuid : " + data['uuid'] + "\n" +
+            #                                    "major : " + data['major'] + "\n" + 
+            #                                    "minor : " + data['minor'] + "\n" +
+            #                                    "rssi : " + str(data['rssi']) + "\n" +
+            #                                    "event_stage : " + data['event_stage'],
+            #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #                         }
+            # if 'ios' in data['platform']:
+            #     sendmessage_body = {
+            #                         "to": data['oneid'],
+            #                         "bot_id": self.beaconbot_id,
+            #                         "type": "text",
+            #                         "message": "สวัสดี" + "\n" + 
+            #                                    "scan success !!" + "\n" +
+            #                                    "---------------------------" + "\n" +
+            #                                    "uuid : " + data['uuid'] + "\n" +
+            #                                    "major : " + data['major'] + "\n" + 
+            #                                    "minor : " + data['minor'] + "\n" +
+            #                                    "rssi : " + data['rssi'] + "\n" +
+            #                                    "event_stage : " + data['event_stage'],
+            #                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #                     }
+            # sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+            # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         return {
             "type": True,
