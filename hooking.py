@@ -59,7 +59,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        print("this is data" + data)
+        print("this is data" + json.dumps(data))
 
     #petdy_iBEACON
         # if('uuid' in data):
