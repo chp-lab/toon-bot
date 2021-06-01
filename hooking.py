@@ -64,17 +64,17 @@ class Hooking(Resource):
             print(data['event'])
 
 
-        sendmessage_headers = {"Authorization": self.onechat_dev_token}
-        sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-        sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": "B790a5e0089415d289d064cff06db374a",
-                                    "type": "text",
-                                    "message": data['payload'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        }
-        sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-        print("debug onechat response :" + json.dumps(sendmessage.json()))
+        # sendmessage_headers = {"Authorization": self.onechat_dev_token}
+        # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+        # sendmessage_body = {
+        #                             "to": data['oneid'],
+        #                             "bot_id": "B790a5e0089415d289d064cff06db374a",
+        #                             "type": "text",
+        #                             "message": data['payload'],
+        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        # }
+        # sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+        # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
     #petdy_iBEACON
         # if('uuid' in data):
