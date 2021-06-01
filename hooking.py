@@ -50,7 +50,7 @@ class Hooking(Resource):
         result = requests.post(self.onechat_url1, json=req_body, headers=headers)
         print(TAG, result.text)
 
-    def post(self, request):
+    def post(self):
         TAG = "Hooking:"
         data = request.json
         print(TAG, "data=", data)
