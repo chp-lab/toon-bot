@@ -61,6 +61,16 @@ class Hooking(Resource):
 
         print("this is data" + json.dumps(data))
 
+        sendmessage_headers = {"Authorization": self.onechat_dev_token}
+        sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+        sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": "B790a5e0089415d289d064cff06db374a",
+                                    "type": "text",
+                                    "message": "Heyyyyyyy !!!",
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        }
+
     #petdy_iBEACON
         # if('uuid' in data):
             # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
