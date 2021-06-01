@@ -46,7 +46,7 @@ class Hooking(Resource):
                     }
                 ]
         }
-        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+        headers = {"Authorization": "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8", "Content-Type": "application/json"}
         result = requests.post(self.onechat_url1, json=req_body, headers=headers)
         print(TAG, result.text)
 
@@ -70,7 +70,7 @@ class Hooking(Resource):
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
         sendmessage_body = {
                                     "to": data['oneid'],
-                                    "bot_id": "B790a5e0089415d289d064cff06db374a",
+                                    "bot_id": "B7f2abd3c4e0e57dbb5c71bfa43920b5a",
                                     "type": "text",
                                     "message": data['payload'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
