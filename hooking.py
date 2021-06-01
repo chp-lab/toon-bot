@@ -59,7 +59,10 @@ class Hooking(Resource):
         module = Module()
 
         print("this is data" + json.dumps(data))
-        print(request.json)
+
+        if ('event' in data):
+            print(data['event'])
+
 
         sendmessage_headers = {"Authorization": self.onechat_dev_token}
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
