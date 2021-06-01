@@ -62,6 +62,8 @@ class Hooking(Resource):
 
         if ('event' in data):
             print(data['event'])
+            if(data['event'] == 'greeting'):
+                print('this is greeting')
 
 
         # sendmessage_headers = {"Authorization": self.onechat_dev_token}
