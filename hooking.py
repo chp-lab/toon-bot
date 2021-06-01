@@ -13,10 +13,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class Hooking(Resource):
     beaconbot_id = "B75f7822f3c3153c699d6599d9b196633"
     onechat_uri = "https://chat-api.one.th"
-    
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
-
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+
     def menu_send(self, user_id, bot_id):
         TAG = "menu_send:"
         # web_vue_url1 = "https://web-meeting-room.herokuapp.com/"
@@ -67,7 +66,7 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": "B790a5e0089415d289d064cff06db374a",
                                     "type": "text",
-                                    "message": "Heyyyyyyy !!!",
+                                    "message": data['data'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
 
