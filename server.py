@@ -35,4 +35,4 @@ if (__name__ == "__main__"):
     server.api.add_resource(Qr_decode, API_VERSION + "/myqr")
     server.api.add_resource(My_mqtt, API_VERSION + "/unlock/<room_num>")
     server.api.add_resource(Covid_log, API_VERSION + "/covid/log")
-    server.app.run(host="0.0.0.0", debug=True, port=5007)
+    server.app.run(host="0.0.0.0", debug=True, port=5009)
