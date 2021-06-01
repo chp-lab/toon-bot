@@ -71,6 +71,9 @@ class Hooking(Resource):
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
 
+        sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+        print("debug onechat response :" + json.dumps(sendmessage.json()))
+
     #petdy_iBEACON
         # if('uuid' in data):
             # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
