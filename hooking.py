@@ -39,7 +39,10 @@ class Hooking(Resource):
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             print(type(chekcovid.json()))
             covid_filter = filter(self.date_filter, chekcovid.json())
-            print('this is covid_filter : ' + covid_filter)
+            print(type(covid_filter))
+            
+            # print('this is covid_filter : ' + covid_filter)
+
             # for covid in chekcovid.json():
             #     if(covid["check_date"] == "2021-06-02"):
             #         print(covid)
