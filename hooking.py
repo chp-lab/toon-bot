@@ -56,7 +56,7 @@ class Hooking(Resource):
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
             self.get_userprofile_body = { "one_id":  data['oneid'] }
-            userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_api, verify=False)
+            userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
             print(data['oneid'])
             print(type(userprofile.json()))
             print('this is user profile : ' + userprofile.json()['user_data'])
