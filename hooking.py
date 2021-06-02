@@ -29,6 +29,17 @@ class Hooking(Resource):
         "covid_tracking":''
     }
 
+    def get_userprofile(self, one_id):
+        TAG = "is_user_exist:"
+        cmd = """SELECT users.one_id FROM users WHERE users.one_id='%s' """ %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        print(TAG, "res=", res)
+        # if(res[0]['len'] > 0):
+        #     return True
+        # else:
+        #     return False
+
     def date_filter(self, date):
         if date['check_date'] == datetime.today().strftime('%Y-%m-%d'):
             return True
@@ -65,8 +76,9 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 if 'green'in covid_status['status']:
-                    check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                    print(TAG, "check_in", check_in)
+                    self.get_userprofile(data['oneid'])
+                    # check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                    # print(TAG, "check_in", check_in)
 
 
         return {
