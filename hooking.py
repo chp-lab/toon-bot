@@ -31,7 +31,7 @@ class Hooking(Resource):
 
     def get_userprofile(self, one_id):
         TAG = "is_user_exist:"
-        cmd = """SELECT users.one_id FROM users WHERE users.one_id='%s' """ %(one_id)
+        cmd = """SELECT users FROM users WHERE users.one_id='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
         print(TAG, "res=", res)
@@ -67,10 +67,8 @@ class Hooking(Resource):
             covid_body = { "oneid": data['oneid'] }
             self.get_userprofile_body = { "one_id":  data['oneid'] }
             userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-            print('this is user profile : ' + json.dumps(userprofile.json()))
             user_info = userprofile.json()['user_data']
-            print(7777)
-            print(user_info)
+
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             covid_filter = filter(self.date_filter, chekcovid.json())
