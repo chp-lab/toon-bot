@@ -17,6 +17,12 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
+    def date_filter(date):
+        if date['check_date'] == "2021-06-02":
+            return True
+        else:
+            return False
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -32,11 +38,12 @@ class Hooking(Resource):
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             print(type(chekcovid.json()))
-            for covid in chekcovid.json():
-                if(covid["check_date"] == "2021-06-02"):
-                    print(covid)
+            covid_filter = filter(self.date_filter, chekcovid.json())
+            print('this is covid_filter : ' + covid_filter)
+            # for covid in chekcovid.json():
+            #     if(covid["check_date"] == "2021-06-02"):
+            #         print(covid)
 
-            # print("checkcovid_response :" + json.dumps(chekcovid.json()))
 
         return {
             "type": True,
