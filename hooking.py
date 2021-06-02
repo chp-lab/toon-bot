@@ -105,7 +105,8 @@ class Hooking(Resource):
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
                                                "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'],
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                     }
             if 'ios' in data['platform']:
@@ -120,7 +121,8 @@ class Hooking(Resource):
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
                                                "rssi : " + data['rssi'] + "\n" +
-                                               "event_stage : " + data['event_stage'],
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
