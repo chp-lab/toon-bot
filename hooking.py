@@ -48,7 +48,7 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 self.user_data['covid_tracking'] = json.dumps(covid_status['status'])
-                print('this is user_data : ' + self.user_data)
+                print('this is user_data : ' + json.dumps(self.user_data))
 
         return {
             "type": True,
