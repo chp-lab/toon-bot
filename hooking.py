@@ -72,8 +72,8 @@ class Hooking(Resource):
                                         "message": "Say,Hi 555",
                                         "custom_notification": "ตอบกลับข้อความคุณ"
                                     }
-            sendmessage = requests.post(self.sendmessage_url, json=send_reply, headers=self.sendmessage_headers, verify=False)
-            print("debug onechat reply chat:" + json.dumps(sendmessage.json()))
+            sendmessage1 = requests.post(self.sendmessage_url, json=send_reply, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat reply chat:" + json.dumps(sendmessage1.json()))
 
 
         sendmessage_headers = {"Authorization": self.onechat_dev_token}
