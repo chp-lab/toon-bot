@@ -40,8 +40,9 @@ class Hooking(Resource):
             print(type(chekcovid.json()))
             covid_filter = filter(self.date_filter, chekcovid.json())
             print(type(covid_filter))
-            
-            # print('this is covid_filter : ' + covid_filter)
+            for covid_status in covid_filter:
+                print('this is covid_filter : ' + covid_status)
+
 
             # for covid in chekcovid.json():
             #     if(covid["check_date"] == "2021-06-02"):
