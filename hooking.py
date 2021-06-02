@@ -18,6 +18,7 @@ class Hooking(Resource):
     covid_body = {}
 
     def date_filter(date, index):
+        print(type(date))
         print('this is date_filter : ' + date)
         if date['check_date'] == "2021-06-02":
             return True
