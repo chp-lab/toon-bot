@@ -66,7 +66,7 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 if 'green'in covid_status['status']:
-                    print(json.dumps(user_info['oneid']))
+                    print(json.dumps(user_info[0]['oneid']))
                     print(datetime.today().strftime('%Y-%m-%d'))
                     print(covid_status['status'])
                     check_in = self.check_in('', json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
