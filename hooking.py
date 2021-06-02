@@ -42,21 +42,12 @@ class Hooking(Resource):
 
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
-            print(data['oneid'])
             covid_body = { "oneid": data['oneid'] }
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-            print(type(chekcovid.json()))
             covid_filter = filter(self.date_filter, chekcovid.json())
-            print(type(covid_filter))
             for covid_status in covid_filter:
-                print('this is covid_filter : ' + json.dumps(covid_status))
-
-
-            # for covid in chekcovid.json():
-            #     if(covid["check_date"] == "2021-06-02"):
-            #         print(covid)
-
+                print('this is covid_filter : ' + json.dumps(covid_status['status']))
 
         return {
             "type": True,
