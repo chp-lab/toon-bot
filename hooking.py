@@ -5,6 +5,7 @@ from flask import request
 import requests
 from database import Database
 from module import Module
+from datetime import datetime
 import urllib3
 import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -17,9 +18,16 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
+    user_data = {
+        "name": '',
+        "employee_code": '',
+        "check_in": '',
+        "check_out": '',
+        "covid_tracking":''
+    }
+
     def date_filter(self, date):
-        
-        if date['check_date'] == "2021-06-02":
+        if date['check_date'] == datetime.today().strftime('%Y-%m-%d'):
             return True
         else:
             return False
