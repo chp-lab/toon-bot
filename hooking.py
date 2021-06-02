@@ -36,10 +36,9 @@ class Hooking(Resource):
             return False
 
     def check_in(self, name, employee_code, check_in, check_out, covid_tracking):
-        TAG = "add_new_user:"
+        TAG = "check_in:"
         database = Database()
-        print(TAG, "add user to our system")
-        sql = """INSERT INTO `timeattendance` (`username`, `employee_code`, `check_in`, `check_out`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `check_out`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
               % (name, employee_code, check_in, check_out, covid_tracking)
         insert = database.insertData(sql)
         return insert
@@ -66,15 +65,9 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 if 'green'in covid_status['status']:
-                    print(json.dumps(user_info[0]['oneid']))
-                    print(datetime.today().strftime('%Y-%m-%d'))
-                    print(covid_status['status'])
-                    check_in = self.check_in('', json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                    check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
                     print(TAG, "check_in", check_in)
 
-                    self.user_data['covid_tracking'] = json.dumps(covid_status['status'])
-                    print('this is user_data : ' + json.dumps(self.user_data))
-                    print(json.dumps(self.user_data['covid_tracking']))
 
         return {
             "type": True,
