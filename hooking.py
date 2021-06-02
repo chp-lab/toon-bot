@@ -70,11 +70,7 @@ class Hooking(Resource):
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
         sendmessage_body = {
                                     "to": data['oneid'],
-<<<<<<< HEAD
                                     "bot_id": "B3ab363e4d008522a80e72c94b5ce775b",
-=======
-                                    "bot_id": "B7f2abd3c4e0e57dbb5c71bfa43920b5a",
->>>>>>> 31377bbe9a14021b307da1f436de74e9db131aa8
                                     "type": "text",
                                     "message": data['payload'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
