@@ -61,23 +61,16 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        # if(data['event'] == 'message'):
-        #     sendmessage_body = {
-        #                             "to": data['oneid'],
-        #                             "bot_id": self.beaconbot_id,
-        #                             "type": "text",
-        #                             "message": "สวัสดี" + "\n" + 
-        #                                        "scan success !!" + "\n" +
-        #                                        "---------------------------" + "\n" +
-        #                                        "uuid : " + data['uuid'] + "\n" +
-        #                                        "major : " + data['major'] + "\n" + 
-        #                                        "minor : " + data['minor'] + "\n" +
-        #                                        "rssi : " + data['rssi'] + "\n" +
-        #                                        "event_stage : " + data['event_stage'],
-        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        #                         }
-        #     sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-        #     print("debug onechat response :" + json.dumps(sendmessage.json()))
+        if(data['event'] == 'message'):
+            sendmessage_body = {
+                                    "to": data['source']['one_id'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "I'm here for you ~",
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
+            sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
         if('uuid' in data):
