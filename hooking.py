@@ -39,7 +39,7 @@ class Hooking(Resource):
         TAG = "add_new_user:"
         database = Database()
         print(TAG, "add user to our system")
-        sql = """INSERT INTO `users` (`username`, `employee_code`, `check_in`, `check_out`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+        sql = """INSERT INTO `user` (`username`, `employee_code`, `check_in`, `check_out`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
               % (name, employee_code, check_in, check_out, covid_tracking)
         insert = database.insertData(sql)
         return insert
