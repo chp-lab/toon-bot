@@ -23,7 +23,7 @@ class Hooking(Resource):
         module = Module()
 
         if(data['event'] == 'message'):
-            print(data)
+            print(data['message']['text'])
 
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         # if('uuid' in data):
