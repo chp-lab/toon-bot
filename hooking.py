@@ -11,9 +11,9 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
-    beaconbot_id = "B75f7822f3c3153c699d6599d9b196633"
+    beaconbot_id = "B7f2abd3c4e0e57dbb5c71bfa43920b5a"
     onechat_uri = "https://chat-api.one.th"
-    onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
+    onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
 
     def menu_send(self, user_id, bot_id):
@@ -58,7 +58,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        print("this is data" + json.dumps(data))
+        print("this is data :" + json.dumps(data))
 
         # if ('event' in data):
         #     print(data['event'])
@@ -70,7 +70,11 @@ class Hooking(Resource):
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
         sendmessage_body = {
                                     "to": data['oneid'],
+<<<<<<< HEAD
                                     "bot_id": "B3ab363e4d008522a80e72c94b5ce775b",
+=======
+                                    "bot_id": "B7f2abd3c4e0e57dbb5c71bfa43920b5a",
+>>>>>>> 31377bbe9a14021b307da1f436de74e9db131aa8
                                     "type": "text",
                                     "message": data['payload'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
