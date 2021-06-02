@@ -17,7 +17,7 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    def date_filter(date):
+    def date_filter(self, date):
         
         if date['check_date'] == "2021-06-02":
             return True
