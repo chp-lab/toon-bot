@@ -14,6 +14,9 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
 
+    covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
+    covid_body = {}
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -22,63 +25,13 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        # if(data['event'] == 'message'):
-        #     print(data['message']['text'])
-
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
-        # if('uuid' in data):
-            
-        #     # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
-        #     # update_body = {
-        #     #                     "event_stage":data['event_stage'],
-        #     #                     "major":data['major'],
-        #     #                     "minor":data['minor'],
-        #     #                     "platform":data['platform'],
-        #     #                     "rssi":data['rssi'],
-        #     #                     "timestamp":data['timestamp'],
-        #     #                     "user_latitude":data['user_latitude'],
-        #     #                     "user_longitude":data['user_longitude'],
-        #     #                     "uuid":data['uuid']
-        #     #               }
-        #     # print(update_body)
-        #     # update = requests.post(update_url, json=update_body, verify=False)
-        #     # print("updateLocation response :" + json.dumps(update.json()))
+        if('uuid' in data):
+            print(data['oneid'])
+            covid_body = { "oneid": data['oneid'] }
 
-        #     sendmessage_headers = {"Authorization": self.onechat_dev_token}
-        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-        #     sendmessage_body = {}
-        #     if 'android' in data['platform']:
-        #         sendmessage_body = {
-        #                                 "to": data['oneid'],
-        #                                 "bot_id": self.beaconbot_id,
-        #                                 "type": "text",
-        #                                 "message": "สวัสดี" + "\n" + 
-        #                                        "scan success !!" + "\n" +
-        #                                        "---------------------------" + "\n" +
-        #                                        "uuid : " + data['uuid'] + "\n" +
-        #                                        "major : " + data['major'] + "\n" + 
-        #                                        "minor : " + data['minor'] + "\n" +
-        #                                        "rssi : " + str(data['rssi']) + "\n" +
-        #                                        "event_stage : " + data['event_stage'],
-        #                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        #                             }
-        #     if 'ios' in data['platform']:
-        #         sendmessage_body = {
-        #                             "to": data['oneid'],
-        #                             "bot_id": self.beaconbot_id,
-        #                             "type": "text",
-        #                             "message": "สวัสดี" + "\n" + 
-        #                                        "scan success !!" + "\n" +
-        #                                        "---------------------------" + "\n" +
-        #                                        "uuid : " + data['uuid'] + "\n" +
-        #                                        "major : " + data['major'] + "\n" + 
-        #                                        "minor : " + data['minor'] + "\n" +
-        #                                        "rssi : " + data['rssi'] + "\n" +
-        #                                        "event_stage : " + data['event_stage'],
-        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        #                         }
-        #     sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-        #     print("debug onechat response :" + json.dumps(sendmessage.json()))
+            chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+            print("checkcovid_response :" + json.dumps(chekcovid.json()))
 
         return {
             "type": True,
