@@ -31,7 +31,7 @@ class Hooking(Resource):
 
     def get_userprofile(self, one_id):
         TAG = "is_user_exist:"
-        cmd = """SELECT users FROM users WHERE users.one_id='%s' """ %(one_id)
+        cmd = """SELECT one_email,employee_code,check_in,check_out,covid_tracking FROM users WHERE users.one_id='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
         print(TAG, "res=", res)
