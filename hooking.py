@@ -13,7 +13,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class Hooking(Resource):
     beaconbot_id = "B7f2abd3c4e0e57dbb5c71bfa43920b5a"
     onechat_uri = "https://chat-api.one.th"
-    onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
+    onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
 
     def menu_send(self, user_id, bot_id):
