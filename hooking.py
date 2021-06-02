@@ -31,8 +31,8 @@ class Hooking(Resource):
             covid_body = { "oneid": data['oneid'] }
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-            # print(type(chekcovid))
-            for covid in chekcovid.json:
+            print(type(chekcovid.json()))
+            for covid in chekcovid.json():
                 if(covid["check_date"] == "2021-06-02"):
                     print(covid)
 
