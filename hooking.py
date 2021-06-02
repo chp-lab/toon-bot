@@ -57,7 +57,7 @@ class Hooking(Resource):
             covid_body = { "oneid": data['oneid'] }
             self.get_userprofile_body = { "one_id":  data['oneid'] }
             userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_api, verify=False)
-            print('this is user profile : ' + json.dumps(userprofile))
+            print('this is user profile : ' + userprofile)
 
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
