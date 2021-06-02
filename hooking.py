@@ -49,6 +49,7 @@ class Hooking(Resource):
             for covid_status in covid_filter:
                 self.user_data['covid_tracking'] = json.dumps(covid_status['status'])
                 print('this is user_data : ' + json.dumps(self.user_data))
+                print(json.dumps(self.user_data['covid_tracking']))
 
         return {
             "type": True,
