@@ -47,7 +47,8 @@ class Hooking(Resource):
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
-                print('this is covid_filter : ' + json.dumps(covid_status['status']))
+                self.user_data['covid_tracking'] = json.dumps(covid_status['status'])
+                print('this is user_data : ' + self.user_data)
 
         return {
             "type": True,
