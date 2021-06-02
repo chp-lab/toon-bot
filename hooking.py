@@ -15,6 +15,8 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+    send_reply = {}
+    sendmessage_body = {}
 
     def menu_send(self, user_id, bot_id):
         TAG = "menu_send:"
@@ -60,10 +62,18 @@ class Hooking(Resource):
 
         print("this is data :" + json.dumps(data))
 
-        # if ('event' in data):
-        #     print(data['event'])
-        #     if(data['event'] == 'greeting'):
-        #         print('this is greeting')
+        if ('event' in data):
+            print(data['event'])
+            if(data['event'] == 'message'):
+                   send_reply = {
+                                        "to": data['source']['one_id'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "Say,Hi 555",
+                                        "custom_notification": "ตอบกลับข้อความคุณ"
+                                    }
+            sendmessage = requests.post(self.sendmessage_url, json=send_reply, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat reply chat:" + json.dumps(sendmessage.json()))
 
 
         sendmessage_headers = {"Authorization": self.onechat_dev_token}
