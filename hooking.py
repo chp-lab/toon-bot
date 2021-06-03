@@ -21,6 +21,10 @@ class Hooking(Resource):
     get_userprofile_api = "http://203.151.164.230:9977/api/get_user_by_oneid"
     get_userprofile_body = {}
 
+    sendmessage_headers = {"Authorization": onechat_dev_token}
+    sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+    sendmessage_body = {}
+
     user_data = {
         "name": '',
         "employee_code": '',
@@ -73,21 +77,19 @@ class Hooking(Resource):
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             covid_filter = filter(self.date_filter, chekcovid.json())
-            print(type(covid_filter))
             for covid_status in covid_filter:
-                print(77777)
-                print(covid_status)
                 if covid_status['status'] != None:
                     if 'green'in covid_status['status']:
                         user_profile = self.get_userprofile(data['oneid'])
-                        check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                        print(TAG, "check_in", check_in)
+                        print(user_profile)
+                        # check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                        # print(TAG, "check_in", check_in)
+
+
                 elif covid_status['status'] == None:
                     print('wtf!!! covid tracking nowwww')
 
                 
-
-
         return {
             "type": True,
             "message": "success",
