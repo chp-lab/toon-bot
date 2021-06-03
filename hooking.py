@@ -82,8 +82,9 @@ class Hooking(Resource):
                     if 'green'in covid_status['status']:
                         user_profile = self.get_userprofile(data['oneid'])
                         print(user_profile[0]['result'])
-                        # check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                        # print(TAG, "check_in", check_in)
+                        print(user_profile[0]['result']['name'])
+                        check_in = self.check_in(json.dumps(user_profile[0]['result']['name']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                        print(TAG, "check_in", check_in)
 
 
                 elif covid_status['status'] == None:
