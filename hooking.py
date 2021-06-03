@@ -34,7 +34,8 @@ class Hooking(Resource):
         cmd = """SELECT one_email,one_id,name FROM users WHERE users.one_id='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
-        print(TAG, "res=", res)
+        return res
+        # print(TAG, "res=", res)
         # if(res[0]['len'] > 0):
         #     return True
         # else:
@@ -72,9 +73,11 @@ class Hooking(Resource):
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             covid_filter = filter(self.date_filter, chekcovid.json())
+            print(7777)
+            print(covid_filter)
             for covid_status in covid_filter:
                 if 'green'in covid_status['status']:
-                    self.get_userprofile(data['oneid'])
+                    user_profile = self.get_userprofile(data['oneid'])
                     # check_in = self.check_in(json.dumps(user_info[0]['oneemail']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
                     # print(TAG, "check_in", check_in)
 
