@@ -11,7 +11,7 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
-    beaconbot_id = "B75f7822f3c3153c699d6599d9b196633"
+    beaconbot_id = "B790a5e0089415d289d064cff06db374a"
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
 
@@ -81,10 +81,20 @@ class Hooking(Resource):
                 if covid_status['status'] != None:
                     if 'green'in covid_status['status']:
                         user_profile = self.get_userprofile(data['oneid'])
-                        print(user_profile[0]['result'])
-                        print(user_profile[0]['result'][0]['name'])
-                        check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['name']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                        check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
                         print(TAG, "check_in", check_in)
+
+                        self.sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
+                                                   "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                        }
+
+                        sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                        print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
                 elif covid_status['status'] == None:
