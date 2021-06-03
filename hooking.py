@@ -73,8 +73,7 @@ class Hooking(Resource):
 
             chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             covid_filter = filter(self.date_filter, chekcovid.json())
-            print(7777)
-            print(covid_filter)
+            print(type(covid_filter))
             for covid_status in covid_filter:
                 if 'green'in covid_status['status']:
                     user_profile = self.get_userprofile(data['oneid'])
