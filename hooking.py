@@ -58,10 +58,10 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
-    def insert_record(self, one_email, one_id, check_in, date):
+    def insert_record(self, one_email, one_id, check_in, covid_tracking, date):
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `date`) VALUES ('%s', '%s', '%s', '%s')""" \
-              % (one_email, one_id, check_in, date)
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+              % (one_email, one_id, check_in, covid_tracking, date)
         insert = database.insertData(sql)
         return insert
 
@@ -93,7 +93,7 @@ class Hooking(Resource):
                     for covid_status in covid_filter:
                         if covid_status['status'] != None:
                             if daily[0]['len'] == 0:
-                                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
+                                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
                                 self.sendmessage_body = {
                                         "to": data['oneid'],
