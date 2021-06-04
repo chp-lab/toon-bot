@@ -63,7 +63,7 @@ class Hooking(Resource):
         print("this is data :" + json.dumps(data))
         sendmessage_headers = {"Authorization": self.onechat_dev_token,"Content-Type": "application/json"}
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-
+        sendmessage_body = {}
         # sendmessage_body = {
         #                         "to": data['oneid'],
         #                         "bot_id": self.beaconbot_id,
@@ -76,7 +76,7 @@ class Hooking(Resource):
 
         if ('event' in data):
             print(data['event'])
-            if(data['message']== 'text'):
+            if(data['message']== 'text' and data['message']['text'] == 'Hi'):
                 sendmessage_body = {
                                     "to": data['source']['oneid'],
                                     "bot_id": self.beaconbot_id,
