@@ -34,16 +34,16 @@ class Hooking(Resource):
     }
 
     def get_userprofile(self, one_id):
-        TAG = "is_user_exist:"
         cmd = """SELECT one_email,one_id,name FROM users WHERE users.one_id='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
         return res
-        # print(TAG, "res=", res)
-        # if(res[0]['len'] > 0):
-        #     return True
-        # else:
-        #     return False
+
+    def get_checkin(self, one_id):
+        cmd = """SELECT check_in WHERE timeattendance.employee_code='%s' """ %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        return res
 
     def date_filter(self, date):
         if date['check_date'] == datetime.today().strftime('%Y-%m-%d'):
@@ -51,11 +51,11 @@ class Hooking(Resource):
         else:
             return False
 
-    def check_in(self, name, employee_code, check_in, check_out, covid_tracking):
+    def check_in(self, name, employee_code, check_in, covid_tracking):
         TAG = "check_in:"
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `check_out`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
-              % (name, employee_code, check_in, check_out, covid_tracking)
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+              % (name, employee_code, check_in, covid_tracking)
         insert = database.insertData(sql)
         return insert
 
@@ -79,22 +79,23 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 if covid_status['status'] != None:
-                    # if 'green'in covid_status['status']:
-                    user_profile = self.get_userprofile(data['oneid'])
-                    check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                    print(TAG, "check_in", check_in)
+                    checkin_status = self.get_checkin(data['oneid'])
+                    if checkin_status[0]['result'][0]['check_in'] == None :
+                        user_profile = self.get_userprofile(data['oneid'])
+                        check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                        print(TAG, "check_in", check_in)
 
-                    self.sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
-                                                "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                    }
+                        self.sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
+                                                    "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                        }
 
-                    sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                    print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                        print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
                 elif covid_status['status'] == None:
