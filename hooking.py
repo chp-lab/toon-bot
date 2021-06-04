@@ -76,7 +76,7 @@ class Hooking(Resource):
         #     sendmessage1 = requests.post(self.sendmessage_url, json=send_reply, headers=self.sendmessage_headers, verify=False)
         #     print("debug onechat reply chat:" + json.dumps(sendmessage1.json()))
 
-        sendmessage_headers = {"Authorization": self.onechat_dev_token}
+        sendmessage_headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
         sendmessage_body = {
                                     "to": data['oneid'],
