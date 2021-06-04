@@ -84,7 +84,7 @@ class Hooking(Resource):
             print("this is daily : " + json.dumps(daily))
             if daily[0]['len'] == 0:
                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime('%Y-%m-%d'))
-                print("this is insert_user : " +  insert_user)
+                print("this is insert_user : " +  json.dumps(insert_user))
 
 
             
