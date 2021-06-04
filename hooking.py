@@ -54,7 +54,7 @@ class Hooking(Resource):
     def check_in(self, name, employee_code, check_in, covid_tracking):
         TAG = "check_in:"
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s')""" \
               % (name, employee_code, check_in, covid_tracking)
         insert = database.insertData(sql)
         return insert
