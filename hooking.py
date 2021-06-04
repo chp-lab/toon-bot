@@ -17,6 +17,8 @@ class Hooking(Resource):
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
 
+    sendmessage_headers = {"Authorization":onechat_dev_token,"Content-Type": "application/json"}
+    sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
 
     def menu_send(self, user_id, bot_id):
         TAG = "menu_send:"
