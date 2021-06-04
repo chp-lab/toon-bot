@@ -74,9 +74,9 @@ class Hooking(Resource):
         # sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
         # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-        if ('message' in data):
-            print(data['message'])
-            if(data['message']['text'] == 'Hi'):
+        if ('event' in data):
+            print(data['event'])
+            if(data['event']== 'message'):
                 sendmessage_body = {
                                     "to": data['source']['oneid'],
                                     "bot_id": self.beaconbot_id,
