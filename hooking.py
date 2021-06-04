@@ -58,16 +58,16 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
-    def insert_record(self, one_email, one_id, date):
+    def insert_record(self, one_email, one_id, check_in, date):
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `date`) VALUES ('%s', '%s', '%s')""" \
-              % (one_email, one_id, date)
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `date`) VALUES ('%s', '%s', '%s', '%s')""" \
+              % (one_email, one_id, check_in, date)
         insert = database.insertData(sql)
         return insert
 
-    def update_time(self, time, one_id):
+    def update_checkout(self, time, one_id):
         database = Database()
-        sql = """UPDATE timeattendance SET check_in = '%s' WHERE timeattendance.employee_code='%s'""" \
+        sql = """UPDATE timeattendance SET check_out = '%s' WHERE timeattendance.employee_code='%s'""" \
               % (time, one_id)
         update = database.insertData(sql)
         return update
@@ -87,17 +87,14 @@ class Hooking(Resource):
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
             if daily[0]['len'] == 0:
-                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime('%Y-%m-%d'))
+                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
                 print("this is insert_user :" + json.dumps(insert_user))
             elif daily[0]['len'] != 0:
-                update = self.update_time(datetime.today().strftime("%H:%M:%S"), data['oneid'])
-                print("this is update :" + json.dumps(update))
+                if data['event_stage'] == 'leave':
+                    checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+                    print("this is checkout :" + json.dumps(checkout))
 
                 
-
-
-            
-
 
             # chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
             # covid_filter = filter(self.date_filter, chekcovid.json())
