@@ -118,7 +118,6 @@ class Hooking(Resource):
 
                 elif data['proximity'] == 'far':
                     if daily[0]['len'] != 0:
-                        if data['event_stage'] == 'leave':
                             checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
                             print("this is checkout :" + json.dumps(checkout))
 
