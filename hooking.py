@@ -75,7 +75,7 @@ class Hooking(Resource):
 
         if ('message' in data):
             print(data['message'])
-            if(data['message']['text'] == 'Hi'):
+            if(data['message'] == 'Hi'):
                 sendmessage_body = {
                                     "to": data['source']['oneid'],
                                     "bot_id": self.beaconbot_id,
