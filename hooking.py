@@ -52,10 +52,16 @@ class Hooking(Resource):
             return False
 
     def check_in(self, name, employee_code, check_in, covid_tracking):
-        TAG = "check_in:"
         database = Database()
         sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`) VALUES ('%s', '%s', '%s', '%s')""" \
               % (name, employee_code, check_in, covid_tracking)
+        insert = database.insertData(sql)
+        return insert
+
+    def insert_record(self, one_email, one_id):
+        database = Database()
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`) VALUES ('%s', '%s')""" \
+              % (one_email, one_id)
         insert = database.insertData(sql)
         return insert
 
@@ -70,12 +76,16 @@ class Hooking(Resource):
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
-            self.get_userprofile_body = { "one_id":  data['oneid'] }
-            userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-            user_info = userprofile.json()['user_data']
+
+            user_profile = self.get_userprofile(data['oneid'])
+            print(user_profile)
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
             print("this is daily : " + json.dumps(daily))
+            # if daily[0]['len'] == 0:
+
+
+            
 
 
             # chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
@@ -85,7 +95,7 @@ class Hooking(Resource):
             #         checkin_status = self.get_checkin(data['oneid'])
             #         if checkin_status[0]['result'][0]['check_in'] == None:
             #             user_profile = self.get_userprofile(data['oneid'])
-            #             check_in = self.check_in(user_profile[0]['result'][0]['one_email'], user_info[0]['oneid'], datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+            #             check_in = self.check_in(user_profile[0]['result'][0]['one_email'], user_profile[0]['oneid'], datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
             #             print(TAG, "check_in", check_in)
 
             #             self.sendmessage_body = {
