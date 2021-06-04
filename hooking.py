@@ -80,7 +80,7 @@ class Hooking(Resource):
             for covid_status in covid_filter:
                 if covid_status['status'] != None:
                     checkin_status = self.get_checkin(data['oneid'])
-                    if checkin_status[0]['result'][0]['check_in'] == None :
+                    if checkin_status[0]['result'][0]['check_in'] == " ":
                         user_profile = self.get_userprofile(data['oneid'])
                         check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
                         print(TAG, "check_in", check_in)
