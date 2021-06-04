@@ -86,13 +86,47 @@ class Hooking(Resource):
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            if daily[0]['len'] == 0:
-                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
-                print("this is insert_user :" + json.dumps(insert_user))
-            elif daily[0]['len'] != 0:
-                if data['event_stage'] == 'leave':
-                    checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
-                    print("this is checkout :" + json.dumps(checkout))
+            if data['event_stage'] == 'proximity_change':
+                if data['proximity'] == 'near':
+                    if daily[0]['len'] == 0:
+                        chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+                        covid_filter = filter(self.date_filter, chekcovid.json())
+                        for covid_status in covid_filter:
+                            if covid_status['status'] != None:
+                                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
+                                print("this is insert_user :" + json.dumps(insert_user))
+                                self.sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
+                                                    "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
+                                sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                                print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+                elif data['proximity'] == 'far':
+                    if daily[0]['len'] != 0:
+                        if data['event_stage'] == 'leave':
+                            checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+                            print("this is checkout :" + json.dumps(checkout))
+
+            # elif data['event_stage'] == 'leave':
+            #     if daily[0]['len'] != 0:
+            #         if data['event_stage'] == 'leave':
+            #             checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+            #             print("this is checkout :" + json.dumps(checkout))
+
+
+            # daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
+            # if daily[0]['len'] == 0:
+            #     insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
+            #     print("this is insert_user :" + json.dumps(insert_user))
+            # elif daily[0]['len'] != 0:
+            #     if data['event_stage'] == 'leave':
+            #         checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+            #         print("this is checkout :" + json.dumps(checkout))
 
                 
 
