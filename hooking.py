@@ -80,6 +80,8 @@ class Hooking(Resource):
             for covid_status in covid_filter:
                 if covid_status['status'] != None:
                     checkin_status = self.get_checkin(data['oneid'])
+                    print(checkin_status)
+                    print(checkin_status[0]['result'][0]['check_in'])
                     if checkin_status[0]['result'][0]['check_in'] == " ":
                         print(789789)
                         # user_profile = self.get_userprofile(data['oneid'])
