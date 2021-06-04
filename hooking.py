@@ -40,7 +40,7 @@ class Hooking(Resource):
         return res
 
     def get_checkin(self, one_id):
-        cmd = """SELECT check_in WHERE timeattendance.employee_code='%s' """ %(one_id)
+        cmd = """SELECT check_in FROM timeattendance WHERE timeattendance.employee_code='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
         return res
