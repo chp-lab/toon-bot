@@ -40,7 +40,7 @@ class Hooking(Resource):
         return res
 
     def get_checkin(self, one_id):
-        cmd = """SELECT check_in FROM timeattendance WHERE timeattendance.employee_code='%s' """ %(str(one_id))
+        cmd = """SELECT check_in FROM timeattendance WHERE timeattendance.employee_code='%s' """ %("''" + str(one_id) + "''")
         database = Database()
         res = database.getData(cmd)
         return res
@@ -80,6 +80,7 @@ class Hooking(Resource):
             for covid_status in covid_filter:
                 if covid_status['status'] != None:
                     checkin_status = self.get_checkin(data['oneid'])
+                    print("''" + data['oneid'] + "''")
                     print(checkin_status)
                     # if checkin_status[0]['result'][0]['check_in'] == " ":
                     #     user_profile = self.get_userprofile(data['oneid'])
