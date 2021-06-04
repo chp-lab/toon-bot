@@ -60,24 +60,26 @@ class Hooking(Resource):
         module = Module()
 
         print("this is data :" + json.dumps(data))
-
-        # if ('event' in data):
-        #     print(data['event'])
-        #     if(data['event'] == 'message'):
-        #            send_reply = {
-        #                                 "to": data['source']['one_id'],
-        #                                 "bot_id": self.beaconbot_id,
-        #                                 "type": "text",
-        #                                 "message": "Say,Hi 555",
-        #                                 "custom_notification": "ตอบกลับข้อความคุณ"
-        #                             }
-        #     sendmessage_headers = {"Authorization": self.onechat_dev_token}
-        #     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-        #     sendmessage1 = requests.post(self.sendmessage_url, json=send_reply, headers=self.sendmessage_headers, verify=False)
-        #     print("debug onechat reply chat:" + json.dumps(sendmessage1.json()))
-
-        sendmessage_headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+        sendmessage_headers = {"Authorization": self.onechat_dev_token,"Content-Type": "application/json"}
         sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+
+        if ('event' in data):
+            print(data['event'])
+            if(data['event'] == 'message' and data['message']['text'] == "Hi"):
+                   sendmessage_body = {
+                                        "to": data['source']['one_id'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "Say,Hi 555",
+                                        "custom_notification": "ตอบกลับข้อความคุณ"
+                                    }
+            # sendmessage_headers = {"Authorization": self.onechat_dev_token,"Content-Type": "application/json"}
+            # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            sendmessage1 = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat reply chat:" + json.dumps(sendmessage1.json()))
+
+        # sendmessage_headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+        # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
         sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": "B7f2abd3c4e0e57dbb5c71bfa43920b5a",
