@@ -82,7 +82,7 @@ class Hooking(Resource):
                     checkin_status = self.get_checkin(data['oneid'])
                     print(checkin_status)
                     print(checkin_status[0]['result'][0]['check_in'])
-                    if checkin_status[0]['result'][0]['check_in'] == " ":
+                    if checkin_status[0]['result'][0]['check_in'] == None:
                         print(789789)
                         # user_profile = self.get_userprofile(data['oneid'])
                         # check_in = self.check_in(user_profile[0]['result'][0]['one_email'], user_info[0]['oneid'], datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
