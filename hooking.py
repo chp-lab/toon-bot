@@ -84,6 +84,7 @@ class Hooking(Resource):
                     # if checkin_status[0]['result'][0]['check_in'] == " ":
 
                         print(user_info[0]['oneid'])
+                        print(type(user_info[0]['oneid']))
                         user_profile = self.get_userprofile(data['oneid'])
                         check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
                         print(TAG, "check_in", check_in)
