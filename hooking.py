@@ -75,7 +75,7 @@ class Hooking(Resource):
             user_info = userprofile.json()['user_data']
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            print("this is daily : " + daily)
+            print("this is daily : " + json.dumps(daily))
 
 
             # chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
