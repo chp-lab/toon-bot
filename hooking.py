@@ -65,6 +65,13 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
+    def update_time(self, time, one_id):
+        database = Database()
+        sql = """UPDATE timeattendance SET check_in = '%s' WHERE timeattendance.employee_code='%s'""" \
+              % (time, one_id)
+        update = database.insertData(sql)
+        return update
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -76,15 +83,17 @@ class Hooking(Resource):
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
-
             user_profile = self.get_userprofile(data['oneid'])
-            print(user_profile)
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            print("this is daily : " + json.dumps(daily))
             if daily[0]['len'] == 0:
                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime('%Y-%m-%d'))
-                print("this is insert_user : " +  json.dumps(insert_user))
+                print("this is insert_user :" + json.dumps(insert_user))
+            elif daily[0]['len'] != 0:
+                update = self.update_time(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+                print("this is update :" + json.dumps(update))
+
+                
 
 
             
