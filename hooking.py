@@ -73,10 +73,9 @@ class Hooking(Resource):
         # sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
         # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-        if ('event' in data):
-            print(data['event'])
-            if(data['event'] == 'message' and data['message']['text'] == 'Hi'):
-            # if(data['event'] == 'message'):
+        if ('message' in data):
+            print(data['message'])
+            if(data['message']['text'] == 'Hi'):
                 sendmessage_body = {
                                     "to": data['source']['oneid'],
                                     "bot_id": self.beaconbot_id,
@@ -86,6 +85,20 @@ class Hooking(Resource):
                                 }
                 sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+        # if ('event' in data):
+        #     print(data['event'])
+        #     if(data['event'] == 'message' and data['message']['text'] == 'Hi'):
+        #     # if(data['event'] == 'message'):
+        #         sendmessage_body = {
+        #                             "to": data['source']['oneid'],
+        #                             "bot_id": self.beaconbot_id,
+        #                             "type": "text",
+        #                             "message": "Say,Hi 555",
+        #                             "custom_notification": "ตอบกลับข้อความคุณ"
+        #                         }
+        #         sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+        #         print("debug onechat response :" + json.dumps(sendmessage.json()))
 
     #petdy_iBEACON
         # if('uuid' in data):
