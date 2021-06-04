@@ -88,11 +88,11 @@ class Hooking(Resource):
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
             if data['event_stage'] == 'proximity_change':
                 if data['proximity'] == 'near':
-                    if daily[0]['len'] == 0:
-                        chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-                        covid_filter = filter(self.date_filter, chekcovid.json())
-                        for covid_status in covid_filter:
-                            if covid_status['status'] != None:
+                    chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+                    covid_filter = filter(self.date_filter, chekcovid.json())
+                    for covid_status in covid_filter:
+                        if covid_status['status'] != None:
+                            if daily[0]['len'] == 0:
                                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
                                 self.sendmessage_body = {
@@ -105,6 +105,16 @@ class Hooking(Resource):
                                 }
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                                 print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        elif covid_status['status'] == None:
+                            self.sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "covid tracking nowwww!!!!!!!",
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                            }
+                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                            print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 elif data['proximity'] == 'far':
                     if daily[0]['len'] != 0:
