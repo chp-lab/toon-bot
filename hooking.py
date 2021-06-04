@@ -39,8 +39,8 @@ class Hooking(Resource):
         res = database.getData(cmd)
         return res
 
-    def get_checkin(self, one_id):
-        cmd = """SELECT check_in FROM timeattendance WHERE timeattendance.employee_code='%s' """ %(one_id)
+    def check_daily(self, one_id, today):
+        cmd = """SELECT * FROM timeattendance WHERE timeattendance.employee_code='%s' AND timeattendance.date='%s' """ %(one_id, today)
         database = Database()
         res = database.getData(cmd)
         return res
@@ -74,32 +74,35 @@ class Hooking(Resource):
             userprofile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
             user_info = userprofile.json()['user_data']
 
-
-            chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-            covid_filter = filter(self.date_filter, chekcovid.json())
-            for covid_status in covid_filter:
-                if covid_status['status'] != None:
-                    checkin_status = self.get_checkin(data['oneid'])
-                    if checkin_status[0]['result'][0]['check_in'] == None:
-                        user_profile = self.get_userprofile(data['oneid'])
-                        check_in = self.check_in(user_profile[0]['result'][0]['one_email'], user_info[0]['oneid'], datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                        print(TAG, "check_in", check_in)
-
-                        self.sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
-                                                    "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                        }
-
-                        sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                        print("debug onechat response :" + json.dumps(sendmessage.json()))
+            daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
+            print("this is daily : " + daily)
 
 
-                elif covid_status['status'] == None:
-                    print('wtf!!! covid tracking nowwww')
+            # chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+            # covid_filter = filter(self.date_filter, chekcovid.json())
+            # for covid_status in covid_filter:
+            #     if covid_status['status'] != None:
+            #         checkin_status = self.get_checkin(data['oneid'])
+            #         if checkin_status[0]['result'][0]['check_in'] == None:
+            #             user_profile = self.get_userprofile(data['oneid'])
+            #             check_in = self.check_in(user_profile[0]['result'][0]['one_email'], user_info[0]['oneid'], datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+            #             print(TAG, "check_in", check_in)
+
+            #             self.sendmessage_body = {
+            #                             "to": data['oneid'],
+            #                             "bot_id": self.beaconbot_id,
+            #                             "type": "text",
+            #                             "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
+            #                                         "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+            #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #             }
+
+            #             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            #             print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+
+            #     elif covid_status['status'] == None:
+            #         print('wtf!!! covid tracking nowwww')
 
                 
         return {
