@@ -79,25 +79,26 @@ class Hooking(Resource):
             covid_filter = filter(self.date_filter, chekcovid.json())
             for covid_status in covid_filter:
                 if covid_status['status'] != None:
-                    checkin_status = self.get_checkin(data['oneid'])
-                    print("''" + data['oneid'] + "''")
-                    print(checkin_status)
+                    # checkin_status = self.get_checkin(data['oneid'])
+                    # print(checkin_status)
                     # if checkin_status[0]['result'][0]['check_in'] == " ":
-                    #     user_profile = self.get_userprofile(data['oneid'])
-                    #     check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
-                    #     print(TAG, "check_in", check_in)
 
-                    #     self.sendmessage_body = {
-                    #                     "to": data['oneid'],
-                    #                     "bot_id": self.beaconbot_id,
-                    #                     "type": "text",
-                    #                     "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
-                    #                                 "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
-                    #                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                    #     }
+                        print(user_info[0]['oneid'])
+                        user_profile = self.get_userprofile(data['oneid'])
+                        check_in = self.check_in(json.dumps(user_profile[0]['result'][0]['one_email']), json.dumps(user_info[0]['oneid']), datetime.today().strftime('%Y-%m-%d'), covid_status['status'])
+                        print(TAG, "check_in", check_in)
 
-                    #     sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                    #     print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        self.sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": "ลงเวลาเข้างานเรียบร้อยแล้ว" + "\n" +
+                                                    "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                        }
+
+                        sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                        print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
                 elif covid_status['status'] == None:
