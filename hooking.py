@@ -65,15 +65,17 @@ class Hooking(Resource):
 
         sendmessage_body = {
                                 "to": data['oneid'],
-                                "bot_id": "B7f2abd3c4e0e57dbb5c71bfa43920b5a",
+                                "bot_id": self.beaconbot_id,
                                 "type": "text",
                                 "message": data['payload'],
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
+        sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+        print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         if ('event' in data):
             print(data['event'])
-        if(data['event'] == 'message' and data['message']['text'] == 'Hi'):
+        if(data['message']['text'] == 'Hi'):
             sendmessage_body = {
                                     "to": data['source']['one_id'],
                                     "bot_id": self.beaconbot_id,
@@ -81,8 +83,8 @@ class Hooking(Resource):
                                     "message": "Say,Hi 555",
                                     "custom_notification": "ตอบกลับข้อความคุณ"
                                 }
-        sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
-        print("debug onechat response :" + json.dumps(sendmessage.json()))
+            sendmessage = requests.post(sendmessage_url, json=sendmessage_body, headers=sendmessage_headers, verify=False)
+            print("debug onechat response :" + json.dumps(sendmessage.json()))
 
     #petdy_iBEACON
         # if('uuid' in data):
