@@ -62,7 +62,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        print("this is data :" + json.dumps(data))
+        # print("this is data :" + json.dumps(data))
         sendmessage_body = {}
 
         if ('event' in data):
@@ -78,15 +78,15 @@ class Hooking(Resource):
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-        sendmessage_body = {
-                                "to": data['oneid'],
-                                "bot_id": self.beaconbot_id,
-                                "type": "text",
-                                "message": data['payload'],
-                                "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-        }
-        sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-        print("debug onechat response :" + json.dumps(sendmessage.json()))
+        # sendmessage_body = {
+        #                         "to": data['oneid'],
+        #                         "bot_id": self.beaconbot_id,
+        #                         "type": "text",
+        #                         "message": data['payload'],
+        #                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        # }
+        # sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+        # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
 
