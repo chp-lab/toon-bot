@@ -92,7 +92,6 @@ class Hooking(Resource):
                     covid_filter = filter(self.date_filter, chekcovid.json())
                     for covid_status in covid_filter:
                         if covid_status['status'] != None:
-                            print("this is daily : " + json.dumps(daily))
                             if daily[0]['len'] == 0:
                                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
@@ -105,6 +104,7 @@ class Hooking(Resource):
                                         "message": message_db[0]['result'][0]['message'],
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
+
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                                 print("debug onechat response :" + json.dumps(sendmessage.json()))
                                 self.sendmessage_body = {
@@ -116,6 +116,16 @@ class Hooking(Resource):
                                 }
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                                 print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+                                message_db = self.get_message(3)
+                                print(message_db[0]['result'][0])
+                                self.sendmessage_body = {
+                                        "to": data['oneid'],
+                                        "bot_id": self.beaconbot_id,
+                                        "type": "text",
+                                        "message": message_db[0]['result'][0]['message'],
+                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
                         elif covid_status['status'] == None:
                             message_db = self.get_message(4)
                             print(message_db[0]['result'][0])
@@ -130,7 +140,6 @@ class Hooking(Resource):
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 elif data['proximity'] == 'far':
-                    print("this is daily : " + json.dumps(daily))
                     if daily[0]['len'] != 0:
                             checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
                             print("this is checkout :" + json.dumps(checkout))
