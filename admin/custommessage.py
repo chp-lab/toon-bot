@@ -9,7 +9,7 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Custommessage(Resource):
-    def post():
+    def post(self):
         print(request.json)
         return {
             "status": 200
