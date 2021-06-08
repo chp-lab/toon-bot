@@ -9,8 +9,15 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Admin(Resource):
+    def get_timeattendance(self):
+        cmd = """SELECT * FROM users""" 
+        database = Database()
+        res = database.getData(cmd)
+        return res
+
     def post(self):
-        print("this is test post")
+        timeattendance = self.get_timeattendance()
+        print("this is result" + timeattendance)
         return {
             'status': 200
         }
