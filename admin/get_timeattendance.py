@@ -10,7 +10,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Admin(Resource):
     def get_timeattendance(self):
-        cmd = """SELECT * FROM users""" 
+        cmd = """SELECT * FROM timeattendance""" 
         database = Database()
         res = database.getData(cmd)
         return res
