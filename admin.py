@@ -10,4 +10,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Admin(Resource):
     def post(self):
-        print("this is test def")
+        print("this is test post")
+    def get(self):
+        print("this is test get")
