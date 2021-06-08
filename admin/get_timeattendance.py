@@ -19,3 +19,4 @@ class Admin(Resource):
         timeattendance = self.get_timeattendance()
         print("this is result" + json.dumps(timeattendance))
         return timeattendance
+
