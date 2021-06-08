@@ -126,6 +126,8 @@ class Hooking(Resource):
                                         "message": message_db[0]['result'][0]['message'],
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
+                                sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                                print("debug onechat response :" + json.dumps(sendmessage.json()))
                         elif covid_status['status'] == None:
                             message_db = self.get_message(4)
                             print(message_db[0]['result'][0])
