@@ -19,5 +19,6 @@ class Admin(Resource):
         timeattendance = self.get_timeattendance()
         print("this is result" + json.dumps(timeattendance))
         return {
-            'status': 200
+            'status': 200,
+            'message': 'success'
         }
