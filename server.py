@@ -6,7 +6,7 @@ from check_perm import Check_perm
 from hooking import Hooking
 from qr_decode import Qr_decode
 from my_mqtt import My_mqtt
-from admin.admin import Admin
+from admin.get_timeattendance import Admin
 # from monitor import Monitor
 from covid_log import Covid_log
 
