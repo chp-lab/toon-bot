@@ -9,5 +9,5 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Admin(Resource):
-    def test(self):
+    def post(self):
         print("this is test def")
