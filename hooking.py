@@ -69,7 +69,7 @@ class Hooking(Resource):
         print("this is KEY" + str(key))
         database = Database()
         sql = """SELECT message FROM bot_message WHERE bot_message.message_keys ='%d'""" %(key)
-        message = database.insertData(sql)
+        message = database.getData(sql)
         return message
 
     def post(self):
