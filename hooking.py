@@ -92,6 +92,7 @@ class Hooking(Resource):
                     covid_filter = filter(self.date_filter, chekcovid.json())
                     for covid_status in covid_filter:
                         if covid_status['status'] != None:
+                            print("this is daily : " + daily)
                             if daily[0]['len'] == 0:
                                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
