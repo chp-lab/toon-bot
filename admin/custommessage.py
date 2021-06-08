@@ -9,9 +9,18 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Custommessage(Resource):
+    def edit_message(self, key, message):
+        database = Database()
+        sql = """UPDATE bot_message SET message = '%s' WHERE bot_message.message_keys='%d'""" \
+              % (message, key)
+        update = database.insertData(sql)
+        return update
+
     def post(self):
         print(type(request.json))
         print(request.json)
+        edit_message = self.edit_message(request.json['key'], request.json['message'])
         return {
-            "status": 200
+            "status": 200,
+            "message": "edit message success !!!"
         }
