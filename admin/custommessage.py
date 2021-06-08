@@ -10,6 +10,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Custommessage(Resource):
     def post(self):
+        print(type(request.json))
         print(request.json)
         return {
             "status": 200
