@@ -130,6 +130,7 @@ class Hooking(Resource):
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 elif data['proximity'] == 'far':
+                    print("this is daily : " + daily)
                     if daily[0]['len'] != 0:
                             checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
                             print("this is checkout :" + json.dumps(checkout))
