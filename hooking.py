@@ -66,7 +66,7 @@ class Hooking(Resource):
         return update
 
     def get_message(self, key):
-        print("this is KEY" + key)
+        print("this is KEY" + str(key))
         database = Database()
         sql = """SELECT message FROM bot_message WHERE bot_message.message_keys = %d""" \
             % (key)
