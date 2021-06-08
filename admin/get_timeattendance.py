@@ -17,7 +17,7 @@ class Admin(Resource):
 
     def post(self):
         timeattendance = self.get_timeattendance()
-        print("this is result" + timeattendance)
+        print("this is result" + json.dumps(timeattendance))
         return {
             'status': 200
         }
