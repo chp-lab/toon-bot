@@ -86,8 +86,6 @@ class Hooking(Resource):
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            message1 = self.get_message(1)
-            print(message1[0]['result'][0])
             if data['event_stage'] == 'proximity_change':
                 if data['proximity'] == 'near':
                     chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
@@ -97,11 +95,13 @@ class Hooking(Resource):
                             if daily[0]['len'] == 0:
                                 insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
+                                message_db = self.get_message(2)
+                                print(message_db[0]['result'][0])
                                 self.sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
                                         "type": "text",
-                                        "message": "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
+                                        "message": message_db[0]['result'][0]['message'],
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -116,11 +116,13 @@ class Hooking(Resource):
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                                 print("debug onechat response :" + json.dumps(sendmessage.json()))
                         elif covid_status['status'] == None:
+                            message_db = self.get_message(4)
+                            print(message_db[0]['result'][0])
                             self.sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": "covid tracking nowwww!!!!!!!",
+                                    "message": message_db[0]['result'][0]['message'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
