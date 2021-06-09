@@ -6,8 +6,9 @@ from check_perm import Check_perm
 from hooking import Hooking
 from qr_decode import Qr_decode
 from my_mqtt import My_mqtt
-from admin.get_timeattendance import Admin
+from admin.get_timeattendance import Timeattendance
 from admin.custommessage import Custommessage
+from admin.get_Replymessage import Replymessage
 # from monitor import Monitor
 from covid_log import Covid_log
 
@@ -37,6 +38,7 @@ if (__name__ == "__main__"):
     server.api.add_resource(Qr_decode, API_VERSION + "/myqr")
     server.api.add_resource(My_mqtt, API_VERSION + "/unlock/<room_num>")
     server.api.add_resource(Covid_log, API_VERSION + "/covid/log")
-    server.api.add_resource(Admin, API_VERSION + "/admin/get_timeattendance")
+    server.api.add_resource(Timeattendance, API_VERSION + "/admin/get_timeattendance")
     server.api.add_resource(Custommessage, API_VERSION + "/admin/custommessage")
+    server.api.add_resource(Replymessage, API_VERSION + "/admin/get_replymessage")
     server.app.run(host="0.0.0.0", debug=True, port=5007)
