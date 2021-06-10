@@ -70,7 +70,7 @@ class Hooking(Resource):
         # for i in range(len(checkcovid.json)):{
         #     print(checkcovid.json)
         # }
-        print(checkcovid[45328])
+        print(checkcovid.json[45328])
 
         # if ("uuid" in data):
         #     print("this is one_id : " + data['oneid'])
