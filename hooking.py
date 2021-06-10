@@ -67,7 +67,7 @@ class Hooking(Resource):
         checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
         print("debug onechat response :" + json.dumps(checkcovid.json()))
 
-        for i in range(len(checkcovid)):
+        for i in range(len(checkcovid.text)):
             print(checkcovid[i])
         # if ("uuid" in data):
         #     print("this is one_id : " + data['oneid'])
