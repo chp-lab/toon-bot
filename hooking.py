@@ -60,8 +60,17 @@ class Hooking(Resource):
 
         print("this is data :" + json.dumps(data))
 
-        if ("uuid" in data):
-            print("this is one_id" + data['oneid'])
+        checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
+        checkcovid_body = {
+                             "oneid": "25542868864"
+                            }
+        checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
+        print("debug onechat response :" + json.dumps(checkcovid.json()))
+
+        # if ("uuid" in data):
+        #     print("this is one_id : " + data['oneid'])
+        
+        
 
         # if ('event' in data):
         #     print(data['event'])
