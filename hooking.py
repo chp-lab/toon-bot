@@ -53,7 +53,7 @@ class Hooking(Resource):
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
         result = requests.post(self.onechat_url1, json=req_body, headers=headers)
         print(TAG, result.text)
-
+#comment Test
     def post(self):
         TAG = "Hooking:"
         data = request.json
