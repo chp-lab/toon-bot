@@ -87,8 +87,8 @@ class Hooking(Resource):
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            if data['event_stage'] == 'proximity_change':
-                if data['proximity'] == 'near':
+            if (data['event_stage']):
+                if data['event_stage'] == 'enter':
                     chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                     covid_filter = filter(self.date_filter, chekcovid.json())
                     for covid_status in covid_filter:
@@ -142,7 +142,7 @@ class Hooking(Resource):
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-                elif data['proximity'] == 'far':
+                elif data['event_stage'] == 'leave':
                     if daily[0]['len'] != 0:
                             checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
                             print("this is checkout :" + json.dumps(checkout))
