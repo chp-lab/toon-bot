@@ -87,6 +87,7 @@ class Hooking(Resource):
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
+            print("this is event_stage : " + data['event_stage'])
             if (data['event_stage']):
                 if data['event_stage'] == 'enter':
                     chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
