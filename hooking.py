@@ -83,6 +83,7 @@ class Hooking(Resource):
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
+            print(covid_body)
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
