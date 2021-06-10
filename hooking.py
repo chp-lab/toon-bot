@@ -65,6 +65,18 @@ class Hooking(Resource):
         #     if(data['event'] == 'greeting'):
         #         print('this is greeting')
 
+        if ('event' in data):
+            print(data['event'])
+            if(data["event"]=='message' and data['message']['text']=='Hi'):
+                sendmessage_body = {
+                                    "to":data['source']['one_id'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "Say,Hi"+" "+data['source']['email'],
+                                    "custom_notification": "ตอบกลับข้อความคุณครับ"
+                                }
+                sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         # sendmessage_headers = {"Authorization": self.onechat_dev_token}
         # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
