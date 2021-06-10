@@ -60,6 +60,9 @@ class Hooking(Resource):
 
         print("this is data :" + json.dumps(data))
 
+        if ("uuid" in data):
+            print("this is one_id" + data['oneid'])
+
         # if ('event' in data):
         #     print(data['event'])
         #     if(data['event'] == 'greeting'):
