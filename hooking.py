@@ -49,7 +49,7 @@ class Hooking(Resource):
         headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
         result = requests.post(self.onechat_url1, json=req_body, headers=headers)
         print(TAG, result.text)
-#comment Test
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -62,11 +62,13 @@ class Hooking(Resource):
 
         checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
         checkcovid_body = {
-                             "oneid": "25542868864"
-                            }
+                            "oneid": "12643514984"
+                          }
         checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
         print("debug onechat response :" + json.dumps(checkcovid.json()))
 
+        for i in range(len(checkcovid)):
+            print(checkcovid[i])
         # if ("uuid" in data):
         #     print("this is one_id : " + data['oneid'])
         
