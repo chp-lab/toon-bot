@@ -73,7 +73,7 @@ class Hooking(Resource):
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": "Say,Hi"+" "+data['source']['email'],
-                                    "custom_notification": "ตอบกลับข้อความคุณ"
+                                    "custom_notification": "ตอบกลับข้อความคุณครับ"
                                 }
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
