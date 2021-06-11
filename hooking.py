@@ -16,6 +16,8 @@ class Hooking(Resource):
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
 
+    sendmessage_body ={}
+
     def menu_send(self, user_id, bot_id):
         TAG = "menu_send:"
         # web_vue_url1 = "https://web-meeting-room.herokuapp.com/"
@@ -58,7 +60,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        print("this is data :" + json.dumps(data))
+        # print("this is data :" + json.dumps(data))
 
         # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
         # checkcovid_body = {
