@@ -167,10 +167,16 @@ class Hooking(Resource):
                     for covid_status in covid_filter:
                         if covid_status['status'] != None:
                             if daily[0]['len'] == 0:
-                                insert_user = self.check_in(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
-                                print("this is insert_user :" + json.dumps(insert_user))
+                                self.check_in_body = {
+                                    "one_email": user_profile.json()["result"][0]["one_email"],
+                                    "one_id": user_profile.json()["result"][0]["one_id"],
+                                    "check_in_time": datetime.today().strftime("%H:%M:%S"),
+                                    "covid_tracking": covid_status['status'],
+                                    "date": datetime.today().strftime('%Y-%m-%d'),
+                                }
+                                insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
+                                print("this is insert_user :" + json.dumps(insert_user.json()))
                                 message_db = self.get_message(2)
-                                print(message_db[0]['result'][0])
                                 self.sendmessage_body = {
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
@@ -217,7 +223,11 @@ class Hooking(Resource):
 
                 elif data['event_stage'] == 'leave':
                     if daily[0]['len'] != 0:
-                            checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
+                            self.check_out_body = {
+                                "time": datetime.today().strftime("%H:%M:%S"),
+                                "one_id": user_profile.json()["result"][0]["one_id"]
+                            }
+                            checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
                             print("this is checkout :" + json.dumps(checkout))
 
 
