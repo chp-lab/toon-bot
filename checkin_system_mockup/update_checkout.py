@@ -17,5 +17,5 @@ class Check_out(Resource):
         return update
 
     def post(self):
-        result = self.update_checkout(request.json['time'], request.json['one_id'])
+        result = self.update_checkout(request.json['check_out_time'], request.json['one_id'])
         return result
