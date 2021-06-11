@@ -10,6 +10,8 @@ from admin.get_timeattendance import Timeattendance
 from admin.custommessage import Custommessage
 from admin.get_Replymessage import Replymessage
 from checkin_system_mockup.get_userprofile import Userprofile
+from checkin_system_mockup.check_in import Check_in
+from checkin_system_mockup.update_checkout import Check_out
 
 
 # from monitor import Monitor
@@ -45,4 +47,6 @@ if (__name__ == "__main__"):
     server.api.add_resource(Custommessage, API_VERSION + "/admin/custommessage")
     server.api.add_resource(Replymessage, API_VERSION + "/admin/get_replymessage")
     server.api.add_resource(Userprofile, API_VERSION + "/get_userprofile")
+    server.api.add_resource(Check_in, API_VERSION + "/check_in")
+    server.api.add_resource(Check_out, API_VERSION + "/check_out")
     server.app.run(host="0.0.0.0", debug=True, port=5007)
