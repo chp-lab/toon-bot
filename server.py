@@ -9,6 +9,9 @@ from my_mqtt import My_mqtt
 from admin.get_timeattendance import Timeattendance
 from admin.custommessage import Custommessage
 from admin.get_Replymessage import Replymessage
+from checkin_system_mockup.get_userprofile import Userprofile
+
+
 # from monitor import Monitor
 from covid_log import Covid_log
 
@@ -41,4 +44,5 @@ if (__name__ == "__main__"):
     server.api.add_resource(Timeattendance, API_VERSION + "/admin/get_timeattendance")
     server.api.add_resource(Custommessage, API_VERSION + "/admin/custommessage")
     server.api.add_resource(Replymessage, API_VERSION + "/admin/get_replymessage")
+    server.api.add_resource(Userprofile, API_VERSION + "/get_userprofile")
     server.app.run(host="0.0.0.0", debug=True, port=5007)

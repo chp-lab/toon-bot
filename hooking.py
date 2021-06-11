@@ -51,7 +51,7 @@ class Hooking(Resource):
         else:
             return False
 
-    def insert_record(self, one_email, one_id, check_in, covid_tracking, date):
+    def check_in(self, one_email, one_id, check_in, covid_tracking, date):
         database = Database()
         sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`) VALUES ('%s', '%s', '%s', '%s', '%s')""" \
               % (one_email, one_id, check_in, covid_tracking, date)
@@ -83,11 +83,9 @@ class Hooking(Resource):
         # # if(data['uuid'] == "C8A94F42-3CD5-483A-8ADC-97473197B8B4"):
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
-            print(covid_body)
             user_profile = self.get_userprofile(data['oneid'])
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            print("this is event_stage : " + data['event_stage'])
             if (data['event_stage']):
                 if data['event_stage'] == 'enter':
                     chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
@@ -95,7 +93,7 @@ class Hooking(Resource):
                     for covid_status in covid_filter:
                         if covid_status['status'] != None:
                             if daily[0]['len'] == 0:
-                                insert_user = self.insert_record(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
+                                insert_user = self.check_in(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
                                 print("this is insert_user :" + json.dumps(insert_user))
                                 message_db = self.get_message(2)
                                 print(message_db[0]['result'][0])
