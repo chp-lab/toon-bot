@@ -157,7 +157,7 @@ class Hooking(Resource):
                 "oneid": data['oneid']
             }
             user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-            print("this is user profile : "  + user_profile)
+            print("this is user profile : "  + user_profile.json)
 
             daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
             if (data['event_stage']):
