@@ -65,7 +65,7 @@ class Hooking(Resource):
                             "oneid": "12643514984"
                           }
         checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
-        print("type of :" + type(checkcovid))
+        print("type of :" + json.dumps(type(checkcovid)))
         print("this is transform : " + type(checkcovid.json()))
         print("this is jsondump type : " + type(json.dumps(checkcovid.json())))
 
