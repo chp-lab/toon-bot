@@ -222,7 +222,7 @@ class Hooking(Resource):
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 elif data['event_stage'] == 'leave':
-                    print("this is Daily" + daily[0]['len'])
+                    print("this is Daily" + json.dumps(daily[0]['len']))
                     if daily[0]['len'] != 0:
                             self.check_out_body = {
                                 "time": datetime.today().strftime("%H:%M:%S"),
