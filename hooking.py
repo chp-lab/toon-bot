@@ -225,7 +225,7 @@ class Hooking(Resource):
                     print("this is Daily" + json.dumps(daily[0]['len']))
                     if daily[0]['len'] != 0:
                             self.check_out_body = {
-                                "time": datetime.today().strftime("%H:%M:%S"),
+                                "check_out_time": datetime.today().strftime("%H:%M:%S"),
                                 "one_id": user_profile.json()["result"][0]["one_id"]
                             }
                             checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
