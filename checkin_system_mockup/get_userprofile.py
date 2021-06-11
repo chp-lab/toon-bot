@@ -17,4 +17,4 @@ class Userprofile(Resource):
 
     def post(self):
         result = self.get_userprofile(request.json['oneid'])
-        return result
+        return result['result']
