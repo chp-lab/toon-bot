@@ -69,8 +69,8 @@ class Hooking(Resource):
         # print(len(checkcovid))
         # [print(len(x)) for x in checkcovid]
         [print(len(x)) for x in checkcovid]
-        if(checkcovid[458]["check_date"] == "2021-06-10" ):
-	        print(" Status Is "+ checkcovid[458]["status"])
+        if(checkcovid[127]["check_date"] == "2021-06-10" ):
+	        print(" Status Is "+ checkcovid[127]["status"])
         # print(len(checkcovid.json))
         # for i in range(len(checkcovid)):{
         #     print("i = ",i, "data is ",checkcovid.json[i])
