@@ -66,15 +66,15 @@ class Hooking(Resource):
                           }
         checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
         # print("debug onechat response :" + json.dumps(checkcovid.json()))
-        [print(x) for x in checkcovid]
-        # if ('check_date' in checkcovid):
-        #     print(checkcovid[0]["staffid"])
+        print(len(checkcovid))
+        # [print(x) for x in checkcovid]
+        # if([2]["check_date"] == "2021-06-10" ):
+	    #     print(" Status Is "+ checkcovid[]["status"])
         # print(len(checkcovid.json))
         # for i in range(len(checkcovid.json)):{
         #     print("i = ",i, "data is ",checkcovid.json[i])
         # }
         # print(checkcovid[45328]["check_date"])
-
         # if ("uuid" in data):
         #     print("this is one_id : " + data['oneid'])
         
