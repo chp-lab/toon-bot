@@ -228,7 +228,7 @@ class Hooking(Resource):
                                 "one_id": user_profile.json()["result"][0]["one_id"]
                             }
                             checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
-                            print("this is checkout :" + json.dumps(checkout))
+                            print("this is checkout :" + json.dumps(checkout.json()))
 
 
             
