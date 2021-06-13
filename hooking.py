@@ -11,7 +11,7 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
-    beaconbot_id = "B790a5e0089415d289d064cff06db374a"
+    beaconbot_id = "Bde6bcb263e82544ca9bae0d67b556ec4"
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
 
