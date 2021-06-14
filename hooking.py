@@ -86,9 +86,26 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
+        # if ('event' in data):
+        #     if(data["event"]=='message'):
+        #         message_db = self.get_message(1)
+        #         sendmessage_body = {
+        #                             "to":data['source']['one_id'],
+        #                             "bot_id": self.beaconbot_id,
+        #                             "type": "text",
+        #                             "message": message_db[0]['result'][0]['message'],
+        #                             "custom_notification": "ตอบกลับข้อความคุณครับ"
+        #                         }
+        #         sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+        #         print("debug onechat response :" + json.dumps(sendmessage.json()))
+
         # if('uuid' in data):
         #     covid_body = { "oneid": data['oneid'] }
-        #     user_profile = self.get_userprofile(data['oneid'])
+        #     self.get_userprofile_body = {
+        #         "oneid": data['oneid']
+        #     }
+        #     user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
+        #     print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
         #     daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
         #     if (data['event_stage']):
@@ -98,10 +115,16 @@ class Hooking(Resource):
         #             for covid_status in covid_filter:
         #                 if covid_status['status'] != None:
         #                     if daily[0]['len'] == 0:
-        #                         insert_user = self.check_in(user_profile[0]['result'][0]['one_email'], user_profile[0]['result'][0]['one_id'], datetime.today().strftime("%H:%M:%S"), covid_status['status'], datetime.today().strftime('%Y-%m-%d'))
-        #                         print("this is insert_user :" + json.dumps(insert_user))
+        #                         self.check_in_body = {
+        #                             "one_email": user_profile.json()["result"][0]["one_email"],
+        #                             "one_id": user_profile.json()["result"][0]["one_id"],
+        #                             "check_in_time": datetime.today().strftime("%H:%M:%S"),
+        #                             "covid_tracking": covid_status['status'],
+        #                             "date": datetime.today().strftime('%Y-%m-%d'),
+        #                         }
+        #                         insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
+        #                         print("this is insert_user :" + json.dumps(insert_user.json()))
         #                         message_db = self.get_message(2)
-        #                         print(message_db[0]['result'][0])
         #                         self.sendmessage_body = {
         #                                 "to": data['oneid'],
         #                                 "bot_id": self.beaconbot_id,
@@ -128,11 +151,38 @@ class Hooking(Resource):
         #                                 "to": data['oneid'],
         #                                 "bot_id": self.beaconbot_id,
         #                                 "type": "text",
-        #                                 "message": message_db[0]['result'][0]['message'],
+        #                                 "message": message_db[0]['result'][0]['message'] + "\n" + 
+        #                                         "---------------------------" + "\n" +
+        #                                        "uuid : " + data['uuid'] + "\n" +
+        #                                        "major : " + data['major'] + "\n" + 
+        #                                        "minor : " + data['minor'] + "\n" +
+        #                                        "rssi : " + str(data['rssi']) + "\n" +
+        #                                        "event_stage : " + data['event_stage'] + "\n" +
+        #                                        "proximity :  " + data['proximity'],
         #                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         #                         }
         #                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
         #                         print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+        #                     elif daily[0]['len'] == 1:
+        #                         self.sendmessage_body = {
+        #                             "to": data['oneid'],
+        #                             "bot_id": self.beaconbot_id,
+        #                             "type": "text",
+        #                             "message": "สวัสดี ตั้งใจทำงานค่ะ" + "\n" + 
+        #                                         "---------------------------" + "\n" +
+        #                                        "uuid : " + data['uuid'] + "\n" +
+        #                                        "major : " + data['major'] + "\n" + 
+        #                                        "minor : " + data['minor'] + "\n" +
+        #                                        "rssi : " + str(data['rssi']) + "\n" +
+        #                                        "event_stage : " + data['event_stage'] + "\n" +
+        #                                        "proximity :  " + data['proximity'],
+        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        #                     }
+        #                     sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+        #                     print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+                                
         #                 elif covid_status['status'] == None:
         #                     message_db = self.get_message(4)
         #                     print(message_db[0]['result'][0])
@@ -140,162 +190,45 @@ class Hooking(Resource):
         #                             "to": data['oneid'],
         #                             "bot_id": self.beaconbot_id,
         #                             "type": "text",
-        #                             "message": message_db[0]['result'][0]['message'],
+        #                             "message": message_db[0]['result'][0]['message']+ "\n" + 
+        #                                         "---------------------------" + "\n" +
+        #                                        "uuid : " + data['uuid'] + "\n" +
+        #                                        "major : " + data['major'] + "\n" + 
+        #                                        "minor : " + data['minor'] + "\n" +
+        #                                        "rssi : " + str(data['rssi']) + "\n" +
+        #                                        "event_stage : " + data['event_stage'] + "\n" +
+        #                                        "proximity :  " + data['proximity'],
         #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         #                     }
         #                     sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
         #                     print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         #         elif data['event_stage'] == 'leave':
+        #             print("this is Daily" + json.dumps(daily[0]['len']))
         #             if daily[0]['len'] != 0:
-        #                     checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
-        #                     print("this is checkout :" + json.dumps(checkout))
+        #                     self.check_out_body = {
+        #                         "check_out_time": datetime.today().strftime("%H:%M:%S"),
+        #                         "one_id": user_profile.json()["result"][0]["one_id"]
+        #                     }
+        #                     checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
+        #                     print("this is checkout :" + json.dumps(checkout.json()))
 
-        print(6666666)
-        if ('event' in data):
-            if(data["event"]=='message'):
-                print(777777)
-                message_db = self.get_message(1)
-                sendmessage_body = {
-                                    "to":data['source']['one_id'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": message_db[0]['result'][0]['message'],
-                                    "custom_notification": "ตอบกลับข้อความคุณครับ"
-                                }
-                sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-        if('uuid' in data):
-            covid_body = { "oneid": data['oneid'] }
-            self.get_userprofile_body = {
-                "oneid": data['oneid']
-            }
-            user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-            print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
-
-            daily = self.check_daily(data['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            if (data['event_stage']):
-                if data['event_stage'] == 'enter':
-                    chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-                    covid_filter = filter(self.date_filter, chekcovid.json())
-                    for covid_status in covid_filter:
-                        if covid_status['status'] != None:
-                            if daily[0]['len'] == 0:
-                                self.check_in_body = {
-                                    "one_email": user_profile.json()["result"][0]["one_email"],
-                                    "one_id": user_profile.json()["result"][0]["one_id"],
-                                    "check_in_time": datetime.today().strftime("%H:%M:%S"),
-                                    "covid_tracking": covid_status['status'],
-                                    "date": datetime.today().strftime('%Y-%m-%d'),
-                                }
-                                insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
-                                print("this is insert_user :" + json.dumps(insert_user.json()))
-                                message_db = self.get_message(2)
-                                self.sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": message_db[0]['result'][0]['message'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-
-                                sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                                print("debug onechat response :" + json.dumps(sendmessage.json()))
-                                self.sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-                                sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                                print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-                                message_db = self.get_message(3)
-                                print(message_db[0]['result'][0])
-                                self.sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": message_db[0]['result'][0]['message']+ "\n" + 
-                                                "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-                                sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                                print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-                            elif daily[0]['len'] == 1:
-                                self.sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "สวัสดี ตั้งใจทำงานค่ะ" + "\n" + 
-                                                "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                            }
-                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                            print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-                                
-                        elif covid_status['status'] == None:
-                            message_db = self.get_message(4)
-                            print(message_db[0]['result'][0])
-                            self.sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": message_db[0]['result'][0]['message']+ "\n" + 
-                                                "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                            }
-                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                            print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-                elif data['event_stage'] == 'leave':
-                    print("this is Daily" + json.dumps(daily[0]['len']))
-                    if daily[0]['len'] != 0:
-                            self.check_out_body = {
-                                "check_out_time": datetime.today().strftime("%H:%M:%S"),
-                                "one_id": user_profile.json()["result"][0]["one_id"]
-                            }
-                            checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
-                            print("this is checkout :" + json.dumps(checkout.json()))
-
-                            self.sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + "\n" + 
-                                                "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                            }
-                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                            print("debug onechat response :" + json.dumps(sendmessage.json()))
+        #                     self.sendmessage_body = {
+        #                             "to": data['oneid'],
+        #                             "bot_id": self.beaconbot_id,
+        #                             "type": "text",
+        #                             "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + "\n" + 
+        #                                         "---------------------------" + "\n" +
+        #                                        "uuid : " + data['uuid'] + "\n" +
+        #                                        "major : " + data['major'] + "\n" + 
+        #                                        "minor : " + data['minor'] + "\n" +
+        #                                        "rssi : " + str(data['rssi']) + "\n" +
+        #                                        "event_stage : " + data['event_stage'] + "\n" +
+        #                                        "proximity :  " + data['proximity'],
+        #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        #                     }
+        #                     sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+        #                     print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         return {
             "type": True,
