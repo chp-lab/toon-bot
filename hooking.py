@@ -151,8 +151,10 @@ class Hooking(Resource):
         #                     checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
         #                     print("this is checkout :" + json.dumps(checkout))
 
+        print(6666666)
         if ('event' in data):
             if(data["event"]=='message'):
+                print(777777)
                 message_db = self.get_message(1)
                 sendmessage_body = {
                                     "to":data['source']['one_id'],
