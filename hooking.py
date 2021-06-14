@@ -73,13 +73,6 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        # covid_body = { "oneid": data['oneid'] }
-        self.get_userprofile_body = {
-                "oneid": data['oneid']
-            }
-        user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-        print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
-
         # print("this is data :" + json.dumps(data))
 
         # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
@@ -193,6 +186,12 @@ class Hooking(Resource):
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
             print("debug onechat response :" + json.dumps(sendmessage.json()))
+                   
+        self.get_userprofile_body = {
+                "oneid": data['oneid']
+            }
+        user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
+        print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
         return {
             "type": True,
