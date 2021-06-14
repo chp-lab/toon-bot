@@ -186,9 +186,9 @@ class Hooking(Resource):
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
             print("debug onechat response :" + json.dumps(sendmessage.json()))
-                   
+
         self.get_userprofile_body = {
-                "oneid": data['oneid']
+                "one_id": data['oneid']
             }
         user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
         print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
