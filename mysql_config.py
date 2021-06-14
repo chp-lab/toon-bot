@@ -5,7 +5,8 @@ class MysqlConfig:
     def __init__(self):
         # realpath /home/user01/petdy-iBeacon/toon-bot
         # self.mysql_conf_file = "/home/user01/petdy-iBeacon/hr-ibeacon-checkin/dev-only/toon-bot/database_config.yaml"
-        self.mysql_conf_file = "/home/user01/petdy-iBeacon/toon-bot/database_config.yaml"
+        self.mysql_conf_file = "/home/user01/hr-ibeacon-checkin/toon-bot/database_config.yaml"
+        # self.mysql_conf_file = "/home/user01/petdy-iBeacon/toon-bot/database_config.yaml"
     def showData(self):
         print("Testing")
     def callDBConfig(self):
