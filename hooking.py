@@ -18,7 +18,7 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    get_userprofile_api = "http://203.151.164.229:5009/api/v1/get_userprofile"
+    get_userprofile_api = "http://203.151.164.229:5007/api/v1/get_userprofile"
     get_userprofile_body = {}
 
     check_in_api = "http://203.151.164.229:5009/api/v1/check_in"
