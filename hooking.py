@@ -79,7 +79,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        # print("this is data :" + json.dumps(data))
+        print("this is data :" + json.dumps(data))
 
         # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
         # checkcovid_body = {
