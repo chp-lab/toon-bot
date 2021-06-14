@@ -229,7 +229,7 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": "สวัสดี ตั้งใจทำงานค่ะ" + 
+                                    "message": "สวัสดี ตั้งใจทำงานค่ะ" + "\n" + 
                                                 "---------------------------" + "\n" +
                                                "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
@@ -270,7 +270,7 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + 
+                                    "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + "\n" + 
                                                 "---------------------------" + "\n" +
                                                "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
