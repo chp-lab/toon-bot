@@ -151,6 +151,19 @@ class Hooking(Resource):
         #                     checkout = self.update_checkout(datetime.today().strftime("%H:%M:%S"), data['oneid'])
         #                     print("this is checkout :" + json.dumps(checkout))
 
+        if ('event' in data):
+            if(data["event"]=='message'):
+                message_db = self.get_message(1)
+                sendmessage_body = {
+                                    "to":data['source']['one_id'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": message_db[0]['result'][0]['message'],
+                                    "custom_notification": "ตอบกลับข้อความคุณครับ"
+                                }
+                sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                print("debug onechat response :" + json.dumps(sendmessage.json()))
+
         if('uuid' in data):
             covid_body = { "oneid": data['oneid'] }
             self.get_userprofile_body = {
@@ -231,10 +244,6 @@ class Hooking(Resource):
                             checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
                             print("this is checkout :" + json.dumps(checkout.json()))
 
-
-            
-
-                
         return {
             "type": True,
             "message": "success",
