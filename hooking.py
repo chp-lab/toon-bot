@@ -18,8 +18,8 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    get_userprofile_api = "http://203.151.164.229:5007/api/v1/get_userprofile"
-    get_userprofile_body = {}
+    # get_userprofile_api = "http://203.151.164.229:5007/api/v1/get_userprofile"
+    # get_userprofile_body = {}
 
     check_in_api = "http://203.151.164.229:5007/api/v1/check_in"
     check_in_body = {}
@@ -64,7 +64,13 @@ class Hooking(Resource):
     #     headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
     #     result = requests.post(self.onechat_url1, json=req_body, headers=headers)
     #     print(TAG, result.text)
+    def get_userprofile(self, one_id):
+        cmd = """SELECT one_email,one_id,name FROM users WHERE users.one_id='%s' """ %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        return res
 
+      
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -186,12 +192,14 @@ class Hooking(Resource):
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
             print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-        self.get_userprofile_body = {
-                "oneid": "12643514984"
-            }
-        user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-        print("this is user profile : " + json.dumps(user_profile.json()["result"][0]["one_id"]))
+        
+        User_Profile = self.get_userprofile(data['oneid'])
+        print("User Profile is : "+User_Profile)
+        # self.get_userprofile_body = {
+        #         "oneid": "12643514984"
+        #     }
+        # user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
+        # print("this is user profile : " + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
         return {
             "type": True,
