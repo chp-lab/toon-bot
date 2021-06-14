@@ -14,45 +14,56 @@ class Hooking(Resource):
     beaconbot_id = "B7f2abd3c4e0e57dbb5c71bfa43920b5a"
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
-    onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+    # onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+    covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
+    covid_body = {}
+
+    get_userprofile_api = "http://203.151.164.229:5009/api/v1/get_userprofile"
+    get_userprofile_body = {}
+
+    check_in_api = "http://203.151.164.229:5009/api/v1/check_in"
+    check_in_body = {}
+
+    check_out_api = "http://203.151.164.229:5009/api/v1/check_out"
+    check_out_body = {}
 
     sendmessage_headers = {"Authorization": onechat_dev_token}
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
     sendmessage_body ={}
 
-    def menu_send(self, user_id, bot_id):
-        TAG = "menu_send:"
-        # web_vue_url1 = "https://web-meeting-room.herokuapp.com/"
-        web_vue_url1 = "https://onesmartaccess.herokuapp.com/"
-        req_body = {
-            "to": user_id,
-            "bot_id": bot_id,
-            "message": "ให้ช่วยอะไรดี",
-            "quick_reply":
-                [
-                    {
-                        "label": "อัพโหลดรูป",
-                        "type": "text",
-                        "message": "อัพโหลดรูป",
-                        "payload": {"action": "image_rec"}
-                    },
-                    {
-                        "label": "ทำความรู้จักผู้คน",
-                        "type": "text",
-                        "message": "มีใครโสดอยู่บ้าง",
-                        "payload": {"action": "find_single"}
-                    },
-                    {
-                        "label": "อัพเดทโปรไฟล์",
-                        "type": "text",
-                        "message": "ขออัพเดทโปรไฟล์หน่อยครับ",
-                        "payload": {"action": "profile_update"}
-                    }
-                ]
-        }
-        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
-        result = requests.post(self.onechat_url1, json=req_body, headers=headers)
-        print(TAG, result.text)
+    # def menu_send(self, user_id, bot_id):
+    #     TAG = "menu_send:"
+    #     # web_vue_url1 = "https://web-meeting-room.herokuapp.com/"
+    #     web_vue_url1 = "https://onesmartaccess.herokuapp.com/"
+    #     req_body = {
+    #         "to": user_id,
+    #         "bot_id": bot_id,
+    #         "message": "ให้ช่วยอะไรดี",
+    #         "quick_reply":
+    #             [
+    #                 {
+    #                     "label": "อัพโหลดรูป",
+    #                     "type": "text",
+    #                     "message": "อัพโหลดรูป",
+    #                     "payload": {"action": "image_rec"}
+    #                 },
+    #                 {
+    #                     "label": "ทำความรู้จักผู้คน",
+    #                     "type": "text",
+    #                     "message": "มีใครโสดอยู่บ้าง",
+    #                     "payload": {"action": "find_single"}
+    #                 },
+    #                 {
+    #                     "label": "อัพเดทโปรไฟล์",
+    #                     "type": "text",
+    #                     "message": "ขออัพเดทโปรไฟล์หน่อยครับ",
+    #                     "payload": {"action": "profile_update"}
+    #                 }
+    #             ]
+    #     }
+    #     headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+    #     result = requests.post(self.onechat_url1, json=req_body, headers=headers)
+    #     print(TAG, result.text)
 
     def post(self):
         TAG = "Hooking:"
@@ -61,6 +72,13 @@ class Hooking(Resource):
         print(TAG, request.headers)
         database = Database()
         module = Module()
+
+        covid_body = { "oneid": data['oneid'] }
+        self.get_userprofile_body = {
+                "oneid": data['oneid']
+            }
+        user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
+        print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
         # print("this is data :" + json.dumps(data))
 
