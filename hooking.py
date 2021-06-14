@@ -18,7 +18,7 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    get_userprofile_api = "http://203.151.164.229:5009/api/v1/get_userprofile"
+    get_userprofile_api = "http://203.151.164.229:5004/api/v1/get_userprofile"
     get_userprofile_body = {}
 
     check_in_api = "http://203.151.164.229:5009/api/v1/check_in"
@@ -188,7 +188,7 @@ class Hooking(Resource):
             print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         self.get_userprofile_body = {
-                "one_id": data['oneid']
+                "oneid": data['oneid']
             }
         user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
         print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
