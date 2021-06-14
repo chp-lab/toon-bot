@@ -218,7 +218,14 @@ class Hooking(Resource):
                                         "to": data['oneid'],
                                         "bot_id": self.beaconbot_id,
                                         "type": "text",
-                                        "message": message_db[0]['result'][0]['message'],
+                                        "message": message_db[0]['result'][0]['message']+ "\n" + 
+                                                "---------------------------" + "\n" +
+                                               "uuid : " + data['uuid'] + "\n" +
+                                               "major : " + data['major'] + "\n" + 
+                                               "minor : " + data['minor'] + "\n" +
+                                               "rssi : " + str(data['rssi']) + "\n" +
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
                                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -250,7 +257,14 @@ class Hooking(Resource):
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'],
+                                    "message": message_db[0]['result'][0]['message']+ "\n" + 
+                                                "---------------------------" + "\n" +
+                                               "uuid : " + data['uuid'] + "\n" +
+                                               "major : " + data['major'] + "\n" + 
+                                               "minor : " + data['minor'] + "\n" +
+                                               "rssi : " + str(data['rssi']) + "\n" +
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
