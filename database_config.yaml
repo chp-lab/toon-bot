@@ -2,6 +2,6 @@ db_param:
   host: 'localhost'
   user: 'admin'
   passwd: '0x00ff0000'
-  database: 'petdyiBeacon_test'
+  database: 'iBeacon_usercase1'
   use_unicode: True
   charset: 'utf8'
