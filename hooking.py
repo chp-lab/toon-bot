@@ -191,7 +191,7 @@ class Hooking(Resource):
                 "oneid": data['oneid']
             }
         user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-        print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
+        print("this is user profile : " + json.dumps(user_profile.json()["result"][0][1]))
 
         return {
             "type": True,
