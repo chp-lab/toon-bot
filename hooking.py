@@ -223,6 +223,19 @@ class Hooking(Resource):
                                 }
                                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                                 print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+                            elif daily[0]['len'] == 1:
+                                self.sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "สวัสดี ตั้งใจทำงานค่ะ",
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                            }
+                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                            print("debug onechat response :" + json.dumps(sendmessage.json()))
+
+                                
                         elif covid_status['status'] == None:
                             message_db = self.get_message(4)
                             print(message_db[0]['result'][0])
@@ -245,6 +258,16 @@ class Hooking(Resource):
                             }
                             checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
                             print("this is checkout :" + json.dumps(checkout.json()))
+
+                            self.sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ",
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                            }
+                            sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
+                            print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         return {
             "type": True,
