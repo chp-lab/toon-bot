@@ -73,7 +73,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        covid_body = { "oneid": data['oneid'] }
+        # covid_body = { "oneid": data['oneid'] }
         self.get_userprofile_body = {
                 "oneid": data['oneid']
             }
