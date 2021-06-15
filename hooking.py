@@ -50,7 +50,7 @@ class Hooking(Resource):
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
                                                 "type" : "webview",
-                                                "url" : "https://arcane-mountain-05572.herokuapp.com/",
+                                                "url" : "https://sites.google.com/silpakorn.edu/1294309room/",
                                                 "size" : "full",
                                                 "sign" : "true",
                                                 "onechat_token" : "true"
