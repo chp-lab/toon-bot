@@ -16,9 +16,10 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     bot_id = "B7f2abd3c4e0e57dbb5c71bfa43920b5a"
+    # https://chat-api.one.th/message/api/v1/push_quickreply
     # onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
-    covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
-    covid_body = {}
+    # covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
+    # covid_body = {}
 
     # get_userprofile_api = "http://203.151.164.229:5009/api/v1/get_userprofile"
     # get_userprofile_body = {}
@@ -28,10 +29,34 @@ class Hooking(Resource):
 
     # check_out_api = "http://203.151.164.229:5009/api/v1/check_out"
     # check_out_body = {}
-    headers = {"Authorization": onechat_dev_token, "Content-Type": "application/json"}
-    sendmessage_headers = {"Authorization": onechat_dev_token}
-    sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-    sendmessage_body ={}
+    # headers = {"Authorization": onechat_dev_token, "Content-Type": "application/json"}
+    # sendmessage_headers = {"Authorization": onechat_dev_token}
+    # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+    # sendmessage_body ={}
+
+    def post(self):
+        TAG = "Hooking:"
+        data = request.json
+        print(TAG, "data=", data)
+        print(TAG, request.headers)
+        database = Database()
+        print("this is data :" + json.dumps(data))
+
+        quick_reply_url = 'https://chat-api.one.th/message/api/v1/push_quickreply'
+        quick_reply_body = {
+	                        "to": data['oneid'],
+	                        "bot_id": self.beaconbot_id,
+	                        "message": "โปรดเข้าไปที่ site",
+	                        "quick_reply": [   {"label" : "ลงทะเบียน",
+                                                "type" : "webview",
+                                                "url" : "https://one.th/register",
+                                                "size" : "full",
+                                                "sign" : "true",
+                                                "onechat_token" : "true"
+                                            }]
+                         }
+        quick_out = requests.post(quick_reply_url, json=quick_reply_body, verify=False)
+        print("debug onechat response :" + json.dumps(quick_out.json()))
 
     # def menu_send(self, user_id, bot_id):
     #     TAG = "menu_send:"
@@ -66,38 +91,38 @@ class Hooking(Resource):
     #     headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
     #     result = requests.post(self.onechat_url1, json=req_body, headers=headers)
     #     print(TAG, result.text)
-    def get_userprofile(self, one_id):
-        cmd = """SELECT one_email,one_id,name FROM users WHERE users.one_id='%s' """ %(one_id)
-        database = Database()
-        res = database.getData(cmd)
-        return res
+    # def get_userprofile(self, one_id):
+    #     cmd = """SELECT one_email,one_id,name FROM users WHERE users.one_id='%s' """ %(one_id)
+    #     database = Database()
+    #     res = database.getData(cmd)
+    #     return res
 
       
-    def post(self):
-        TAG = "Hooking:"
-        data = request.json
-        print(TAG, "data=", data)
-        print(TAG, request.headers)
-        database = Database()
-        module = Module()
+    # def post(self):
+    #     TAG = "Hooking:"
+    #     data = request.json
+    #     print(TAG, "data=", data)
+    #     print(TAG, request.headers)
+    #     database = Database()
+    #     module = Module()
 
-        print("this is data :" + json.dumps(data))
-        print("this is header :"+request.headers)
+    #     print("this is data :" + json.dumps(data))
+    #     print("this is header :"+request.headers)
 
-        auth_key = "Authorization"
-        if(auth_key not in request.headers):
-            return module.unauthorized()
+    #     # auth_key = "Authorization"
+    #     # if(auth_key not in request.headers):
+    #     #     return module.unauthorized()
 
-        auth = request.headers.get("Authorization")
-        print(TAG, "auth=", auth)
-        payload = {
-            "bot_id":self.bot_id,
-            "source":auth
-        }
+    #     auth = request.headers.get("Authorization")
+    #     print(TAG, "auth=", auth)
+    #     payload = {
+    #         "bot_id":self.bot_id,
+    #         "source":auth
+    #     }
 
-        r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.headers, json=payload)
-        print(TAG, "response code=", r.status_code)
-        print(TAG, r.json())
+    #     r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.headers, json=payload)
+    #     print(TAG, "response code=", r.status_code)
+    #     print(TAG, r.json())
 
         # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
         # checkcovid_body = {
