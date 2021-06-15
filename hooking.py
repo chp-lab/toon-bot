@@ -8,7 +8,6 @@ from module import Module
 from datetime import datetime
 import urllib3
 import json
-import time
 import asyncio
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -81,7 +80,7 @@ class Hooking(Resource):
         return insert
 
     async def recheck_data():
-        time.sleep(3)
+        await asyncio.sleep(3)
         print(77777777)
         # for once_data in data_list:
         #     print(once_data)
