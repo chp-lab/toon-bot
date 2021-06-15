@@ -50,7 +50,7 @@ class Hooking(Resource):
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
                                                 "type" : "webview",
-                                                "url" : "https://asenseiot.avilon.co.th/login",
+                                                "url" : "https://google.co.th",
                                                 "size" : "full",
                                                 "sign" : "true",
                                                 "onechat_token" : "true"
