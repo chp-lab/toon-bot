@@ -44,7 +44,7 @@ class Hooking(Resource):
 
         quick_reply_url = 'https://chat-api.one.th/message/api/v1/push_quickreply'
         quick_reply_body = {
-	                        "to": data['oneid'],
+	                        "to": "Ucaef0f4949fd5b57a36fdd6c24d3af2d",
 	                        "bot_id": self.beaconbot_id,
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
