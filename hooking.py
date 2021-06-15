@@ -96,7 +96,7 @@ class Hooking(Resource):
 
         test_delay = await self.recheck_data()
 
-        print(test_delay)
+        print("this is time delay" + test_delay)
 
         # if ('event' in data):
         #     if(data["event"]=='message'):
