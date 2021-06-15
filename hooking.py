@@ -50,7 +50,7 @@ class Hooking(Resource):
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
                                                 "type" : "webview",
-                                                "url" : "https://one.th/register",
+                                                "url" : "https://arcane-mountain-05572.herokuapp.com/",
                                                 "size" : "full",
                                                 "sign" : "true",
                                                 "onechat_token" : "true"
