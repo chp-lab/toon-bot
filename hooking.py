@@ -254,5 +254,5 @@ class Hooking(Resource):
             "len": 0,
             "result": "testing"
         }
-        
-    asyncio.run(post())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(post())
