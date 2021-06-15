@@ -16,6 +16,7 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer Af047823219745b05b6993360704664914fff808c0a544edfa73dbec65d8daebf59ea0ed141bd4d93811a798db510b5c8"
     bot_id = "B7f2abd3c4e0e57dbb5c71bfa43920b5a"
+    headers = {"Authorization":onechat_dev_token, "Content-Type": "application/json"}
     # https://chat-api.one.th/message/api/v1/push_quickreply
     # onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
     # covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
@@ -55,7 +56,7 @@ class Hooking(Resource):
                                                 "onechat_token" : "true"
                                             }]
                          }
-        quick_out = requests.post(quick_reply_url, json=quick_reply_body, verify=False)
+        quick_out = requests.post(quick_reply_url, json=quick_reply_body,headers=self.headers, verify=False)
         print("debug onechat response :" + json.dumps(quick_out.json()))
 
     # def menu_send(self, user_id, bot_id):
