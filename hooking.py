@@ -8,7 +8,7 @@ from module import Module
 from datetime import datetime
 import urllib3
 import json
-import asyncio
+from threading import Timer
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
@@ -79,15 +79,14 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
-    async def recheck_data(delay, what):
-        await asyncio.sleep(delay)
-        print(what)
+    def recheck_data():
+        print(77777)
 
         # for once_data in data_list:
         #     print(once_data)
         
     
-    async def post(self):
+    def post(self):
         TAG = "Hooking:"
         data = request.json
         print(TAG, "data=", data)
@@ -95,9 +94,8 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        await self.recheck_data(1, 'hello')
-        await self.recheck_data(2, 'world')
-
+        r = Timer(1.0, self.recheck_data)
+        r.start
 
         # if ('event' in data):
         #     if(data["event"]=='message'):
