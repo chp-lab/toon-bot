@@ -94,7 +94,7 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        r = Timer(1.0, self.recheck_data)
+        r = Timer(5.0, self.recheck_data)
         r.start()
 
         # if ('event' in data):
