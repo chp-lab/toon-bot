@@ -83,7 +83,7 @@ class Hooking(Resource):
         time.sleep(3)
         # for once_data in data_list:
         #     print(once_data)
-        return 'YEAH!!!!'
+        return True
         
 
     async def post(self):
