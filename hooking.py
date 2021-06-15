@@ -81,7 +81,7 @@ class Hooking(Resource):
 
     async def recheck_data():
         await asyncio.sleep(3)
-        print(77777777)
+
         # for once_data in data_list:
         #     print(once_data)
         
