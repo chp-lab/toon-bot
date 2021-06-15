@@ -81,9 +81,9 @@ class Hooking(Resource):
 
     async def recheck_data():
         time.sleep(3)
+        print(77777777)
         # for once_data in data_list:
         #     print(once_data)
-        return True
         
 
     async def post(self):
@@ -94,9 +94,8 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        test_delay = await self.recheck_data()
+        await self.recheck_data()
 
-        print("this is time delay" + test_delay)
 
         # if ('event' in data):
         #     if(data["event"]=='message'):
