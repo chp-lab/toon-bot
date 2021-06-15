@@ -50,7 +50,7 @@ class Hooking(Resource):
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
                                                 "type" : "webview",
-                                                "url" : "https://sites.google.com/silpakorn.edu/1294309room/",
+                                                "url" : "https://asenseiot.avilon.co.th/login",
                                                 "size" : "full",
                                                 "sign" : "true",
                                                 "onechat_token" : "true"
