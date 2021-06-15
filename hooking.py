@@ -79,13 +79,14 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
-    async def recheck_data():
-        await asyncio.sleep(3)
+    async def recheck_data(delay, what):
+        await asyncio.sleep(delay)
+        print(what)
 
         # for once_data in data_list:
         #     print(once_data)
         
-
+    
     async def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -94,7 +95,8 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        await self.recheck_data()
+        await self.recheck_data(1, 'hello')
+        await self.recheck_data(2, 'world')
 
 
         # if ('event' in data):
@@ -252,3 +254,5 @@ class Hooking(Resource):
             "len": 0,
             "result": "testing"
         }
+        
+    asyncio.run(post())
