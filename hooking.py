@@ -79,7 +79,7 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
-    def recheck_data():
+    def recheck_data(self):
         print(77777)
 
         # for once_data in data_list:
