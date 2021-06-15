@@ -50,7 +50,7 @@ class Hooking(Resource):
 	                        "message": "โปรดเข้าไปที่ site",
 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
                                                 "type" : "webview",
-                                                "url" : "https://google.co.th",
+                                                "url" : "https://google.co.th/",
                                                 "size" : "full",
                                                 "sign" : "true",
                                                 "onechat_token" : "true"
