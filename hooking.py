@@ -52,7 +52,7 @@ class Hooking(Resource):
                                                 "type" : "webview",
                                                 "url" : "https://google.co.th/",
                                                 "size" : "full",
-                                                "sign" : "true",
+                                                "sign" : "false",
                                                 "onechat_token" : "true"
                                             }]
                          }
