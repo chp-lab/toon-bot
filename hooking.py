@@ -9,6 +9,7 @@ from datetime import datetime
 import urllib3
 import json
 import time
+import asyncio
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Hooking(Resource):
