@@ -95,7 +95,7 @@ class Hooking(Resource):
         module = Module()
 
         r = Timer(1.0, self.recheck_data)
-        r.start
+        r.start()
 
         # if ('event' in data):
         #     if(data["event"]=='message'):
