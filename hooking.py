@@ -2,6 +2,7 @@
 
 from logging import log
 from flask_restful import Resource
+from datetime import datetime
 from flask import request
 import requests
 from database import Database
@@ -18,14 +19,14 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    # get_userprofile_api = "http://203.151.164.229:5007/api/v1/get_userprofile"
+    # get_userprofile_api = "http://203.151.164.229:5009/api/v1/get_userprofile"
     # get_userprofile_body = {}
 
-    check_in_api = "http://203.151.164.229:5007/api/v1/check_in"
-    check_in_body = {}
+    # check_in_api = "http://203.151.164.229:5009/api/v1/check_in"
+    # check_in_body = {}
 
-    check_out_api = "http://203.151.164.229:5007/api/v1/check_out"
-    check_out_body = {}
+    # check_out_api = "http://203.151.164.229:5009/api/v1/check_out"
+    # check_out_body = {}
 
     sendmessage_headers = {"Authorization": onechat_dev_token}
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
@@ -80,6 +81,7 @@ class Hooking(Resource):
         module = Module()
 
         print("this is data :" + json.dumps(data))
+        print("this is header :"+request.headers)
 
         # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
         # checkcovid_body = {
@@ -114,7 +116,7 @@ class Hooking(Resource):
         #     if(data['event'] == 'greeting'):
         #         print('this is greeting')
 
-        if ('event' in data):
+        '''if ('event' in data):
             print(data['event'])
             if(data["event"]=='message' and data['message']['text']=='Hi'):
                 sendmessage_body = {
@@ -125,7 +127,7 @@ class Hooking(Resource):
                                     "custom_notification": "ตอบกลับข้อความคุณครับ"
                                 }
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                print("debug onechat response :" + json.dumps(sendmessage.json()))
+                print("debug onechat response :" + json.dumps(sendmessage.json()))'''
 
         # sendmessage_headers = {"Authorization": self.onechat_dev_token}
         # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
@@ -140,7 +142,7 @@ class Hooking(Resource):
         # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
     #petdy_iBEACON
-        if('uuid' in data):
+        '''if('uuid' in data):
             # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
             # update_body = {
             #                     "event_stage":data['event_stage'],
@@ -194,7 +196,7 @@ class Hooking(Resource):
             print("debug onechat response :" + json.dumps(sendmessage.json()))
         
         User_Profile = self.get_userprofile(data['source']['one_id'])
-        print(User_Profile)
+        print(User_Profile)'''
         # self.get_userprofile_body = {
         #         "oneid": "12643514984"
         #     }
