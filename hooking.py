@@ -90,7 +90,8 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is count_request len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        time.sleep(5)   
+        # do not delay in the server, must give good priority of the piece code
+        # time.sleep(5)
         return self.request_count
 
     def check_sameUser(self, record):
@@ -127,6 +128,19 @@ class Hooking(Resource):
 
         return r
 
+    def is_entred(self, one_id):
+        TAG = "is_entered:"
+        cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.check_in 
+        FROM `timeattendance` 
+        WHERE timeattendance.employee_code='%s' AND timeattendance.date=CURRENT_DATE""" %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        print(TAG, res)
+        if(res[0]['len'] == 0):
+            return False
+        else:
+            return True
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -160,7 +174,13 @@ class Hooking(Resource):
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
             r = self.send_msg(one_id, tmp_msg)
             print(TAG, "r=", r)
-            return
+            # return
+
+            if(self.is_user_exist(one_id)):
+                print(TAG, "user was enter")
+                return
+            else:
+                print(TAG, "first enter of the day")
 
             record = self.count_request(data)
             newdata =  self.check_sameUser(record)
@@ -176,9 +196,8 @@ class Hooking(Resource):
 
             daily = self.check_daily(newdata[0]['oneid'], datetime.today().strftime('%Y-%m-%d'))
 
-
-
             if newdata[0]['event_stage'] == 'enter':
+                # check is record is entered
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
                 for covid_status in covid_filter:
