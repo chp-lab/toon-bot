@@ -252,6 +252,7 @@ class Hooking(Resource):
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
+                            return module.success()
 
                         elif daily[0]['len'] == 1:
                             self.sendmessage_body = {
@@ -295,6 +296,7 @@ class Hooking(Resource):
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
+                return module.success()
         return {
             "type": True,
             "message": "success",
