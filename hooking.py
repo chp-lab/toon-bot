@@ -1,5 +1,6 @@
 # -- coding: utf-8 --
 
+from time import time
 from flask_restful import Resource
 from flask import request
 import requests
@@ -8,6 +9,7 @@ from module import Module
 from datetime import datetime
 import urllib3
 import json
+import time
 from threading import Timer
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -88,14 +90,13 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
+        time.sleep(5)
         
         return "7894564126"
 
     def beacon_ckeckin(self, data):
-        record = Timer(5.0, self.count_request(data))
-        record.start()
-        print("this is record : " + str(record))
-
+        record = self.count_request(data)
+        print("this is record : " + json.dumps(record))
     def post(self):
         TAG = "Hooking:"
         data = request.json
