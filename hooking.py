@@ -154,7 +154,8 @@ class Hooking(Resource):
         if('uuid' in data):
             print(TAG, "event=", data)
             one_id = data['oneid']
-            self.send_msg(one_id, "testing")
+            r = self.send_msg(one_id, "testing")
+            print(TAG, "r=", r)
             return
 
             record = self.count_request(data)
