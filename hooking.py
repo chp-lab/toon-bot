@@ -100,8 +100,11 @@ class Hooking(Resource):
         #     oneid_list.append(once_record['oneid'])
 
         for once_record in record:
+            if newrecord_list.count(once_record) == 0 and oneid_list.count(once_record["oneid"]) == 0:
+                oneid_list.append(once_record["oneid"])
+                newrecord_list.appendonce_record()
+        
             # for oneid_record in newrecord_list:
-                print("this is debug : " + str(once_record["oneid"].count(newrecord_list)))
                 # print("this is de bug : " + oneid_record["oneid"].count(oneid_list))
                 # if oneid_record["oneid"].count(oneid_list) == 0:
                 #     oneid_list.append(oneid_record["oneid"])
@@ -109,7 +112,7 @@ class Hooking(Resource):
 
             # if once_record["oneid"].count(newrecord_list) == 0:
             #     newrecord_list.append(once_record)
-        
+        print("this is oneid_list : " + json.dumps(oneid_list))
         print("this is newrecord_list : " + json.dumps(newrecord_list))
 
     def beacon_ckeckin(self, data):
