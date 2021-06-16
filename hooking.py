@@ -111,6 +111,19 @@ class Hooking(Resource):
         print("this is record : " + json.dumps(record))
         self.request_count.clear()
 
+    def send_msg(self, one_id, reply_msg):
+        TAG = "send_msg:"
+        payload = {
+            "to": one_id,
+            "bot_id": self.beaconbot_id,
+            "type": "text",
+            "message": reply_msg,
+            "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        }
+        r = requests.post(self.onechat_uri + "/message/api/v1/push_message", self.sendmessage_headers, json=payload)
+
+        return r
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -138,10 +151,15 @@ class Hooking(Resource):
                     add_user = self.add_new_user(data['source']['email'], data['source']['display_name'], data['source']['one_id'])
                     print(TAG, "add=new_user=", add_user)
 
-        
-        
-
         if('uuid' in data):
+            print(TAG, "event=", data)
+            user_id = data['source']['user_id']
+            email = data['source']['email']
+            one_id = data['source']['one_id']
+            name = data['source']['display_name']
+            self.send_msg(one_id, "testing")
+            return
+
             record = self.count_request(data)
             newdata =  self.check_sameUser(record)
             # self.request_count.clear()
@@ -155,6 +173,9 @@ class Hooking(Resource):
             print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
             daily = self.check_daily(newdata[0]['oneid'], datetime.today().strftime('%Y-%m-%d'))
+
+
+
             if newdata[0]['event_stage'] == 'enter':
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
