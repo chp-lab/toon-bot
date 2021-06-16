@@ -120,7 +120,7 @@ class Hooking(Resource):
             "message": reply_msg,
             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
-        r = sendmessage = requests.post(self.sendmessage_url, json=reply_msg, headers=self.sendmessage_headers, verify=False)
+        r = requests.post(self.sendmessage_url, json=reply_msg, headers=self.sendmessage_headers, verify=False)
 
         return r
 
