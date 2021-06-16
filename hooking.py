@@ -21,13 +21,13 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    get_userprofile_api = "http://locallhost:5007/api/v1/get_userprofile"
+    get_userprofile_api = "http://127.0.0.1:5007/api/v1/get_userprofile"
     get_userprofile_body = {}
 
-    check_in_api = "http://locallhost:5007/api/v1/check_in"
+    check_in_api = "http://127.0.0.1:5007/api/v1/check_in"
     check_in_body = {}
 
-    check_out_api = "http://locallhost:5007/api/v1/check_out"
+    check_out_api = "http://127.0.0.1:5007/api/v1/check_out"
     check_out_body = {}
 
     sendmessage_headers = {"Authorization": onechat_dev_token}
