@@ -153,10 +153,7 @@ class Hooking(Resource):
 
         if('uuid' in data):
             print(TAG, "event=", data)
-            user_id = data['source']['user_id']
-            email = data['source']['email']
-            one_id = data['source']['one_id']
-            name = data['source']['display_name']
+            one_id = data['one_id']
             self.send_msg(one_id, "testing")
             return
 
