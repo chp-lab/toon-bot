@@ -138,14 +138,15 @@ class Hooking(Resource):
                     add_user = self.add_new_user(data['source']['email'], data['source']['display_name'], data['source']['one_id'])
                     print(TAG, "add=new_user=", add_user)
 
-        record = self.count_request(data)
-        newdata =  self.check_sameUser(record)
-        self.request_count.clear()
         
-        print("this is new data : " + json.dumps(newdata))
         
 
-        if('uuid' in newdata[0]):
+        if('uuid' in data):
+            record = self.count_request(data)
+            newdata =  self.check_sameUser(record)
+            self.request_count.clear()
+            
+            print("this is new data : " + json.dumps(newdata))
             covid_body = { "oneid": newdata[0]['oneid'] }
             self.get_userprofile_body = {
                 "oneid": newdata[0]['oneid']
