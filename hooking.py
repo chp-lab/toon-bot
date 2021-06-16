@@ -176,7 +176,7 @@ class Hooking(Resource):
             print(TAG, "r=", r)
             # return
 
-            if(self.is_user_exist(one_id)):
+            if(self.is_entred(one_id)):
                 print(TAG, "user was enter")
                 return
             else:
