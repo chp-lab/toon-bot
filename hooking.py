@@ -99,7 +99,7 @@ class Hooking(Resource):
 
         data_list.append(data)
 
-        r = Timer(10.0, self.recheck_data, (data_list))
+        r = Timer(20.0, self.recheck_data, (data_list))
         r.start()
 
         
