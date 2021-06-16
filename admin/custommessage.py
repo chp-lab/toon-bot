@@ -17,8 +17,6 @@ class Custommessage(Resource):
         return update
 
     def post(self):
-        print(type(request.json))
-        print(request.json)
         edit_message = self.edit_message(request.json['key'], request.json['message'])
         return {
             "status": 200,
