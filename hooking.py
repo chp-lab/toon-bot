@@ -94,7 +94,7 @@ class Hooking(Resource):
         return self.request_count
 
     def check_sameUser(self, record):
-        self.request_count.clear()
+        
         oneid_list = []
         newrecord_list = []
 
@@ -120,6 +120,7 @@ class Hooking(Resource):
 
         record = self.count_request(data)
         newdata =  self.check_sameUser(record)
+        self.request_count.clear()
         
         print("this is new data : " + json.dumps(newdata))
         if ('event' in newdata):
