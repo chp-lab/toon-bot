@@ -121,7 +121,7 @@ class Hooking(Resource):
         record = self.count_request(data)
         newdata =  self.check_sameUser(record)
         
-
+        print("this is new data : " + json.dumps(newdata))
         if ('event' in newdata):
             if(newdata["event"]=='message'):
                 message_db = self.get_message(1)
