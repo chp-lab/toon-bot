@@ -101,7 +101,7 @@ class Hooking(Resource):
 
         for once_record in record:
             # for oneid_record in newrecord_list:
-                print("this is debug : " + once_record["oneid"].count(newrecord_list))
+                print("this is debug : " + json.dumps(once_record["oneid"].count(newrecord_list)))
                 # print("this is de bug : " + oneid_record["oneid"].count(oneid_list))
                 # if oneid_record["oneid"].count(oneid_list) == 0:
                 #     oneid_list.append(oneid_record["oneid"])
