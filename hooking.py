@@ -120,7 +120,7 @@ class Hooking(Resource):
             "message": reply_msg,
             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
-        r = requests.post(self.onechat_uri + "/message/api/v1/push_message", self.sendmessage_headers, json=payload, verify=False)
+        r = sendmessage = requests.post(self.sendmessage_url, json=reply_msg, headers=self.sendmessage_headers, verify=False)
 
         return r
 
