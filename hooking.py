@@ -113,6 +113,7 @@ class Hooking(Resource):
 
     def send_msg(self, one_id, reply_msg):
         TAG = "send_msg:"
+
         payload = {
             "to": one_id,
             "bot_id": self.beaconbot_id,
@@ -120,7 +121,9 @@ class Hooking(Resource):
             "message": reply_msg,
             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
-        r = requests.post(self.sendmessage_url, json=reply_msg, headers=self.sendmessage_headers, verify=False)
+
+        print(TAG, "payload=", payload)
+        r = requests.post(self.sendmessage_url, json=payload, headers=self.sendmessage_headers, verify=False)
 
         return r
 
