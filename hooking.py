@@ -92,11 +92,13 @@ class Hooking(Resource):
         print(json.dumps(self.request_count))
         time.sleep(5)
         
-        return "7894564126"
+        return self.request_count
 
     def beacon_ckeckin(self, data):
         record = self.count_request(data)
         print("this is record : " + json.dumps(record))
+        self.request_count = []
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
