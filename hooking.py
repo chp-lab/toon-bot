@@ -119,16 +119,11 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        record = self.count_request(data)
-        newdata =  self.check_sameUser(record)
-        self.request_count.clear()
-        
-        print("this is new data : " + json.dumps(newdata))
-        if ('event' in newdata[0]):
-            if(newdata[0]["event"]=='message'):
+        if ('event' in data):
+            if(data["event"]=='message'):
                 message_db = self.get_message(1)
                 sendmessage_body = {
-                                    "to":newdata[0]['source']['one_id'],
+                                    "to":data['source']['one_id'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": message_db[0]['result'][0]['message'],
@@ -137,11 +132,18 @@ class Hooking(Resource):
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-            elif(newdata[0]["event"]=='add_friend'):
-                user_exist = self.is_user_exist(newdata[0]['source']['email'])
+            elif(data["event"]=='add_friend'):
+                user_exist = self.is_user_exist(data['source']['email'])
                 if(user_exist == False) :
-                    add_user = self.add_new_user(newdata[0]['source']['email'], newdata[0]['source']['display_name'], newdata[0]['source']['one_id'])
+                    add_user = self.add_new_user(data['source']['email'], data['source']['display_name'], data['source']['one_id'])
                     print(TAG, "add=new_user=", add_user)
+
+        record = self.count_request(data)
+        newdata =  self.check_sameUser(record)
+        self.request_count.clear()
+        
+        print("this is new data : " + json.dumps(newdata))
+        
 
         if('uuid' in newdata[0]):
             covid_body = { "oneid": newdata[0]['oneid'] }
