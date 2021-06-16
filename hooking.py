@@ -94,8 +94,20 @@ class Hooking(Resource):
         return self.request_count
 
     def check_sameUser(self, record):
+        oneid_list = []
+        newrecord_list = []
+        # for once_record in record:
+        #     oneid_list.append(once_record['oneid'])
+
         for once_record in record:
-            print("this is once_record : " + json.dumps(once_record))
+            for oneid_record in newrecord_list:
+                if oneid_record["oneid"].count(newrecord_list) == 0:
+                    newrecord_list.append(once_record
+                    )
+            # if once_record["oneid"].count(newrecord_list) == 0:
+            #     newrecord_list.append(once_record)
+        
+        print("this is newrecord_list : " + json.dumps(newrecord_list))
 
     def beacon_ckeckin(self, data):
         record = self.count_request(data)
@@ -112,6 +124,8 @@ class Hooking(Resource):
 
         record = self.count_request(data)
         self.check_sameUser(record)
+        self.request_count.clear()
+        
 
         # if ('event' in data):
         #     if(data["event"]=='message'):
