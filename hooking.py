@@ -176,12 +176,6 @@ class Hooking(Resource):
             print(TAG, "r=", r)
             # return
 
-            if(self.is_entred(one_id)):
-                print(TAG, "user was enter")
-                return
-            else:
-                print(TAG, "first enter of the day")
-
             record = self.count_request(data)
             newdata =  self.check_sameUser(record)
             # self.request_count.clear()
@@ -197,9 +191,20 @@ class Hooking(Resource):
             daily = self.check_daily(newdata[0]['oneid'], datetime.today().strftime('%Y-%m-%d'))
 
             if newdata[0]['event_stage'] == 'enter':
-                # check is record is entered
+                # do slow job first
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
+
+                #check is it first time user enter the area
+                if (self.is_entred(one_id)):
+                    print(TAG, "user was enter")
+                    self.send_msg(one_id, "ยินดีต้อรับค่ะ")
+                    # end the job
+                    return
+                else:
+                    # continue the job
+                    print(TAG, "first enter of the day")
+                # check is record is entered
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
                         if daily[0]['len'] == 0:
