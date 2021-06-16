@@ -206,6 +206,8 @@ class Hooking(Resource):
                     # continue the job
                     print(TAG, "first enter of the day")
                 # check is record is entered
+                print(TAG, "covid_filter=", covid_filter)
+                
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
                         if daily[0]['len'] == 0:
