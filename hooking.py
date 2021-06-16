@@ -90,7 +90,7 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        time.sleep(5)
+        time.sleep(10)
         
         return self.request_count
 
