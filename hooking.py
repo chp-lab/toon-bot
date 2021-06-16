@@ -88,7 +88,7 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        delay = Timer(10.0)
+        delay = Timer(10.0, self.delay)
         delay.start()
         
         return self.request_count
