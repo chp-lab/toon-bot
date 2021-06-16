@@ -123,11 +123,11 @@ class Hooking(Resource):
         self.request_count.clear()
         
         print("this is new data : " + json.dumps(newdata))
-        if ('event' in newdata):
-            if(newdata["event"]=='message'):
+        if ('event' in newdata[0]):
+            if(newdata[0]["event"]=='message'):
                 message_db = self.get_message(1)
                 sendmessage_body = {
-                                    "to":newdata['source']['one_id'],
+                                    "to":newdata[0]['source']['one_id'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": message_db[0]['result'][0]['message'],
@@ -136,22 +136,22 @@ class Hooking(Resource):
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-            elif(newdata["event"]=='add_friend'):
-                user_exist = self.is_user_exist(newdata['source']['email'])
+            elif(newdata[0]["event"]=='add_friend'):
+                user_exist = self.is_user_exist(newdata[0]['source']['email'])
                 if(user_exist == False) :
-                    add_user = self.add_new_user(newdata['source']['email'], newdata['source']['display_name'], newdata['source']['one_id'])
+                    add_user = self.add_new_user(newdata[0]['source']['email'], newdata[0]['source']['display_name'], newdata[0]['source']['one_id'])
                     print(TAG, "add=new_user=", add_user)
 
-        if('uuid' in newdata):
-            covid_body = { "oneid": newdata['oneid'] }
+        if('uuid' in newdata[0]):
+            covid_body = { "oneid": newdata[0]['oneid'] }
             self.get_userprofile_body = {
-                "oneid": newdata['oneid']
+                "oneid": newdata[0]['oneid']
             }
             user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
             print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
-            daily = self.check_daily(newdata['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            if newdata['event_stage'] == 'enter':
+            daily = self.check_daily(newdata[0]['oneid'], datetime.today().strftime('%Y-%m-%d'))
+            if newdata[0]['event_stage'] == 'enter':
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
                 for covid_status in covid_filter:
@@ -168,7 +168,7 @@ class Hooking(Resource):
                             print("this is insert_user :" + json.dumps(insert_user.json()))
                             message_db = self.get_message(2)
                             self.sendmessage_body = {
-                                    "to": newdata['oneid'],
+                                    "to": newdata[0]['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": message_db[0]['result'][0]['message'],
@@ -178,7 +178,7 @@ class Hooking(Resource):
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
                             self.sendmessage_body = {
-                                    "to": newdata['oneid'],
+                                    "to": newdata[0]['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
@@ -190,17 +190,17 @@ class Hooking(Resource):
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
                             self.sendmessage_body = {
-                                    "to": newdata['oneid'],
+                                    "to": newdata[0]['oneid'],
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": message_db[0]['result'][0]['message'] + "\n" + 
                                             "---------------------------" + "\n" +
-                                        "uuid : " + newdata['uuid'] + "\n" +
-                                        "major : " + newdata['major'] + "\n" + 
-                                        "minor : " + newdata['minor'] + "\n" +
-                                        "rssi : " + str(newdata['rssi']) + "\n" +
-                                        "event_stage : " + newdata['event_stage'] + "\n" +
-                                        "proximity :  " + newdata['proximity'],
+                                        "uuid : " + newdata[0]['uuid'] + "\n" +
+                                        "major : " + newdata[0]['major'] + "\n" + 
+                                        "minor : " + newdata[0]['minor'] + "\n" +
+                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
+                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
+                                        "proximity :  " + newdata[0]['proximity'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -208,17 +208,17 @@ class Hooking(Resource):
 
                         elif daily[0]['len'] == 1:
                             self.sendmessage_body = {
-                                "to": newdata['oneid'],
+                                "to": newdata[0]['oneid'],
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
                                 "message": "สวัสดี ตั้งใจทำงานค่ะ" + "\n" + 
                                             "---------------------------" + "\n" +
-                                        "uuid : " + newdata['uuid'] + "\n" +
-                                        "major : " + newdata['major'] + "\n" + 
-                                        "minor : " + newdata['minor'] + "\n" +
-                                        "rssi : " + str(newdata['rssi']) + "\n" +
-                                        "event_stage : " + newdata['event_stage'] + "\n" +
-                                        "proximity :  " + newdata['proximity'],
+                                        "uuid : " + newdata[0]['uuid'] + "\n" +
+                                        "major : " + newdata[0]['major'] + "\n" + 
+                                        "minor : " + newdata[0]['minor'] + "\n" +
+                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
+                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
+                                        "proximity :  " + newdata[0]['proximity'],
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -229,23 +229,23 @@ class Hooking(Resource):
                         message_db = self.get_message(4)
                         print(message_db[0]['result'][0])
                         self.sendmessage_body = {
-                                "to": newdata['oneid'],
+                                "to": newdata[0]['oneid'],
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
                                 "message": message_db[0]['result'][0]['message']+ "\n" + 
                                             "---------------------------" + "\n" +
-                                        "uuid : " + newdata['uuid'] + "\n" +
-                                        "major : " + newdata['major'] + "\n" + 
-                                        "minor : " + newdata['minor'] + "\n" +
-                                        "rssi : " + str(newdata['rssi']) + "\n" +
-                                        "event_stage : " + newdata['event_stage'] + "\n" +
-                                        "proximity :  " + newdata['proximity'],
+                                        "uuid : " + newdata[0]['uuid'] + "\n" +
+                                        "major : " + newdata[0]['major'] + "\n" + 
+                                        "minor : " + newdata[0]['minor'] + "\n" +
+                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
+                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
+                                        "proximity :  " + newdata[0]['proximity'],
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-            elif newdata['event_stage'] == 'leave':
+            elif newdata[0]['event_stage'] == 'leave':
                 print("this is Daily" + json.dumps(daily[0]['len']))
                 if daily[0]['len'] != 0:
                         self.check_out_body = {
@@ -256,17 +256,17 @@ class Hooking(Resource):
                         print("this is checkout :" + json.dumps(checkout.json()))
 
                         self.sendmessage_body = {
-                                "to": newdata['oneid'],
+                                "to": newdata[0]['oneid'],
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
                                 "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + "\n" + 
                                             "---------------------------" + "\n" +
-                                        "uuid : " + newdata['uuid'] + "\n" +
-                                        "major : " + newdata['major'] + "\n" + 
-                                        "minor : " + newdata['minor'] + "\n" +
-                                        "rssi : " + str(newdata['rssi']) + "\n" +
-                                        "event_stage : " + newdata['event_stage'] + "\n" +
-                                        "proximity :  " + newdata['proximity'],
+                                        "uuid : " + newdata[0]['uuid'] + "\n" +
+                                        "major : " + newdata[0]['major'] + "\n" + 
+                                        "minor : " + newdata[0]['minor'] + "\n" +
+                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
+                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
+                                        "proximity :  " + newdata[0]['proximity'],
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
