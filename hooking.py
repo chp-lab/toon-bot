@@ -82,6 +82,7 @@ class Hooking(Resource):
     def recheck_data(self,data_list):
         print(77777)
         print(len(data_list))
+        print(json.dumps(data_list))
 
         # for once_data in data_list:
         #     print(once_data)
