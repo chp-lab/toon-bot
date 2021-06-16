@@ -102,8 +102,7 @@ class Hooking(Resource):
         for once_record in record:
             for oneid_record in newrecord_list:
                 if oneid_record["oneid"].count(newrecord_list) == 0:
-                    newrecord_list.append(once_record
-                    )
+                    newrecord_list.append(once_record)
             # if once_record["oneid"].count(newrecord_list) == 0:
             #     newrecord_list.append(once_record)
         
