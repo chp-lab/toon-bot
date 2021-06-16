@@ -95,7 +95,7 @@ class Hooking(Resource):
 
     def check_sameUser(self, record):
         for once_record in record:
-            print("this is once_record : " + once_record)
+            print("this is once_record : " + json.dumps(once_record))
 
     def beacon_ckeckin(self, data):
         record = self.count_request(data)
@@ -112,7 +112,7 @@ class Hooking(Resource):
 
         record = self.count_request(data)
         self.check_sameUser(record)
-        
+
         # if ('event' in data):
         #     if(data["event"]=='message'):
         #         message_db = self.get_message(1)
