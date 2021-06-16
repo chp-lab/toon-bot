@@ -144,7 +144,7 @@ class Hooking(Resource):
         if('uuid' in data):
             record = self.count_request(data)
             newdata =  self.check_sameUser(record)
-            self.request_count.clear()
+            # self.request_count.clear()
             
             print("this is new data : " + json.dumps(newdata))
             covid_body = { "oneid": newdata[0]['oneid'] }
