@@ -157,7 +157,7 @@ class Hooking(Resource):
         if('uuid' in data):
             print(TAG, "event=", data)
             one_id = data['oneid']
-            tmp_msg = "event:" + data['event_stage']
+            tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximityproximity'])
             r = self.send_msg(one_id, tmp_msg)
             print(TAG, "r=", r)
             return
