@@ -94,7 +94,7 @@ class Hooking(Resource):
     def beacon_ckeckin(self, data):
         record = Timer(5.0, self.count_request(data))
         record.start()
-        print("this is record : " + record)
+        print("this is record : " + str(record))
 
     def post(self):
         TAG = "Hooking:"
