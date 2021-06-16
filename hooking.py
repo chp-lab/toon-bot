@@ -88,13 +88,12 @@ class Hooking(Resource):
 
     def count_request(self, request_num):
         self.request_count.append(request_num)
-        print("this is len : " + str(len(self.request_count)))
+        print("this is count_request len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
         time.sleep(5)   
         return self.request_count
 
     def check_sameUser(self, record):
-        
         oneid_list = []
         newrecord_list = []
 
@@ -103,6 +102,8 @@ class Hooking(Resource):
                 oneid_list.append(once_record["oneid"])
                 newrecord_list.append(once_record)
 
+        print("this is oneid_list : " + json.dumps(oneid_list))
+        print("this is newrecord_list : " + json.dumps(newrecord_list))
         return newrecord_list
 
     def beacon_ckeckin(self, data):
