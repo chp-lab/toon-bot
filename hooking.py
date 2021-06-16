@@ -21,13 +21,13 @@ class Hooking(Resource):
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
-    get_userprofile_api = "http://203.151.164.229:5007/api/v1/get_userprofile"
+    get_userprofile_api = "http://127.0.0.1:5007/api/v1/get_userprofile"
     get_userprofile_body = {}
 
-    check_in_api = "http://203.151.164.229:5007/api/v1/check_in"
+    check_in_api = "http://127.0.0.1:5007/api/v1/check_in"
     check_in_body = {}
 
-    check_out_api = "http://203.151.164.229:5007/api/v1/check_out"
+    check_out_api = "http://127.0.0.1:5007/api/v1/check_out"
     check_out_body = {}
 
     sendmessage_headers = {"Authorization": onechat_dev_token}
@@ -90,7 +90,8 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is count_request len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        time.sleep(5)   
+        # do not delay in the server, must give good priority of the piece code
+        # time.sleep(5)
         return self.request_count
 
     def check_sameUser(self, record):
@@ -110,6 +111,35 @@ class Hooking(Resource):
         record = self.count_request(data)
         print("this is record : " + json.dumps(record))
         self.request_count.clear()
+
+    def send_msg(self, one_id, reply_msg):
+        TAG = "send_msg:"
+
+        payload = {
+            "to": one_id,
+            "bot_id": self.beaconbot_id,
+            "type": "text",
+            "message": reply_msg,
+            "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+        }
+
+        print(TAG, "payload=", payload)
+        r = requests.post(self.sendmessage_url, json=payload, headers=self.sendmessage_headers, verify=False)
+
+        return r
+
+    def is_entred(self, one_id):
+        TAG = "is_entered:"
+        cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.check_in 
+        FROM `timeattendance` 
+        WHERE timeattendance.employee_code='%s' AND timeattendance.date=CURRENT_DATE""" %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        print(TAG, res)
+        if(res[0]['len'] == 0):
+            return False
+        else:
+            return True
 
     def post(self):
         TAG = "Hooking:"
@@ -138,26 +168,46 @@ class Hooking(Resource):
                     add_user = self.add_new_user(data['source']['email'], data['source']['display_name'], data['source']['one_id'])
                     print(TAG, "add=new_user=", add_user)
 
-        
-        
-
         if('uuid' in data):
-            record = self.count_request(data)
-            newdata =  self.check_sameUser(record)
+            print(TAG, "event=", data)
+            one_id = data['oneid']
+            tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
+            r = self.send_msg(one_id, tmp_msg)
+            print(TAG, "r=", r)
+            # return
+
+            # record = self.count_request(data)
+            # newdata =  self.check_sameUser(record)
             # self.request_count.clear()
             
-            print("this is new data : " + json.dumps(newdata))
-            covid_body = { "oneid": newdata[0]['oneid'] }
+            # print("this is new data : " + json.dumps(newdata))
+
+            covid_body = { "oneid": one_id }
             self.get_userprofile_body = {
-                "oneid": newdata[0]['oneid']
+                "oneid": one_id
             }
             user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
             print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
 
-            daily = self.check_daily(newdata[0]['oneid'], datetime.today().strftime('%Y-%m-%d'))
-            if newdata[0]['event_stage'] == 'enter':
+            daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
+
+            if(data['event_stage'] == 'enter'):
+                # do slow job first
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
+
+                #check is it first time user enter the area
+                if (self.is_entred(one_id)):
+                    print(TAG, "user was enter")
+                    self.send_msg(one_id, "ยินดีต้อรับค่ะ")
+                    # end the job
+                    return
+                else:
+                    # continue the job
+                    print(TAG, "first enter of the day")
+                # check is record is entered
+                print(TAG, "covid_filter=", covid_filter)
+
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
                         if daily[0]['len'] == 0:
@@ -172,7 +222,7 @@ class Hooking(Resource):
                             print("this is insert_user :" + json.dumps(insert_user.json()))
                             message_db = self.get_message(2)
                             self.sendmessage_body = {
-                                    "to": newdata[0]['oneid'],
+                                    "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": message_db[0]['result'][0]['message'],
@@ -182,7 +232,7 @@ class Hooking(Resource):
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
                             self.sendmessage_body = {
-                                    "to": newdata[0]['oneid'],
+                                    "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
                                     "message": "สถานะ covid tracking ของคุณคือ :" + covid_status['status'],
@@ -194,62 +244,40 @@ class Hooking(Resource):
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
                             self.sendmessage_body = {
-                                    "to": newdata[0]['oneid'],
+                                    "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'] + "\n" + 
-                                            "---------------------------" + "\n" +
-                                        "uuid : " + newdata[0]['uuid'] + "\n" +
-                                        "major : " + newdata[0]['major'] + "\n" + 
-                                        "minor : " + newdata[0]['minor'] + "\n" +
-                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
-                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
-                                        "proximity :  " + newdata[0]['proximity'],
+                                    "message": message_db[0]['result'][0]['message'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                             print("debug onechat response :" + json.dumps(sendmessage.json()))
+                            return module.success()
 
                         elif daily[0]['len'] == 1:
                             self.sendmessage_body = {
-                                "to": newdata[0]['oneid'],
+                                "to": one_id,
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
-                                "message": "สวัสดี ตั้งใจทำงานค่ะ" + "\n" + 
-                                            "---------------------------" + "\n" +
-                                        "uuid : " + newdata[0]['uuid'] + "\n" +
-                                        "major : " + newdata[0]['major'] + "\n" + 
-                                        "minor : " + newdata[0]['minor'] + "\n" +
-                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
-                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
-                                        "proximity :  " + newdata[0]['proximity'],
+                                "message": "สวัสดี ตั้งใจทำงานค่ะ",
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-                            
                     elif covid_status['status'] == None:
                         message_db = self.get_message(4)
                         print(message_db[0]['result'][0])
                         self.sendmessage_body = {
-                                "to": newdata[0]['oneid'],
+                                "to": one_id,
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
-                                "message": message_db[0]['result'][0]['message']+ "\n" + 
-                                            "---------------------------" + "\n" +
-                                        "uuid : " + newdata[0]['uuid'] + "\n" +
-                                        "major : " + newdata[0]['major'] + "\n" + 
-                                        "minor : " + newdata[0]['minor'] + "\n" +
-                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
-                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
-                                        "proximity :  " + newdata[0]['proximity'],
+                                "message": message_db[0]['result'][0]['message'],
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
 
-            elif newdata[0]['event_stage'] == 'leave':
+            elif data['event_stage'] == 'leave':
                 print("this is Daily" + json.dumps(daily[0]['len']))
                 if daily[0]['len'] != 0:
                         self.check_out_body = {
@@ -260,17 +288,10 @@ class Hooking(Resource):
                         print("this is checkout :" + json.dumps(checkout.json()))
 
                         self.sendmessage_body = {
-                                "to": newdata[0]['oneid'],
+                                "to": one_id,
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
-                                "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ" + "\n" + 
-                                            "---------------------------" + "\n" +
-                                        "uuid : " + newdata[0]['uuid'] + "\n" +
-                                        "major : " + newdata[0]['major'] + "\n" + 
-                                        "minor : " + newdata[0]['minor'] + "\n" +
-                                        "rssi : " + str(newdata[0]['rssi']) + "\n" +
-                                        "event_stage : " + newdata[0]['event_stage'] + "\n" +
-                                        "proximity :  " + newdata[0]['proximity'],
+                                "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ",
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -435,6 +456,7 @@ class Hooking(Resource):
     #                     }
     #                     sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         # print("debug onechat response :" + json.dumps(sendmessage.json()))
+                return module.success()
         return {
             "type": True,
             "message": "success",
