@@ -90,9 +90,12 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        time.sleep(10)
-        
+        time.sleep(10)   
         return self.request_count
+
+    def check_sameUser(self, record):
+        for once_record in record:
+            print("this is once_record : " + once_record)
 
     def beacon_ckeckin(self, data):
         record = self.count_request(data)
@@ -107,12 +110,9 @@ class Hooking(Resource):
         database = Database()
         module = Module()
 
-        self.beacon_ckeckin(data)
-
-
-        # r = Timer(2.0, self.delay)
-        # r.start()
-
+        record = self.count_request(data)
+        self.check_sameUser(record)
+        
         # if ('event' in data):
         #     if(data["event"]=='message'):
         #         message_db = self.get_message(1)
