@@ -88,13 +88,12 @@ class Hooking(Resource):
         self.request_count.append(request_num)
         print("this is len : " + str(len(self.request_count)))
         print(json.dumps(self.request_count))
-        delay = Timer(5.0, self.delay)
-        delay.start()
         
         return "7894564126"
 
     def beacon_ckeckin(self, data):
-        record = self.count_request(data)
+        record = Timer(5.0, self.count_request(data))
+        record.start()
         print("this is record : " + record)
 
     def post(self):
