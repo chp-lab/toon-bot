@@ -89,7 +89,7 @@ class Hooking(Resource):
 
     def count_request(self, request_num):
         self.request_count.append(request_num)
-        print("this is len : " + len(self.request_count))
+        print("this is len : " + str(len(self.request_count)))
         print(self.request_count)
 
     def post(self):
