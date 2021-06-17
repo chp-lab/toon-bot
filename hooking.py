@@ -107,7 +107,17 @@ class Hooking(Resource):
         database = Database()
         cmd = """SELECT rooms.address FROM `rooms` WHERE rooms.minor=%s AND rooms.major=%s""" %(minor, major)
         res = database.getData(cmd)
+
+        print(TAG, "res=", res)
         return res
+
+    def is_area_exist(self, major, minor):
+        TAG = "is_area_exist:"
+        res = self.get_area(major, minor)
+        if(res[0]['len'] == 0):
+            return False
+        else:
+            return True
 
     def post(self):
         TAG = "Hooking:"
@@ -142,6 +152,12 @@ class Hooking(Resource):
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
             r = self.send_msg(one_id, tmp_msg)
             print(TAG, "r=", r)
+            major = data['major']
+            minor = data['minor']
+
+            if(self.is_area_exist(major, minor)):
+                self.send_msg(one_id, "ไม่พบพื้นที่ในระบบ")
+                return module.success()
 
             covid_body = { "oneid": one_id }
             self.get_userprofile_body = {
@@ -156,7 +172,7 @@ class Hooking(Resource):
                 # do slow job first
                 if (self.is_entred(one_id) and (data['event_stage'] == 'enter')):
                     print(TAG, "user was enter")
-                    building = self.get_area(data['major'], data['minor'])
+                    building = self.get_area(major, minor)
                     greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
                     # end the job
@@ -172,7 +188,7 @@ class Hooking(Resource):
                 #check is it first time user enter the area
                 if (self.is_entred(one_id)):
                     print(TAG, "user was enter")
-                    building = self.get_area(data['major'], data['minor'])
+                    building = self.get_area(major, minor)
                     greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
                     # end the job
