@@ -153,6 +153,7 @@ class Hooking(Resource):
                     # end the job
                     return module.success()
                 elif(self.is_entred(one_id) and (data['event_stage'] == 'proximity_change')):
+                    print(TAG, "user are in the area")
                     self.send_msg(one_id, "you are in the area")
                     return module.success()
 
