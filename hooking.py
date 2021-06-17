@@ -74,8 +74,8 @@ class Hooking(Resource):
     def record_to_log(self, one_id, event, area_id):
         TAG = "record_to_log:"
         database = Database()
-        sql = """INSERT INTO `access_log` (`log_id`, `one_id`, `one_email`, `event`, `area_id`, `created_at`) 
-        VALUES (NULL, '%s', '%s', '%ss', %s, CURRENT_TIMESTAMP)""" %(one_id, event, area_id)
+        sql = """INSERT INTO `access_log` (`log_id`, `one_id`, `event`, `area_id`, `created_at`) 
+        VALUES (NULL, '%s', '%s', %s, CURRENT_TIMESTAMP)""" %(one_id, event, area_id)
         insert = database.insertData(sql)
         return insert
 
