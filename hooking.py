@@ -183,7 +183,7 @@ class Hooking(Resource):
                     # self.send_msg(one_id, "you are in the area")
                     return module.success()
 
-                chekcovid = requests.post(self.covid_api, json=covid_body, verify=True)
+                chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
                 #check is it first time user enter the area
