@@ -197,7 +197,9 @@ class Hooking(Resource):
 
                 print(TAG, "first enter of the day")
                 # check is record is entered
-                print(TAG, "checkcovid=", chekcovid.json())
+
+                covid_data = chekcovid.json()[0]
+                print(TAG, "covid_data=", chekcovid.json())
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
