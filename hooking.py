@@ -183,7 +183,7 @@ class Hooking(Resource):
                     # self.send_msg(one_id, "you are in the area")
                     return module.success()
 
-                chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+                chekcovid = requests.post(self.covid_api, json=covid_body, verify=True)
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
                 #check is it first time user enter the area
@@ -198,8 +198,8 @@ class Hooking(Resource):
                 print(TAG, "first enter of the day")
                 # check is record is entered
 
-                covid_data = chekcovid.json()[0]
-                print(TAG, "covid_data=", chekcovid.json())
+                covid_data = chekcovid.json()
+                print(TAG, "covid_data=", covid_data)
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
