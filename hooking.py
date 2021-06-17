@@ -248,11 +248,12 @@ class Hooking(Resource):
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
 
+                            greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building_address)
                             self.sendmessage_body = {
                                     "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'] + "\n" + building_address
+                                    "message": message_db[0]['result'][0]['message'] + "\n" + greeting_msg
                                 ,
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
