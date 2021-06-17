@@ -36,5 +36,5 @@ class Check_in(Resource):
         return insert
 
     def post(self):
-        result = self.check_in(request.json['one_email'],request.json['one_id'],request.json['check_in_time'],request.json['covid_tracking'],request.json['date'])
+        result = self.check_in(request.json['one_email'],request.json['one_id'],request.json['check_in_time'],request.json['covid_tracking'],request.json['date'], request.json['minor'])
         return result
