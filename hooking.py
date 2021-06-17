@@ -149,6 +149,13 @@ class Hooking(Resource):
         if('uuid' in data):
             print(TAG, "event=", data)
             one_id = data['oneid']
+            print(TAG, "one_id=", one_id)
+
+            if(one_id == ''):
+                admin_one_id = ""
+                self.send_msg(admin_one_id, "problem with oneid")
+                print(TAG, "### one id is blank ###")
+                return module.serveErrMsg()
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
             # r = self.send_msg(one_id, tmp_msg)
             # print(TAG, "r=", r)
