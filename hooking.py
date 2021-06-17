@@ -210,7 +210,7 @@ class Hooking(Resource):
                 print(TAG, "covid_data=", covid_data)
 
                 building = self.get_area(major, minor)
-                building_address = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
+                building_address = """%s""" % (building[0]['result'][0]['address'])
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
@@ -248,7 +248,6 @@ class Hooking(Resource):
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
 
-                            greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building_address)
                             self.sendmessage_body = {
                                     "to": one_id,
                                     "bot_id": self.beaconbot_id,
@@ -295,7 +294,7 @@ class Hooking(Resource):
                         print("this is checkout :" + json.dumps(checkout.json()))
 
                         building = self.get_area(major, minor)
-                        building_address = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
+                        building_address = """%s""" % (building[0]['result'][0]['address'])
 
                         self.sendmessage_body = {
                                 "to": one_id,
