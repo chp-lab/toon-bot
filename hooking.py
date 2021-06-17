@@ -73,6 +73,7 @@ class Hooking(Resource):
         insert = database.insertData(sql)
         return insert
 
+
     def send_msg(self, one_id, reply_msg):
         TAG = "send_msg:"
 
@@ -289,7 +290,8 @@ class Hooking(Resource):
                 if daily[0]['len'] != 0:
                         self.check_out_body = {
                             "check_out_time": datetime.today().strftime("%H:%M:%S"),
-                            "one_id": user_profile.json()["result"][0]["one_id"]
+                            "one_id": user_profile.json()["result"][0]["one_id"],
+                            "minor": minor
                         }
                         checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
                         print("this is checkout :" + json.dumps(checkout.json()))
