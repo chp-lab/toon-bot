@@ -102,6 +102,13 @@ class Hooking(Resource):
         else:
             return True
 
+    def get_area(self, major, minor):
+        TAG = "get_are:"
+        database = Database()
+        cmd = """SELECT rooms.address FROM `rooms` WHERE rooms.minor=%s AND rooms.major=%s""" %(minor, major)
+        res = database.getData(cmd)
+        return res
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -149,7 +156,9 @@ class Hooking(Resource):
                 # do slow job first
                 if (self.is_entred(one_id) and (data['event_stage'] == 'enter')):
                     print(TAG, "user was enter")
-                    self.send_msg(one_id, "ยินดีต้อรับค่ะ")
+                    building = self.get_area(data['major'], data['minor'])
+                    greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
+                    self.send_msg(one_id, greeting_msg)
                     # end the job
                     return module.success()
                 elif(self.is_entred(one_id) and (data['event_stage'] == 'proximity_change')):
@@ -163,7 +172,9 @@ class Hooking(Resource):
                 #check is it first time user enter the area
                 if (self.is_entred(one_id)):
                     print(TAG, "user was enter")
-                    self.send_msg(one_id, "ยินดีต้อรับค่ะ")
+                    building = self.get_area(data['major'], data['minor'])
+                    greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
+                    self.send_msg(one_id, greeting_msg)
                     # end the job
                     return module.success()
 
