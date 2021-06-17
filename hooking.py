@@ -184,6 +184,11 @@ class Hooking(Resource):
 
             # daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
 
+            # record to access log
+            if (event_stage == 'enter'):
+                print(TAG, "record to access log")
+                rec = self.record_to_log(one_id, event_stage, minor)
+
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
@@ -197,11 +202,6 @@ class Hooking(Resource):
                     # print(TAG, "user are in the area")
                     # self.send_msg(one_id, "you are in the area")
                     return module.success()
-
-                # record to access log
-                if(event_stage == 'enter'):
-                    print(TAG, "record to access log")
-                    rec = self.record_to_log(one_id, event_stage, minor)
 
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 print(TAG, "covid respoens code=", chekcovid.status_code)
