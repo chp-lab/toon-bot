@@ -234,11 +234,14 @@ class Hooking(Resource):
 
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
+                            building = self.get_area(major, minor)
+                            greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
                             self.sendmessage_body = {
                                     "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'],
+                                    "message": message_db[0]['result'][0]['message'] + "\n" + greeting_msg
+                                ,
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
