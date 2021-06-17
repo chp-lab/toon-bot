@@ -156,7 +156,7 @@ class Hooking(Resource):
             minor = data['minor']
 
             if(not self.is_area_exist(major, minor)):
-                self.send_msg(one_id, "ไม่พบพื้นที่ในระบบ")
+                self.send_msg(one_id, "ไม่พบพื้นที่ในระบบ major:%s minor:%s" %(major, minor))
                 return module.success()
 
             covid_body = { "oneid": one_id }
