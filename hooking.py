@@ -150,8 +150,8 @@ class Hooking(Resource):
             print(TAG, "event=", data)
             one_id = data['oneid']
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
-            r = self.send_msg(one_id, tmp_msg)
-            print(TAG, "r=", r)
+            # r = self.send_msg(one_id, tmp_msg)
+            # print(TAG, "r=", r)
             major = data['major']
             minor = data['minor']
 
@@ -202,7 +202,9 @@ class Hooking(Resource):
                 covid_data = chekcovid.json()
                 print(TAG, "covid_data=", covid_data)
 
-
+                covid_rec_len = len(covid_data)
+                if(covid_rec_len == 0):
+                    self.send_msg(one_id, "ขออภัยค่ะ ระบบตรวจสอบการทำ Covid tracking มีปัญหา ไม่ทราบสถานะความเสี่ยงของคุณ")
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
