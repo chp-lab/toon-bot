@@ -221,6 +221,7 @@ class Hooking(Resource):
                                 "check_in_time": datetime.today().strftime("%H:%M:%S"),
                                 "covid_tracking": covid_status['status'],
                                 "date": datetime.today().strftime('%Y-%m-%d'),
+                                "minor":minor
                             }
                             insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
                             print("this is insert_user :" + json.dumps(insert_user.json()))
@@ -253,8 +254,7 @@ class Hooking(Resource):
                                     "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'] + "\n" + greeting_msg
-                                ,
+                                    "message": message_db[0]['result'][0]['message'] + "\n" + greeting_msg,
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
                             sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
