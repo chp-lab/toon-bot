@@ -152,7 +152,7 @@ class Hooking(Resource):
             print(TAG, "one_id=", one_id)
 
             if(one_id == ''):
-                admin_one_id = ""
+                admin_one_id = "6271993808"
                 self.send_msg(admin_one_id, "problem with oneid")
                 print(TAG, "### one id is blank ###")
                 return module.serveErrMsg()
