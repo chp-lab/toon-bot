@@ -155,7 +155,7 @@ class Hooking(Resource):
             major = data['major']
             minor = data['minor']
 
-            if(self.is_area_exist(major, minor)):
+            if(not self.is_area_exist(major, minor)):
                 self.send_msg(one_id, "ไม่พบพื้นที่ในระบบ")
                 return module.success()
 
@@ -164,7 +164,8 @@ class Hooking(Resource):
                 "oneid": one_id
             }
             user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
-            print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
+            # print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
+            print(TAG, "user_profile=", user_profile)
 
             daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
 
