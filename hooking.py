@@ -153,7 +153,7 @@ class Hooking(Resource):
 
             if(one_id == ''):
                 admin_one_id = "6271993808"
-                self.send_msg(admin_one_id, "problem with oneid")
+                self.send_msg(admin_one_id, "### system: problem with oneid")
                 print(TAG, "### one id is blank ###")
                 return module.serveErrMsg()
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
@@ -206,12 +206,8 @@ class Hooking(Resource):
                 print(TAG, "first enter of the day")
                 # check is record is entered
 
-                covid_data = chekcovid.json()
+                covid_data = chekcovid.json().pop()
                 print(TAG, "covid_data=", covid_data)
-
-                covid_rec_len = len(covid_data)
-                if(covid_rec_len == 0):
-                    self.send_msg(one_id, "ขออภัยค่ะ ระบบตรวจสอบการทำ Covid tracking มีปัญหา ไม่ทราบสถานะความเสี่ยงของคุณ")
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
