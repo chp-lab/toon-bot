@@ -34,16 +34,6 @@ class Hooking(Resource):
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
     sendmessage_body = {}
 
-    request_count = []
-
-    user_data = {
-        "name": '',
-        "employee_code": '',
-        "check_in": '',
-        "check_out": '',
-        "covid_tracking":''
-    }
-
     def check_daily(self, one_id, today):
         cmd = """SELECT * FROM timeattendance WHERE timeattendance.employee_code='%s' AND timeattendance.date='%s' """ %(one_id, today)
         database = Database()
@@ -82,35 +72,6 @@ class Hooking(Resource):
               % (email, name, one_id)
         insert = database.insertData(sql)
         return insert
-
-    def delay(self):
-        print("wait for check table . . .")
-
-    def count_request(self, request_num):
-        self.request_count.append(request_num)
-        print("this is count_request len : " + str(len(self.request_count)))
-        print(json.dumps(self.request_count))
-        # do not delay in the server, must give good priority of the piece code
-        # time.sleep(5)
-        return self.request_count
-
-    def check_sameUser(self, record):
-        oneid_list = []
-        newrecord_list = []
-
-        for once_record in record:
-            if newrecord_list.count(once_record) == 0 and oneid_list.count(once_record["oneid"]) == 0:
-                oneid_list.append(once_record["oneid"])
-                newrecord_list.append(once_record)
-
-        print("this is oneid_list : " + json.dumps(oneid_list))
-        print("this is newrecord_list : " + json.dumps(newrecord_list))
-        return newrecord_list
-
-    def beacon_ckeckin(self, data):
-        record = self.count_request(data)
-        print("this is record : " + json.dumps(record))
-        self.request_count.clear()
 
     def send_msg(self, one_id, reply_msg):
         TAG = "send_msg:"
@@ -174,13 +135,6 @@ class Hooking(Resource):
             tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
             r = self.send_msg(one_id, tmp_msg)
             print(TAG, "r=", r)
-            # return
-
-            # record = self.count_request(data)
-            # newdata =  self.check_sameUser(record)
-            # self.request_count.clear()
-            
-            # print("this is new data : " + json.dumps(newdata))
 
             covid_body = { "oneid": one_id }
             self.get_userprofile_body = {
@@ -304,6 +258,7 @@ class Hooking(Resource):
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
+
                 return module.success()
         return {
             "type": True,
