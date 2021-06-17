@@ -191,8 +191,17 @@ class Hooking(Resource):
 
             daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
 
-            if(data['event_stage'] == 'enter'):
+            if((data['event_stage'] == 'enter') or (data['event_stage'] == 'proximity_change')):
                 # do slow job first
+                if (self.is_entred(one_id) and (data['event_stage'] == 'enter')):
+                    print(TAG, "user was enter")
+                    self.send_msg(one_id, "ยินดีต้อรับค่ะ")
+                    # end the job
+                    return module.success()
+                elif(self.is_entred(one_id) and (data['event_stage'] == 'proximity_change')):
+                    self.send_msg(one_id, "you are in the area")
+                    return module.success()
+
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
@@ -201,10 +210,9 @@ class Hooking(Resource):
                     print(TAG, "user was enter")
                     self.send_msg(one_id, "ยินดีต้อรับค่ะ")
                     # end the job
-                    return
-                else:
-                    # continue the job
-                    print(TAG, "first enter of the day")
+                    return module.success()
+
+                print(TAG, "first enter of the day")
                 # check is record is entered
                 print(TAG, "covid_filter=", covid_filter)
 
