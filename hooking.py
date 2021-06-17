@@ -174,7 +174,7 @@ class Hooking(Resource):
                 if (self.is_entred(one_id) and (data['event_stage'] == 'enter')):
                     print(TAG, "user was enter")
                     building = self.get_area(major, minor)
-                    greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
+                    greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
                     # end the job
                     return module.success()
@@ -190,7 +190,7 @@ class Hooking(Resource):
                 if (self.is_entred(one_id)):
                     print(TAG, "user was enter")
                     building = self.get_area(major, minor)
-                    greeting_msg = """ยินดีต้อนรับสู่ %""" %(building[0]['result'][0]['address'])
+                    greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
                     # end the job
                     return module.success()
