@@ -30,7 +30,7 @@ class Check_in(Resource):
             # end job when record is exist!
             return module.wrongAPImsg()
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`, checkin_at) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')""" \
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`, checkin_at) VALUES ('%s', '%s', '%s', '%s', '%s', %s)""" \
               % (one_email, one_id, check_in_time, covid_tracking, date, minor)
         insert = database.insertData(sql)
         return insert
