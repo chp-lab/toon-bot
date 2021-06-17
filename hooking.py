@@ -209,6 +209,9 @@ class Hooking(Resource):
                 covid_data = chekcovid.json().pop()
                 print(TAG, "covid_data=", covid_data)
 
+                building = self.get_area(major, minor)
+                building_address = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
+
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
                         if daily[0]['len'] == 0:
@@ -244,13 +247,13 @@ class Hooking(Resource):
 
                             message_db = self.get_message(3)
                             print(message_db[0]['result'][0])
-                            building = self.get_area(major, minor)
-                            greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
+
+                            greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building_address)
                             self.sendmessage_body = {
                                     "to": one_id,
                                     "bot_id": self.beaconbot_id,
                                     "type": "text",
-                                    "message": message_db[0]['result'][0]['message'] + "\n" + greeting_msg
+                                    "message": message_db[0]['result'][0]['message'] + "\n" + building_address
                                 ,
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                             }
@@ -291,11 +294,14 @@ class Hooking(Resource):
                         checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
                         print("this is checkout :" + json.dumps(checkout.json()))
 
+                        building = self.get_area(major, minor)
+                        building_address = """ยินดีต้อนรับสู่ %s""" % (building[0]['result'][0]['address'])
+
                         self.sendmessage_body = {
                                 "to": one_id,
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
-                                "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ",
+                                "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ " + building_address,
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
