@@ -184,6 +184,7 @@ class Hooking(Resource):
                     return module.success()
 
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
+                print(TAG, "covid respoens code=", chekcovid.status_code)
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
                 #check is it first time user enter the area
@@ -200,6 +201,8 @@ class Hooking(Resource):
 
                 covid_data = chekcovid.json()
                 print(TAG, "covid_data=", covid_data)
+
+
 
                 for covid_status in covid_filter:
                     if covid_status['status'] != None:
