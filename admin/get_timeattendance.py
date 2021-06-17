@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class Timeattendance(Resource):
     def get_timeattendance(self):
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
-        timeattendance.covid_tracking, timeattendance.checkin_at AS this_in, timeattendance.checkout_at AS this_checkout,
+        timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_in, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_in) AS checkin_area,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area
         FROM `timeattendance` ORDER BY `log_id`  DESC"""
