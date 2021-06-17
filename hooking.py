@@ -197,7 +197,9 @@ class Hooking(Resource):
                     # print(TAG, "user are in the area")
                     # self.send_msg(one_id, "you are in the area")
                     return module.success()
-                elif(event_stage == 'enter'):
+
+                # record to access log
+                if(event_stage == 'enter'):
                     print(TAG, "record to access log")
                     rec = self.record_to_log(one_id, event_stage, minor)
 
