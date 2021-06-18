@@ -14,10 +14,12 @@ class Timeattendance(Resource):
         TAG = "get_timeattendan:"
         module = Module()
 
-        print(TAG, "args=", args)
+        one_email_key = "one_email"
+
+        print(TAG, "args=", args.get(one_email_key))
         condition = """True"""
 
-        one_email_key = "one_email"
+
 
         if(module.isQueryStr(args, one_email_key)):
             one_email = args.get(one_email_key)
