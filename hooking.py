@@ -206,8 +206,8 @@ class Hooking(Resource):
         json_res = r.json()
         # print(TAG, "json_res=", json_res)
         if(json_res['status'] != "success"):
-            return module.wrongAPImsg()
-        
+            return module.unauthorized()
+
         return {
                    'type': True,
                    'message': "success",
