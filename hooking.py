@@ -371,7 +371,7 @@ class Hooking(Resource):
 
             elif data['event_stage'] == 'leave':
                 self.check_out_body = {
-                    "check_out_time": datetime.today().strftime("%H:%M:%S"),
+                    "check_out_time": "CURRENT_TIME",
                     "one_id": user_profile.json()["result"][0]["one_id"],
                     "minor": minor
                 }

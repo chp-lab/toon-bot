@@ -12,7 +12,7 @@ class Check_out(Resource):
     def update_checkout(self, time, one_id, minor):
         database = Database()
         sql = """UPDATE timeattendance 
-        SET timeattendance.check_out = '%s', timeattendance.checkout_at=%s, timeattendance.updated_at=CURRENT_TIMESTAMP
+        SET timeattendance.check_out = %s, timeattendance.checkout_at=%s, timeattendance.updated_at=CURRENT_TIMESTAMP
         WHERE timeattendance.employee_code='%s' AND timeattendance.date=CURRENT_DATE""" \
               % (time, minor, one_id)
         update = database.insertData(sql)
