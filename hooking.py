@@ -309,9 +309,9 @@ class Hooking(Resource):
                         self.check_in_body = {
                             "one_email": user_profile.json()["result"][0]["one_email"],
                             "one_id": user_profile.json()["result"][0]["one_id"],
-                            "check_in_time": datetime.today().strftime("%H:%M:%S"),
+                            "check_in_time": "CURRENT_TIME",
                             "covid_tracking": covid_status['status'],
-                            "date": datetime.today().strftime('%Y-%m-%d'),
+                            "date": "CURRENT_DATE",
                             "minor": minor,
                             "lat": lat,
                             "long": long

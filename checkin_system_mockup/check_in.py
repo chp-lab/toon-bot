@@ -31,7 +31,7 @@ class Check_in(Resource):
             return module.wrongAPImsg()
         database = Database()
         sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`, checkin_at, 	latitude, longitude) 
-        VALUES ('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s')""" \
+        VALUES ('%s', '%s', %s, '%s', %s, %s, '%s', '%s')""" \
               % (one_email, one_id, check_in_time, covid_tracking, date, minor, lat, long)
         insert = database.insertData(sql)
         return insert
