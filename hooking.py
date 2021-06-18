@@ -234,6 +234,8 @@ class Hooking(Resource):
             print(TAG, "event=", data)
             one_id = data['oneid']
             event_stage = data['event_stage']
+            lat = data['user_latitude']
+            long = data['user_longitude']
             print(TAG, "one_id=", one_id)
 
             if(one_id == ''):
@@ -310,7 +312,9 @@ class Hooking(Resource):
                             "check_in_time": datetime.today().strftime("%H:%M:%S"),
                             "covid_tracking": covid_status['status'],
                             "date": datetime.today().strftime('%Y-%m-%d'),
-                            "minor":minor
+                            "minor": minor,
+                            "lat": lat,
+                            "long": long
                         }
                         insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
                         print("this is insert_user :" + json.dumps(insert_user.json()))

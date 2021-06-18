@@ -22,7 +22,7 @@ class Check_in(Resource):
         else:
             return True
 
-    def check_in(self, one_email, one_id, check_in_time, covid_tracking, date, minor):
+    def check_in(self, one_email, one_id, check_in_time, covid_tracking, date, minor, lat, long):
         TAG = "check_in:"
         module = Module()
         if(self.is_entred(one_id)):
@@ -30,11 +30,13 @@ class Check_in(Resource):
             # end job when record is exist!
             return module.wrongAPImsg()
         database = Database()
-        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`, checkin_at) VALUES ('%s', '%s', '%s', '%s', '%s', %s)""" \
-              % (one_email, one_id, check_in_time, covid_tracking, date, minor)
+        sql = """INSERT INTO `timeattendance` (`one_email`, `employee_code`, `check_in`, `covid_tracking`, `date`, checkin_at, 	latitude, longitude) 
+        VALUES ('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s')""" \
+              % (one_email, one_id, check_in_time, covid_tracking, date, minor, lat, long)
         insert = database.insertData(sql)
         return insert
 
     def post(self):
-        result = self.check_in(request.json['one_email'],request.json['one_id'],request.json['check_in_time'],request.json['covid_tracking'],request.json['date'], request.json['minor'])
+        result = self.check_in(request.json['one_email'],request.json['one_id'],request.json['check_in_time'],
+                               request.json['covid_tracking'],request.json['date'], request.json['minor'], request.json['lat'], request.json['long'])
         return result
