@@ -50,4 +50,4 @@ class Timeattendance(Resource):
 
         timeattendance = self.get_timeattendance()
 
-        return timeattendance
+        return prof_res
