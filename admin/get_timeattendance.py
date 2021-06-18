@@ -99,7 +99,7 @@ class Timeattendance(Resource):
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area,
-        timeattendance.latitude, timeattendance.longitude
+        timeattendance.latitude, timeattendance.longitude, timeattendance.employee_code AS one_id
         FROM `timeattendance`
         WHERE %s
         ORDER BY `log_id`  DESC""" %(condition)
