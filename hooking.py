@@ -126,19 +126,27 @@ class Hooking(Resource):
         else:
             return True
 
+    def send_quick_reply(self, one_id, msg, payload):
+        TAG = "send_quick_reply:"
+        req_body = {
+            "to":one_id,
+            "bot_id": self.beaconbot_id,
+            "message": "ให้ช่วยอะไรดี",
+            "quick_reply": payload
+        }
+        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+        result = requests.post(self.onechat_url1, json=req_body, headers=headers)
+        return result
+
     def menu_send(self, one_id):
         TAG = "menu_send:"
         web_vue_url1 = "http://onesmartaccess.ddns.net:8081"
-        req_body = {
-            "to": one_id,
-            "bot_id": self.beaconbot_id,
-            "message": "ให้ช่วยอะไรดี",
-            "quick_reply":
-                [
+        msg = "ให้ช่วยอะไรดี"
+        payload = [
                     {
                         "label": "การเข้างานของคุณ",
                         "type": "text",
-                        "message": "อัพโหลดรูป",
+                        "message": "ดูการเข้าานของฉัน",
                         "payload": "my_rec"
                     },
                     {
@@ -149,10 +157,8 @@ class Hooking(Resource):
                         "onechat_token": "true"
                     }
                 ]
-        }
-        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
-        result = requests.post(self.onechat_url1, json=req_body, headers=headers)
-        print(TAG, result.text)
+        res = self.send_quick_reply(one_id, msg, payload)
+        print(TAG, "res=", res)
 
     def post(self):
         TAG = "Hooking:"
