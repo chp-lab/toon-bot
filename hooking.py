@@ -160,6 +160,17 @@ class Hooking(Resource):
         res = self.send_quick_reply(one_id, msg, payload)
         print(TAG, "res=", res)
 
+    def get_my_rec(self, one_id):
+        TAG = "get_my_rec:"
+        database = Database()
+        print(TAG, "get data")
+        cmd = """SELECT timeattendance.check_in, timeattendance.date, timeattendance.checkin_at, rooms.address 
+        FROM `timeattendance`
+        LEFT JOIN rooms ON timeattendance.checkin_at=rooms.minor
+        WHERE timeattendance.employee_code="%s" AND timeattendance.date=CURRENT_DATE""" %(one_id)
+        res = database.getData(cmd)
+        return res
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -187,7 +198,14 @@ class Hooking(Resource):
                 if('data' in data['message']):
                     recv_data = data['message']['data']
                     if(recv_data == "my_rec"):
-                        self.send_msg(one_id, "developing")
+                        # get time reccv of this user
+                        res = self.get_my_rec(one_id)
+                        if(res[0]['len'] == 0):
+                            self.send_msg(one_id, "ไม่พบเวลาเข้างานของคุณ")
+                            return module.measurementNotFound()
+                        rec = res[0]['result'][0]
+                        reply_msg = "เวลาเข้างานของคุณคือ %s %s สถานที่ %s" %(rec['checckin'], rec['date'], rec['address'])
+                        self.send_msg(one_id, recv_msg)
                         return module.success()
                     return module.success()
 

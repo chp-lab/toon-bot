@@ -19,7 +19,7 @@ class Database(Resource):
         # }
         mysqlConfig = MysqlConfig()
         my_config = mysqlConfig.callDBConfig()
-        print(TAG, "my_config=", my_config)
+        # print(TAG, "my_config=", my_config)
         self.config = my_config['db_param']
 
     def getData(self, query_cmd):
