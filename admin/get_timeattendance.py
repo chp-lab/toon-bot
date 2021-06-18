@@ -39,10 +39,12 @@ class Timeattendance(Resource):
 
         auth = request.headers.get("Authorization")
         onechat_token = auth.split()
+
+        # print(TAG, "auth=", auth)
         
         if(len(onechat_token) < 2):
             return module.wrongAPImsg()
-        if(auth[0] != "Berer"):
+        if(auth[0] != "Bearer"):
             return module.wrongAPImsg()
 
         hooking.get_onechat_profile(onechat_token[1])
