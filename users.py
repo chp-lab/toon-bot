@@ -10,8 +10,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from hooking import Hooking
 
 class Users(Resource):
-
-    def user_profile(self):
     def get(self):
         TAG = "get_profile:"
         module = Module()
