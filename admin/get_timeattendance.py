@@ -12,6 +12,7 @@ from hooking import Hooking
 class Timeattendance(Resource):
     def get_timeattendance(self, args):
         TAG = "get_timeattendan:"
+        database = Database()
         module = Module()
 
         condition = """TRUE """
@@ -39,6 +40,25 @@ class Timeattendance(Resource):
             print(TAG, "search with date")
             condition = condition + """ AND timeattendance.date='%s' """ %(checkin_date)
 
+        if(checkin_area is not None):
+            print(TAG, "check in at like", checkin_area)
+            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
+            FROM rooms
+            WHERE rooms.room_num LIKE '%%%s%%'"""
+
+            matched_area = database.getData()
+
+            if(matched_area[0]['len'] > 0):
+                areas = matched_area[0]['result']
+                area_filter = ""
+                for i in range(len(areas)):
+                    if(i == 0):
+                        area_filter = "timeattendance.checkin_at=%s" %(areas['minor'])
+                    else:
+                        area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(areas['minor'])
+                condition = condition + """ AND %s """ %(area_filter)
+
+
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
@@ -48,9 +68,6 @@ class Timeattendance(Resource):
         WHERE %s
         ORDER BY `log_id`  DESC""" %(condition)
 
-
-
-        database = Database()
         res = database.getData(cmd)
         return res
 
