@@ -146,7 +146,7 @@ class Hooking(Resource):
                     {
                         "label": "การเข้างานของคุณ",
                         "type": "text",
-                        "message": "ดูการเข้าานของฉัน",
+                        "message": "ดูการเข้างานของฉัน",
                         "payload": "my_rec"
                     },
                     {
@@ -184,8 +184,11 @@ class Hooking(Resource):
                     self.send_msg(one_id, "ยินดีให้บริการค่ะ")
                     return module.success()
 
-                if(recv_msg == "my_rec"):
-                    self.send_msg(one_id, "developing")
+                if('data' in data['message']):
+                    recv_data = data['message']['data']
+                    if(recv_data == "my_rec"):
+                        self.send_msg(one_id, "developing")
+                        return module.success()
                     return module.success()
 
                 sendmessage_body = {
