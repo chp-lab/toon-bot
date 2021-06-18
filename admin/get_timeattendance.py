@@ -48,6 +48,8 @@ class Timeattendance(Resource):
 
             matched_area = database.getData(area_cmd)
 
+            print(TAG, "matched_area=", matched_area)
+
             if(matched_area[0]['len'] > 0):
                 areas = matched_area[0]['result']
                 area_filter = ""
@@ -57,6 +59,8 @@ class Timeattendance(Resource):
                     else:
                         area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(areas['minor'])
                 condition = condition + """ AND %s """ %(area_filter)
+            else:
+                condition = condition + """ AND False """
 
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
