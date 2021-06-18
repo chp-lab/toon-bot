@@ -174,7 +174,7 @@ class Hooking(Resource):
                 one_id = data['source']['one_id']
                 dissplay_name = data['source']['display_name']
 
-                recv_msg = data['message']['data']
+                recv_msg = data['message']['text']
                 print(TAG, "recv_msg=", recv_msg)
 
                 one_email = data['source']['email']
@@ -187,7 +187,7 @@ class Hooking(Resource):
                 if(recv_msg == "my_rec"):
                     self.send_msg(one_id, "developing")
                     return module.success()
-                
+
                 sendmessage_body = {
                                     "to":data['source']['one_id'],
                                     "bot_id": self.beaconbot_id,
