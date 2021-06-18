@@ -27,5 +27,12 @@ class Timeattendance(Resource):
 
     def get(self):
         TAG = "get_timeatt:"
+        module = Module()
+        
         timeattendance = self.get_timeattendance()
+
+        auth_key = "Authorization"
+        if(auth_key not in request.headers):
+            return module.unauthorized()
+
         return timeattendance
