@@ -32,6 +32,8 @@ class Hooking(Resource):
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
     sendmessage_body = {}
 
+    onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+
     def check_daily(self, one_id, today):
         cmd = """SELECT * FROM timeattendance WHERE timeattendance.employee_code='%s' AND timeattendance.date='%s' """ %(one_id, today)
         database = Database()
@@ -124,6 +126,34 @@ class Hooking(Resource):
         else:
             return True
 
+    def menu_send(self, one_id):
+        TAG = "menu_send:"
+        web_vue_url1 = "http://onesmartaccess.ddns.net:8081"
+        req_body = {
+            "to": one_id,
+            "bot_id": self.beaconbot_id,
+            "message": "ให้ช่วยอะไรดี",
+            "quick_reply":
+                [
+                    {
+                        "label": "การเข้างานของคุณ",
+                        "type": "text",
+                        "message": "อัพโหลดรูป",
+                        "payload": "my_rec"
+                    },
+                    {
+                        "label": "Admin",
+                        "type": "link",
+                        "url": web_vue_url1,
+                        "sign": "false",
+                        "onechat_token": "true"
+                    }
+                ]
+        }
+        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
+        result = requests.post(self.onechat_url1, json=req_body, headers=headers)
+        print(TAG, result.text)
+
     def post(self):
         TAG = "Hooking:"
         data = request.json
@@ -151,7 +181,7 @@ class Hooking(Resource):
                                     "custom_notification": "ตอบกลับข้อความคุณครับ"
                                 }
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                print("debug onechat response :" + json.dumps(sendmessage.json()))
+                self.menu_send(one_id)
                 return module.success()
 
             elif(data["event"]=='add_friend'):
