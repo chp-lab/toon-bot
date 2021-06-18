@@ -48,7 +48,7 @@ class Timeattendance(Resource):
 
             matched_area = database.getData(area_cmd)
 
-            print(TAG, "matched_area=", matched_area)
+            print(TAG, "checkin matched_area=", matched_area)
 
             if(matched_area[0]['len'] > 0):
                 areas = matched_area[0]['result']
@@ -59,7 +59,7 @@ class Timeattendance(Resource):
                         area_filter = "timeattendance.checkin_at=%s" %(area_minor)
                     else:
                         area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(area_minor)
-                condition = condition + """ AND %s """ %(area_filter)
+                condition = condition + """ AND (%s) """ %(area_filter)
             else:
                 condition = condition + """ AND False """
 
@@ -71,7 +71,7 @@ class Timeattendance(Resource):
 
             matched_area = database.getData(area_cmd)
 
-            print(TAG, "matched_area=", matched_area)
+            print(TAG, "checkout matched_area=", matched_area)
 
             if(matched_area[0]['len'] > 0):
                 areas = matched_area[0]['result']
@@ -82,7 +82,7 @@ class Timeattendance(Resource):
                         area_filter = "timeattendance.checkout_at=%s" %(area_minor)
                     else:
                         area_filter = area_filter + " OR timeattendance.checkout_at=%s" %(area_minor)
-                condition = condition + """ AND %s """ %(area_filter)
+                condition = condition + """ AND (%s) """ %(area_filter)
             else:
                 condition = condition + """ AND False """
 
