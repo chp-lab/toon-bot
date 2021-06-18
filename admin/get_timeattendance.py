@@ -107,10 +107,10 @@ class Timeattendance(Resource):
         res = database.getData(cmd)
         return res
 
-    def post(self):
-        args = request.args
-        timeattendance = self.get_timeattendance(args)
-        return timeattendance
+    # def post(self):
+    #     args = request.args
+    #     timeattendance = self.get_timeattendance(args)
+    #     return timeattendance
 
     def get(self):
         TAG = "get_timeatt:"
