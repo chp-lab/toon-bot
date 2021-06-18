@@ -12,7 +12,7 @@ from hooking import Hooking
 class Users(Resource):
 
     def user_profile(self):
-    def get(self, one_id):
+    def get(self):
         TAG = "get_profile:"
         module = Module()
         hooking = Hooking()
