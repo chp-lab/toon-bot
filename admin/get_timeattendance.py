@@ -14,7 +14,7 @@ class Timeattendance(Resource):
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area,
-        timeattendance.latitude, timeattendance.longtitude
+        timeattendance.latitude, timeattendance.longitude
         FROM `timeattendance` ORDER BY `log_id`  DESC"""
 
         database = Database()
