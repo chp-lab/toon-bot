@@ -54,10 +54,11 @@ class Timeattendance(Resource):
                 areas = matched_area[0]['result']
                 area_filter = ""
                 for i in range(len(areas)):
+                    area_minor = areas[i]['minor']
                     if(i == 0):
-                        area_filter = "timeattendance.checkin_at=%s" %(areas['minor'])
+                        area_filter = "timeattendance.checkin_at=%s" %(area_minor)
                     else:
-                        area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(areas['minor'])
+                        area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(area_minor)
                 condition = condition + """ AND %s """ %(area_filter)
             else:
                 condition = condition + """ AND False """
