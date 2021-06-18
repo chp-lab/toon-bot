@@ -134,8 +134,8 @@ class Hooking(Resource):
             "message": "ให้ช่วยอะไรดี",
             "quick_reply": payload
         }
-        headers = {"Authorization": self.onechat_dev_token, "Content-Type": "application/json"}
-        result = requests.post(self.onechat_url1, json=req_body, headers=headers)
+
+        result = requests.post(self.onechat_url1, json=req_body, headers=self.sendmessage_headers)
         return result
 
     def menu_send(self, one_id):
@@ -170,6 +170,22 @@ class Hooking(Resource):
         WHERE timeattendance.employee_code="%s" AND timeattendance.date=CURRENT_DATE""" %(one_id)
         res = database.getData(cmd)
         return res
+
+    def get_onechat_profile(self, auth):
+        TAG = "get_onechat_profile:"
+        print(TAG, "auth=", auth)
+        payload = {
+            "bot_id":  self.beaconbot_id,
+            "source": auth
+        }
+
+        r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.sendmessage_headers, json=payload)
+        print(TAG, "response code=", r.status_code)
+        # print(TAG, r.json())
+
+        json_res = r.json()
+        print(TAG, "json_res=", json_res)
+        return json_res
 
     def post(self):
         TAG = "Hooking:"

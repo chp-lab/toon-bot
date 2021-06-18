@@ -29,11 +29,21 @@ class Timeattendance(Resource):
     def get(self):
         TAG = "get_timeatt:"
         module = Module()
+        hooking = Hooking()
 
         timeattendance = self.get_timeattendance()
 
         auth_key = "Authorization"
         if(auth_key not in request.headers):
             return module.unauthorized()
+
+        auth = request.headers.get("Authorization")
+        onechat_token = auth.split()
+        if(len(auth) < 2):
+            return module.wrongAPImsg()
+        if(auth[0] != "Berer"):
+            return module.wrongAPImsg()
+
+        hooking.get_onechat_profile(auth[1])
 
         return timeattendance
