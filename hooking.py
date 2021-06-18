@@ -64,6 +64,17 @@ class Hooking(Resource):
         else:
             return False
 
+    def is_oneid_exist(self, one_id):
+        TAG = "is_oneid_exist:"
+        cmd = """SELECT users.one_id FROM users WHERE users.one_id='%s' """ %(one_id)
+        database = Database()
+        res = database.getData(cmd)
+        print(TAG, "res=", res)
+        if(res[0]['len'] > 0):
+            return True
+        else:
+            return False
+
     def add_new_user(self, email, name, one_id):
         TAG = "add_new_user:"
         database = Database()
@@ -214,6 +225,30 @@ class Hooking(Resource):
                    'error_message': None,
                    'result': [{'onechat_profie': json_res}]
                }, 200
+
+    def is_admin(self, one_id):
+        TAG = "is_admin:"
+        dataabaase = Database()
+        module = Module()
+
+        if(not self.is_oneid_exist(one_id)):
+            return module.userNotFound()
+
+        cmd = """SELECT users.role FROM `users` WHERE users.one_id='%s'""" %(one_id)
+        res = dataabaase.getData(cmd)
+
+        role = res[0]['result'][0]['role']
+
+        print(TAG, "role=", role)
+
+        if(role is None):
+            return False
+        elif(role == "admin"):
+            return True
+        else:
+            return False
+
+
 
     def post(self):
         TAG = "Hooking:"

@@ -48,6 +48,15 @@ class Timeattendance(Resource):
         if(prof_res[1] != 200):
             return prof_res
 
+        one_id = prof_res[0]['result'][0]['onechat_profie']['data']['one_id']
+        if(not hooking.is_admin(one_id)):
+            return {
+                       'type': False,
+                       'message': "fail",
+                       'error_message': "You are not admin",
+                       'result': None
+                   }, 401
+
         timeattendance = self.get_timeattendance()
 
-        return prof_res
+        return timeattendance
