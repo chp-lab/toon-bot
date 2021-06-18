@@ -136,8 +136,11 @@ class Hooking(Resource):
             if(data["event"]=='message'):
                 message_db = self.get_message(1)
                 one_id = data['source']['one_id']
+                dissplay_name = data['source']['display_name']
                 one_email = data['source']['email']
                 if(not self.is_user_exist(one_email)):
+                    add_user = self.add_new_user(one_email, dissplay_name, one_id)
+                    print(TAG, "add=new_user=", add_user)
                     self.send_msg(one_id, "ยินดีให้บริการค่ะ")
                     return module.success()
                 sendmessage_body = {
