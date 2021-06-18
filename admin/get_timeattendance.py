@@ -46,7 +46,7 @@ class Timeattendance(Resource):
             FROM rooms
             WHERE rooms.room_num LIKE '%%%s%%'"""
 
-            matched_area = database.getData()
+            matched_area = database.getData(area_cmd)
 
             if(matched_area[0]['len'] > 0):
                 areas = matched_area[0]['result']
