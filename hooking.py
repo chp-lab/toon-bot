@@ -171,6 +171,25 @@ class Hooking(Resource):
         res = database.getData(cmd)
         return res
 
+    def get_onechat_token(self, auth):
+        TAG = "get_onechat_token:"
+        module = Module()
+        onechat_token = auth.split()
+
+        print(TAG, "auth=", auth)
+
+        if(len(onechat_token) < 2):
+            return module.wrongAPImsg()
+        if(onechat_token[0] != "Bearer"):
+            return module.wrongAPImsg()
+
+        return {
+                   'type': True,
+                   'message': "success",
+                   'error_message': None,
+                   'result': [{'onechat_token': onechat_token[1]}]
+               }, 200
+
     def get_onechat_profile(self, auth):
         TAG = "get_onechat_profile:"
         print(TAG, "auth=", auth)
@@ -184,7 +203,7 @@ class Hooking(Resource):
         # print(TAG, r.json())
 
         json_res = r.json()
-        print(TAG, "json_res=", json_res)
+        # print(TAG, "json_res=", json_res)
         return json_res
 
     def post(self):
