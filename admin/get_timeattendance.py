@@ -13,7 +13,8 @@ class Timeattendance(Resource):
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
-        (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area
+        (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area,
+        timeattendance.latitude, timeattendance.longtitude
         FROM `timeattendance` ORDER BY `log_id`  DESC"""
 
         database = Database()
