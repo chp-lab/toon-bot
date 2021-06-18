@@ -39,7 +39,8 @@ class Timeattendance(Resource):
         return res
 
     def post(self):
-        timeattendance = self.get_timeattendance()
+        args = request.args
+        timeattendance = self.get_timeattendance(args)
         return timeattendance
 
     def get(self):
