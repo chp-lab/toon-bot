@@ -7,6 +7,7 @@ from datetime import datetime
 import urllib3
 import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from hooking import Hooking
 
 class Timeattendance(Resource):
     def get_timeattendance(self):
@@ -28,7 +29,7 @@ class Timeattendance(Resource):
     def get(self):
         TAG = "get_timeatt:"
         module = Module()
-        
+
         timeattendance = self.get_timeattendance()
 
         auth_key = "Authorization"
