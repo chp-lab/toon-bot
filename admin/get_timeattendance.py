@@ -89,7 +89,7 @@ class Timeattendance(Resource):
 
         if(covid_status is not None):
             print(TAG, "filter only covid status=", covid_status)
-            condition = condition + """ AND timeattendance.covid_traking='%s' """ %(covid_status)
+            condition = condition + """ AND timeattendance.covid_tracking='%s' """ %(covid_status)
 
         if(month is not None):
             print(TAG, "filter only month=", month)
