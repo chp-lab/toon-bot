@@ -204,7 +204,7 @@ class Hooking(Resource):
                             self.send_msg(one_id, "ไม่พบเวลาเข้างานของคุณ")
                             return module.measurementNotFound()
                         rec = res[0]['result'][0]
-                        reply_msg = "เวลาเข้างานของคุณคือ %s %s สถานที่ %s" %(rec['checkin'], rec['date'], rec['address'])
+                        reply_msg = "เวลาเข้างานของคุณคือ %s %s สถานที่ %s" %(rec['check_in'], rec['date'], rec['address'])
                         self.send_msg(one_id, recv_msg)
                         return module.success()
                     return module.success()
