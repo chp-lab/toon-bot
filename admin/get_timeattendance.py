@@ -10,13 +10,29 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from hooking import Hooking
 
 class Timeattendance(Resource):
-    def get_timeattendance(self):
+    def get_timeattendance(self, args):
+        TAG = "get_timeattendan:"
+        module = Module()
+
+        condition = """True"""
+
+        one_email_key  = "one_email"
+
+        if(module.isQueryStr(args, one_email_key)):
+            one_email = args.get(one_email_key)
+            print(TAG, "search with one email like", one_email)
+            condition = condition + """ AND timeattendance.one_email LIKE '%%%s%%' """ %(one_email)
+
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
         (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area,
         timeattendance.latitude, timeattendance.longitude
-        FROM `timeattendance` ORDER BY `log_id`  DESC"""
+        FROM `timeattendance`
+        WHERE %s
+        ORDER BY `log_id`  DESC""" %(condition)
+
+
 
         database = Database()
         res = database.getData(cmd)
@@ -57,6 +73,8 @@ class Timeattendance(Resource):
                        'result': None
                    }, 401
 
-        timeattendance = self.get_timeattendance()
+        args = request.args
+
+        timeattendance = self.get_timeattendance(args)
 
         return timeattendance
