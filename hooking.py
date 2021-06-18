@@ -204,7 +204,12 @@ class Hooking(Resource):
 
         json_res = r.json()
         # print(TAG, "json_res=", json_res)
-        return json_res
+        return {
+                   'type': True,
+                   'message': "success",
+                   'error_message': None,
+                   'result': [{'onechat_profie': json_res}]
+               }, 200
 
     def post(self):
         TAG = "Hooking:"

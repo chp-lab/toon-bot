@@ -45,6 +45,6 @@ class Timeattendance(Resource):
         onechat_token = res[0]['result'][0]['onechat_token']
 
         onechat_profile = hooking.get_onechat_profile(onechat_token)
-        print(TAG, "onechat_profile")
+        print(TAG, "onechat_profile=", onechat_profile)
 
-        return timeattendance
+        return onechat_profile
