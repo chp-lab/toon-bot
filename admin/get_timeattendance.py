@@ -44,7 +44,7 @@ class Timeattendance(Resource):
             print(TAG, "check in at like", checkin_area)
             area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
             FROM rooms
-            WHERE rooms.room_num LIKE '%%%s%%'"""
+            WHERE rooms.room_num LIKE '%%%s%%'""" %(checkin_area)
 
             matched_area = database.getData(area_cmd)
 
