@@ -63,6 +63,31 @@ class Timeattendance(Resource):
             else:
                 condition = condition + """ AND False """
 
+        if(checkout_area is not None):
+            print(TAG, "check out at like", checkout_area)
+            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
+            FROM rooms
+            WHERE rooms.room_num LIKE '%%%s%%'""" %(checkout_area)
+
+            matched_area = database.getData(area_cmd)
+
+            print(TAG, "matched_area=", matched_area)
+
+            if(matched_area[0]['len'] > 0):
+                areas = matched_area[0]['result']
+                area_filter = ""
+                for i in range(len(areas)):
+                    area_minor = areas[i]['minor']
+                    if(i == 0):
+                        area_filter = "timeattendance.checkout_at=%s" %(area_minor)
+                    else:
+                        area_filter = area_filter + " OR timeattendance.checkout_at=%s" %(area_minor)
+                condition = condition + """ AND %s """ %(area_filter)
+            else:
+                condition = condition + """ AND False """
+
+
+
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
