@@ -27,6 +27,7 @@ class Timeattendance(Resource):
         checkin_area = args.get("checkin_area")
         checkout_area = args.get("checkout_area")
         covid_status = args.get("covid_status")
+        month = args.get("month")
 
         if(one_email is not None):
             print(TAG, "search with one email like", one_email)
@@ -86,8 +87,13 @@ class Timeattendance(Resource):
             else:
                 condition = condition + """ AND False """
 
+        if(covid_status is not None):
+            print(TAG, "filter only covid status=", covid_status)
+            condition = condition + """ AND timeattendance.covid_traking='%s' """ %(covid_status)
 
-
+        if(month is not None):
+            print(TAG, "filter only month=", month)
+            condition = condition + """ AND MONTH(timeattendance.date)=%s """ %(month)
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
