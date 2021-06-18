@@ -25,3 +25,7 @@ class Timeattendance(Resource):
         timeattendance = self.get_timeattendance()
         return timeattendance
 
+    def get(self):
+        TAG = "get_timeatt:"
+        timeattendance = self.get_timeattendance()
+        return timeattendance
