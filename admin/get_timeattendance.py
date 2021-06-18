@@ -14,17 +14,30 @@ class Timeattendance(Resource):
         TAG = "get_timeattendan:"
         module = Module()
 
-        one_email_key = "one_email"
+        condition = """TRUE """
 
-        print(TAG, "args=", args.get(one_email_key))
-        condition = """True"""
+        one_email = args.get("one_email")
+        one_id = args.get("one_id")
+        checkin_date = args.get("checkin_date")
+        enter_before = args.get("enter_before")
+        enter_after = args.get ("enter_after")
+        out_before = args.get("out_before")
+        out_after = args.get("out_after")
+        checkin_area = args.get("checkin_area")
+        checkout_area = args.get("checkout_area")
+        covid_status = args.get("covid_status")
 
-
-
-        if(module.isQueryStr(args, one_email_key)):
-            one_email = args.get(one_email_key)
+        if(one_email is not None):
             print(TAG, "search with one email like", one_email)
             condition = condition + """ AND timeattendance.one_email LIKE '%%%s%%' """ %(one_email)
+
+        if(one_id is not None):
+            print(TAG, "serach with one_id like", one_id)
+            condition = condition + """ AND ttimeattendance.employee_code LIKE '%%%s%%' """ %(one_id)
+
+        if(checkin_date is not None):
+            print(TAG, "search with ddate")
+            condition = condition + """ AND timeattendance.date=='%s' """ %(checkin_date)
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
