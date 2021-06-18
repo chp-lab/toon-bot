@@ -33,7 +33,7 @@ class Timeattendance(Resource):
 
         if(one_id is not None):
             print(TAG, "serach with one_id like", one_id)
-            condition = condition + """ AND ttimeattendance.employee_code LIKE '%%%s%%' """ %(one_id)
+            condition = condition + """ AND timeattendance.employee_code LIKE '%%%s%%' """ %(one_id)
 
         if(checkin_date is not None):
             print(TAG, "search with ddate")
