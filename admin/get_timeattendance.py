@@ -36,8 +36,8 @@ class Timeattendance(Resource):
             condition = condition + """ AND timeattendance.employee_code='%s' """ %(one_id)
 
         if(checkin_date is not None):
-            print(TAG, "search with ddate")
-            condition = condition + """ AND timeattendance.date=='%s' """ %(checkin_date)
+            print(TAG, "search with date")
+            condition = condition + """ AND timeattendance.date='%s' """ %(checkin_date)
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
