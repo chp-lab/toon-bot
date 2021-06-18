@@ -192,6 +192,7 @@ class Hooking(Resource):
 
     def get_onechat_profile(self, auth):
         TAG = "get_onechat_profile:"
+        module = Module()
         print(TAG, "auth=", auth)
         payload = {
             "bot_id":  self.beaconbot_id,
@@ -204,6 +205,9 @@ class Hooking(Resource):
 
         json_res = r.json()
         # print(TAG, "json_res=", json_res)
+        if(json_res['status'] != "success"):
+            return module.wrongAPImsg()
+        
         return {
                    'type': True,
                    'message': "success",
