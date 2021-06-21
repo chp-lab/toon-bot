@@ -371,8 +371,9 @@ class Hooking(Resource):
                     # get room num
                     room_cmd = """"SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
                     room = database.getData(room_cmd)
-                    room_num = room[0]['result'][0]['room_num']
-                    print(TAG, "room_num=", room_num)
+                    print(TAG, "room=", room)
+                    # room_num = room[0]['result'][0]['room_num']
+                    # print(TAG, "room_num=", room_num)
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
