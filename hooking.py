@@ -358,7 +358,7 @@ class Hooking(Resource):
             # daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
 
             # record to access log
-            if (event_stage == 'enter'):
+            if ((event_stage == 'enter') or (event_stage == 'immediate')):
                 print(TAG, "record to access log")
                 rec = self.record_to_log(one_id, event_stage, minor)
 
