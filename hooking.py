@@ -365,7 +365,7 @@ class Hooking(Resource):
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
 
-                print(TAG, "rssi=", rssi)
+                print(TAG, "proximity=", proximity)
                 if(proximity == "near"):
                     print(TAG, "user close to thee door, open the door")
                     # get room num
