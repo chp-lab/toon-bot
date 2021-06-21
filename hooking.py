@@ -16,6 +16,8 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
 
+    server_uri = "http://127.0.0.1:5007"
+
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
 
@@ -33,6 +35,8 @@ class Hooking(Resource):
     sendmessage_body = {}
 
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
+    unlock_api = server_uri + "/api/v1/unlock/"
+
 
     def check_daily(self, one_id, today):
         cmd = """SELECT * FROM timeattendance WHERE timeattendance.employee_code='%s' AND timeattendance.date='%s' """ %(one_id, today)
@@ -255,7 +259,7 @@ class Hooking(Resource):
         data = request.json
         print(TAG, "data=", data)
         print(TAG, request.headers)
-        # database = Database()
+        database = Database()
         module = Module()
 
         dev_uri = "http://localhost:5008/api/v1/hooking"
@@ -364,6 +368,11 @@ class Hooking(Resource):
                 print(TAG, "rssi=", rssi)
                 if(proximity == "near"):
                     print(TAG, "user close to thee door, open the door")
+                    # get room num
+                    room_cmd = """"SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
+                    room = database.getData(room_cmd)
+                    room_num = room[0]['result'][0]['room_num']
+                    print(TAG, "room_num=", room_num)
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
