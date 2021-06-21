@@ -16,7 +16,7 @@ class Hooking(Resource):
     onechat_uri = "https://chat-api.one.th"
     onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
 
-    server_uri = "http://127.0.0.1:5007"
+    server_unlock_uri = "http://127.0.0.1:5003"
 
     covid_api = "https://hr-management.inet.co.th:5000/detail_user_data"
     covid_body = {}
@@ -35,7 +35,7 @@ class Hooking(Resource):
     sendmessage_body = {}
 
     onechat_url1 = onechat_uri + '/message/api/v1/push_quickreply'
-    unlock_api = server_uri + "/api/v1/unlock/"
+    unlock_api = server_unlock_uri + "/api/v1/unlock/"
 
 
     def check_daily(self, one_id, today):
