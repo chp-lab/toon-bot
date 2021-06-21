@@ -331,7 +331,7 @@ class Hooking(Resource):
                 self.send_msg(admin_one_id, "### system: problem with oneid")
                 print(TAG, "### one id is blank ###")
                 return module.serveErrMsg()
-            tmp_msg = "event_stage:%s, proximity:%s" %(data['event_stage'], data['proximity'])
+            tmp_msg = "event_stage:%s, proximity:%s, rssi:%s" %(data['event_stage'], data['proximity'], data['rssi'])
             r = self.send_msg(one_id, tmp_msg)
             print(TAG, "r=", r)
             major = data['major']
@@ -358,7 +358,7 @@ class Hooking(Resource):
 
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
-                rssi = data["rssi"]
+
                 print(TAG, "rssi=", rssi)
                 if((rssi <= 0) or (rssi > -40)):
                     print(TAG, "user close to thee door, open the door")
