@@ -258,7 +258,7 @@ class Hooking(Resource):
         # database = Database()
         module = Module()
 
-        dev_uri = "localhost:5008/api/v1/hooking"
+        dev_uri = "http://localhost:5008/api/v1/hooking"
 
         print(TAG, "forward to dev")
         try:
