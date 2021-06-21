@@ -264,12 +264,12 @@ class Hooking(Resource):
 
         dev_uri = "http://localhost:5008/api/v1/hooking"
 
-        print(TAG, "forward to dev")
-        try:
-            r = requests.post(dev_uri, json=data, verify=False)
-            print(TAG, "forward status=", r.status_code)
-        except:
-            print(TAG), "no connection found!"
+        # print(TAG, "forward to dev")
+        # try:
+        #     r = requests.post(dev_uri, json=data, verify=False)
+        #     print(TAG, "forward status=", r.status_code)
+        # except:
+        #     print(TAG), "no connection found!"
 
         if ('event' in data):
             if(data["event"]=='message'):
