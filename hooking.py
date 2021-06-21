@@ -324,6 +324,7 @@ class Hooking(Resource):
             event_stage = data['event_stage']
             lat = data['user_latitude']
             long = data['user_longitude']
+            rssi = data["rssi"]
             print(TAG, "one_id=", one_id)
 
             if(one_id == ''):
