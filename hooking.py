@@ -366,7 +366,7 @@ class Hooking(Resource):
                 # open the door
 
                 print(TAG, "proximity=", proximity)
-                if((proximity == "near") or (proximity == "immediate")):
+                if(proximity == "near"):
                     print(TAG, "user close to thee door, open the door")
                     # get room num
                     room_cmd = """SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
