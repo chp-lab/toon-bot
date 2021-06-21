@@ -369,11 +369,11 @@ class Hooking(Resource):
                 if(proximity == "near"):
                     print(TAG, "user close to thee door, open the door")
                     # get room num
-                    room_cmd = """"SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
+                    room_cmd = """SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
                     room = database.getData(room_cmd)
-                    print(TAG, "room=", room)
-                    # room_num = room[0]['result'][0]['room_num']
-                    # print(TAG, "room_num=", room_num)
+                    # print(TAG, "room=", room)
+                    room_num = room[0]['result'][0]['room_num']
+                    print(TAG, "room_num=", room_num)
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
