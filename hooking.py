@@ -325,6 +325,7 @@ class Hooking(Resource):
             lat = data['user_latitude']
             long = data['user_longitude']
             rssi = data["rssi"]
+            proximity = data['proximity']
             print(TAG, "one_id=", one_id)
 
             if(one_id == ''):
@@ -361,7 +362,7 @@ class Hooking(Resource):
                 # open the door
 
                 print(TAG, "rssi=", rssi)
-                if((rssi <= 0) or (rssi > -40)):
+                if(proximity == "near"):
                     print(TAG, "user close to thee door, open the door")
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
