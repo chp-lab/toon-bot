@@ -258,6 +258,12 @@ class Hooking(Resource):
         # database = Database()
         module = Module()
 
+        dev_uri = "localhost:5008/api/v1/hooking"
+
+        print(TAG, "forward to dev")
+        r = requests.post(dev_uri, json=data, verify=False)
+        print(TAG, "forward status=", r.status_code)
+
         if ('event' in data):
             if(data["event"]=='message'):
                 message_db = self.get_message(1)
