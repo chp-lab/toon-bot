@@ -357,6 +357,11 @@ class Hooking(Resource):
                 rec = self.record_to_log(one_id, event_stage, minor)
 
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
+                # open the door
+                rssi = data["rssi"]
+                print(TAG, "rssi=", rssi)
+                if((rssi <= 0) || (rssi > -40)):
+                    print(TAG, "user close to thee door, open the door")
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
