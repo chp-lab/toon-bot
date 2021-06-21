@@ -384,6 +384,7 @@ class Hooking(Resource):
                     }
                     unlock_res = requests.post(unlock_entry, json=unlock_body, headers=unlock_header, verify=False)
                     print(TAG, "unlock_res=", unlock_res)
+                    self.send_msg(one_id, "เปิดประตู")
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
