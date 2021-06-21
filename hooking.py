@@ -360,7 +360,7 @@ class Hooking(Resource):
                 # open the door
                 rssi = data["rssi"]
                 print(TAG, "rssi=", rssi)
-                if((rssi <= 0) || (rssi > -40)):
+                if((rssi <= 0) or (rssi > -40)):
                     print(TAG, "user close to thee door, open the door")
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
