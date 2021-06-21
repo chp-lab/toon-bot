@@ -374,6 +374,16 @@ class Hooking(Resource):
                     # print(TAG, "room=", room)
                     room_num = room[0]['result'][0]['room_num']
                     print(TAG, "room_num=", room_num)
+                    unlock_entry = self.unlock_api + "/" + room_num
+                    secret_key = "XxABgB71B2zssFGRcz3BrMZdJsb5G5TQ~#J0UDsDVyfkBBe$taZVetc3q-i_PL8_ST3cETapN7KutBVHFJRxKd86Kj4DUeoGPR8p#HK5ykKx5fjcp03G)E2C_IMp*C9w"
+                    unlock_header = {"Authorization": secret_key}
+                    unlock_body = {
+                        "guest_req":"checkin",
+                        "secret_key":"9qn1a2MTswD52m6PfU1kdLgfJK4NDoem!HRjRng!F_8AAv*c!*bOCLVxOSj9-XKZ",
+                        "one_id":one_id
+                    }
+                    unlock_res = requests.post(unlock_entry, json=unlock_body, headers=unlock_header, verify=False)
+                    print(TAG, "unlock_res=", unlock_res)
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
