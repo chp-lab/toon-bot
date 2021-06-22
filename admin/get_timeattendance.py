@@ -1,3 +1,4 @@
+from hooking import Hooking
 from flask_restful import Resource
 from flask import request
 import requests
@@ -7,7 +8,7 @@ from datetime import datetime
 import urllib3
 import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-from hooking import Hooking
+
 
 class Timeattendance(Resource):
     def get_timeattendance(self, args):
@@ -21,7 +22,7 @@ class Timeattendance(Resource):
         one_id = args.get("one_id")
         checkin_date = args.get("checkin_date")
         enter_before = args.get("enter_before")
-        enter_after = args.get ("enter_after")
+        enter_after = args.get("enter_after")
         out_before = args.get("out_before")
         out_after = args.get("out_after")
         checkin_area = args.get("checkin_area")
@@ -31,21 +32,25 @@ class Timeattendance(Resource):
 
         if(one_email is not None):
             print(TAG, "search with one email like", one_email)
-            condition = condition + """ AND timeattendance.one_email LIKE '%%%s%%' """ %(one_email)
+            condition = condition + \
+                """ AND timeattendance.one_email LIKE '%%%s%%' """ % (
+                    one_email)
 
         if(one_id is not None):
             print(TAG, "serach with one_id=", one_id)
-            condition = condition + """ AND timeattendance.employee_code='%s' """ %(one_id)
+            condition = condition + \
+                """ AND timeattendance.employee_code='%s' """ % (one_id)
 
         if(checkin_date is not None):
             print(TAG, "search with date")
-            condition = condition + """ AND timeattendance.date='%s' """ %(checkin_date)
+            condition = condition + \
+                """ AND timeattendance.date='%s' """ % (checkin_date)
 
         if(checkin_area is not None):
             print(TAG, "check in at like", checkin_area)
             area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
             FROM rooms
-            WHERE rooms.room_num LIKE '%%%s%%'""" %(checkin_area)
+            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkin_area)
 
             matched_area = database.getData(area_cmd)
 
@@ -57,10 +62,12 @@ class Timeattendance(Resource):
                 for i in range(len(areas)):
                     area_minor = areas[i]['minor']
                     if(i == 0):
-                        area_filter = "timeattendance.checkin_at=%s" %(area_minor)
+                        area_filter = "timeattendance.checkin_at=%s" % (
+                            area_minor)
                     else:
-                        area_filter = area_filter + " OR timeattendance.checkin_at=%s" %(area_minor)
-                condition = condition + """ AND (%s) """ %(area_filter)
+                        area_filter = area_filter + \
+                            " OR timeattendance.checkin_at=%s" % (area_minor)
+                condition = condition + """ AND (%s) """ % (area_filter)
             else:
                 condition = condition + """ AND False """
 
@@ -68,7 +75,7 @@ class Timeattendance(Resource):
             print(TAG, "check out at like", checkout_area)
             area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
             FROM rooms
-            WHERE rooms.room_num LIKE '%%%s%%'""" %(checkout_area)
+            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkout_area)
 
             matched_area = database.getData(area_cmd)
 
@@ -80,20 +87,44 @@ class Timeattendance(Resource):
                 for i in range(len(areas)):
                     area_minor = areas[i]['minor']
                     if(i == 0):
-                        area_filter = "timeattendance.checkout_at=%s" %(area_minor)
+                        area_filter = "timeattendance.checkout_at=%s" % (
+                            area_minor)
                     else:
-                        area_filter = area_filter + " OR timeattendance.checkout_at=%s" %(area_minor)
-                condition = condition + """ AND (%s) """ %(area_filter)
+                        area_filter = area_filter + \
+                            " OR timeattendance.checkout_at=%s" % (area_minor)
+                condition = condition + """ AND (%s) """ % (area_filter)
             else:
                 condition = condition + """ AND False """
 
         if(covid_status is not None):
             print(TAG, "filter only covid status=", covid_status)
-            condition = condition + """ AND timeattendance.covid_tracking='%s' """ %(covid_status)
+            condition = condition + \
+                """ AND timeattendance.covid_tracking='%s' """ % (covid_status)
 
         if(month is not None):
             print(TAG, "filter only month=", month)
-            condition = condition + """ AND MONTH(timeattendance.date)=%s """ %(month)
+            condition = condition + \
+                """ AND MONTH(timeattendance.date)=%s """ % (month)
+
+        # if(enter_before is not None):
+        #     print(TAG, "search with checkin time before")
+        #     condition = condition + \
+        #         """ AND timeattendance.check_in<'%s' """ % (enter_before)
+
+        # if(enter_after is not None):
+        #     print(TAG, "search with checkin time after")
+        #     condition = condition + \
+        #         """ AND timeattendance.check_in>'%s' """ % (enter_after)
+
+        # if(out_before is not None):
+        #     print(TAG, "search with checkout time before")
+        #     condition = condition + \
+        #         """ AND timeattendance.check_out<'%s' """ % (out_before)
+
+        # if(out_after is not None):
+        #     print(TAG, "search with checkout time after")
+        #     condition = condition + \
+        #         """ AND timeattendance.check_out>'%s' """ % (out_after)
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
@@ -102,7 +133,9 @@ class Timeattendance(Resource):
         timeattendance.latitude, timeattendance.longitude, timeattendance.employee_code AS one_id
         FROM `timeattendance`
         WHERE %s
-        ORDER BY `log_id`  DESC""" %(condition)
+        ORDER BY `log_id`  DESC""" % (condition)
+
+        print("Command in search: ", cmd)
 
         res = database.getData(cmd)
         return res
@@ -137,11 +170,11 @@ class Timeattendance(Resource):
         one_id = prof_res[0]['result'][0]['onechat_profie']['data']['one_id']
         if(not hooking.is_admin(one_id)):
             return {
-                       'type': False,
-                       'message': "fail",
-                       'error_message': "You are not admin",
-                       'result': None
-                   }, 401
+                'type': False,
+                'message': "fail",
+                'error_message': "You are not admin",
+                'result': None
+            }, 401
 
         args = request.args
 
