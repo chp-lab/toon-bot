@@ -160,19 +160,20 @@ class Hooking(Resource):
         msg = "ให้ช่วยอะไรดี"
         payload = [
                     {
-                        "label": "การเข้างานของคุณ",
+                        "label": "การเข้าพื้นที่ของคุณ",
                         "type": "text",
                         "message": "ดูการเข้างานของฉัน",
                         "payload": "my_rec"
-                    },
-                    {
+                    }
+                ]
+        if(self.is_admin(one_id)):
+            payload.append({
                         "label": "Admin",
                         "type": "link",
                         "url": web_vue_url1,
                         "sign": "false",
                         "onechat_token": "true"
-                    }
-                ]
+                    })
         res = self.send_quick_reply(one_id, msg, payload)
         print(TAG, "res=", res)
 
