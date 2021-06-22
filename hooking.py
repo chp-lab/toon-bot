@@ -8,6 +8,7 @@ from module import Module
 from datetime import datetime
 import urllib3
 import json
+import threading
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -252,6 +253,14 @@ class Hooking(Resource):
         else:
             return False
 
+    def package_forward(self, package, uri):
+        TAG = "package_forward:"
+        print(TAG, "forward to dev")
+        try:
+            r = requests.post(uri, json=package, verify=False)
+            print(TAG, "forward status=", r.status_code)
+        except:
+            print(TAG), "no connection found!"
 
 
     def post(self):
@@ -263,13 +272,8 @@ class Hooking(Resource):
         module = Module()
 
         dev_uri = "http://localhost:5008/api/v1/hooking"
-
-        # print(TAG, "forward to dev")
-        # try:
-        #     r = requests.post(dev_uri, json=data, verify=False)
-        #     print(TAG, "forward status=", r.status_code)
-        # except:
-        #     print(TAG), "no connection found!"
+        t = threading.Thread(target=self.package_forward, args=(data, dev_uri))
+        t.start()
 
         if ('event' in data):
             if(data["event"]=='message'):
