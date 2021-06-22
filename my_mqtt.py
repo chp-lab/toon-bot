@@ -57,9 +57,9 @@ class My_mqtt(Resource):
         TAG= "my_mqtt:"
         my_hooking = Hooking()
         onechat_uri = "https://chat-api.one.th"
-        onechat_dev_token = "Bearer Af58c5450f3b45c71a97bc51c05373ecefabc49bd2cd94f3c88d5b844813e69a17e26a828c2b64ef889ef0c10e2aee347"
+        onechat_dev_token = "Bearer A1f52b98be0f25416a6a9a262d15747cbfa622f189173425aa8b8ba03bf8d67822a6ab46d22c34e21835d0ec2bb50240d"
         headers = {"Authorization": onechat_dev_token, "Content-Type": "application/json"}
-        bot_id = "B75900943c6205ce084d1c5e8850d40f9"
+        bot_id = "Bde6bcb263e82544ca9bae0d67b556ec4"
 
         module = Module()
         database = Database()
