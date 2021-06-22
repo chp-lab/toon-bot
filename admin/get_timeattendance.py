@@ -106,25 +106,25 @@ class Timeattendance(Resource):
             condition = condition + \
                 """ AND MONTH(timeattendance.date)=%s """ % (month)
 
-        # if(enter_before is not None):
-        #     print(TAG, "search with checkin time before")
-        #     condition = condition + \
-        #         """ AND timeattendance.check_in<'%s' """ % (enter_before)
+        if(enter_before is not None):
+            print(TAG, "search with checkin time before")
+            condition = condition + \
+                """ AND timeattendance.check_in<='%s' """ % (enter_before)
 
-        # if(enter_after is not None):
-        #     print(TAG, "search with checkin time after")
-        #     condition = condition + \
-        #         """ AND timeattendance.check_in>'%s' """ % (enter_after)
+        if(enter_after is not None):
+            print(TAG, "search with checkin time after")
+            condition = condition + \
+                """ AND timeattendance.check_in>'%s' """ % (enter_after)
 
-        # if(out_before is not None):
-        #     print(TAG, "search with checkout time before")
-        #     condition = condition + \
-        #         """ AND timeattendance.check_out<'%s' """ % (out_before)
+        if(out_before is not None):
+            print(TAG, "search with checkout time before")
+            condition = condition + \
+                """ AND timeattendance.check_out<'%s' """ % (out_before)
 
-        # if(out_after is not None):
-        #     print(TAG, "search with checkout time after")
-        #     condition = condition + \
-        #         """ AND timeattendance.check_out>'%s' """ % (out_after)
+        if(out_after is not None):
+            print(TAG, "search with checkout time after")
+            condition = condition + \
+                """ AND timeattendance.check_out>='%s' """ % (out_after)
 
         cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
         timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
