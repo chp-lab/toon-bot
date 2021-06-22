@@ -120,8 +120,6 @@ class My_mqtt(Resource):
             ]
         }
         return res
-        else:
-            return module.unauthorized()
 
 if (__name__ == "__main__"):
     my_mqtt = My_mqtt()
