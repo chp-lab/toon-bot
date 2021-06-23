@@ -400,7 +400,7 @@ class Hooking(Resource):
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
                 print(TAG, "proximity=", proximity)
-                if((proximity == "near") or (proximity == "far") or (event_stage == "enter")):
+                if((proximity == "near") or (event_stage == "enter")):
                     #get covid status
                     covid_res = self.get_covid_rec(one_id)
                     if(covid_res[0]['len'] == 0):
