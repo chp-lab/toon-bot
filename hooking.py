@@ -400,14 +400,11 @@ class Hooking(Resource):
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
                 print(TAG, "proximity=", proximity)
-                if((proximity == "near") or (event_stage == "enter")):
-                    # #get covid status
-                    # covid_res = self.get_covid_rec(one_id)
-                    #
-                    # if(covid_res[0]['len'] == 0):
-                    #     self.send_msg(one_id, "กรุณาทำ Covid trcking ก่อนเข้าพื้นที่ค่ะ")
-                    #     return module.success()
-                    self.door_open(minor, one_id)
+                # if((proximity == "near") and (event_stage == 'proximity_change')):
+                #     # #get covid status
+                #     covid_res = self.get_covid_rec(one_id)
+                #     if(covid_res[0]['len'] != 0):
+                #         self.door_open(minor, one_id)
 
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
@@ -415,9 +412,12 @@ class Hooking(Resource):
                     building = self.get_area(major, minor)
                     greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
+                    self.door_open(minor, one_id)
                     # end the job
                     return module.success()
                 elif(self.is_entred(one_id) and (event_stage == 'proximity_change')):
+                    if(proximity == "near"):
+                        self.door_open(minor, one_id)
                     # print(TAG, "user are in the area")
                     # self.send_msg(one_id, "you are in the area")
                     return module.success()
@@ -427,15 +427,16 @@ class Hooking(Resource):
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
                 #check is it first time user enter the area
-                if (self.is_entred(one_id)):
-                    print(TAG, "user was enter")
-                    building = self.get_area(major, minor)
-                    greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
-                    self.send_msg(one_id, greeting_msg)
-                    # end the job
-                    return module.success()
+                # if (self.is_entred(one_id)):
+                #     print(TAG, "user was enter")
+                #     building = self.get_area(major, minor)
+                #     greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
+                #     self.send_msg(one_id, greeting_msg)
+                #
+                #     # end the job
+                #     return module.success()
 
-                print(TAG, "first enter of the day")
+                # print(TAG, "first enter of the day")
                 # check is record is entered
 
                 covid_data = chekcovid.json().pop()
@@ -492,6 +493,7 @@ class Hooking(Resource):
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        self.door_open(minor, one_id)
                         return module.success()
 
                         # sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -533,12 +535,5 @@ class Hooking(Resource):
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 return module.success()
-        return {
-            "type": True,
-            "message": "success",
-            "elapsed_time_ms": 0,
-            "len": 0,
-            "result": "testing"
-        }
-
+        return module.success()
 
