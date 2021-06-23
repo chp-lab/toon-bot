@@ -401,11 +401,12 @@ class Hooking(Resource):
                 # open the door
                 print(TAG, "proximity=", proximity)
                 if((proximity == "near") or (event_stage == "enter")):
-                    #get covid status
-                    covid_res = self.get_covid_rec(one_id)
-                    if(covid_res[0]['len'] == 0):
-                        self.send_msg(one_id, "กรุณาทำ Covid trcking ก่อนเข้าพื้นที่ค่ะ")
-                        return module.success()
+                    # #get covid status
+                    # covid_res = self.get_covid_rec(one_id)
+                    #
+                    # if(covid_res[0]['len'] == 0):
+                    #     self.send_msg(one_id, "กรุณาทำ Covid trcking ก่อนเข้าพื้นที่ค่ะ")
+                    #     return module.success()
                     self.door_open(minor, one_id)
 
                 # do slow job first
