@@ -263,6 +263,36 @@ class Hooking(Resource):
         except:
             print(TAG), "no connection found!"
 
+    def door_open(self, minor, one_id):
+        TAG = "door_open:"
+        database = Database()
+        print(TAG, "user close to thee door, open the door")
+        # get room num
+        room_cmd = """SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" % (minor)
+        room = database.getData(room_cmd)
+        # print(TAG, "room=", room)
+        room_num = room[0]['result'][0]['room_num']
+        print(TAG, "room_num=", room_num)
+        unlock_entry = self.unlock_api + "/" + room_num
+        secret_key = "XxABgB71B2zssFGRcz3BrMZdJsb5G5TQ~#J0UDsDVyfkBBe$taZVetc3q-i_PL8_ST3cETapN7KutBVHFJRxKd86Kj4DUeoGPR8p#HK5ykKx5fjcp03G)E2C_IMp*C9w"
+        unlock_header = {"Authorization": secret_key}
+        unlock_body = {
+            "guest_req": "checkin",
+            "secret_key": "9qn1a2MTswD52m6PfU1kdLgfJK4NDoem!HRjRng!F_8AAv*c!*bOCLVxOSj9-XKZ",
+            "one_id": one_id
+        }
+        unlock_res = requests.post(unlock_entry, json=unlock_body, headers=unlock_header, verify=False)
+        print(TAG, "unlock_res=", unlock_res)
+        self.send_msg(one_id, "เปิดประตู " + room_num)
+
+    def get_covid_rec(self, one_id):
+        TAG = "get_covid_rec:"
+        database = Database()
+        cmd = """SELECT timeattendance.covid_tracking 
+        FROM timeattendance 
+        WHERE timeattendance.employee_code='%s' AND timeattendance.date=CURRENT_DATE""" %(one_id)
+        covid_res = database.getData(cmd)
+        return covid_res
 
     def post(self):
         TAG = "Hooking:"
@@ -369,27 +399,15 @@ class Hooking(Resource):
 
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
-
                 print(TAG, "proximity=", proximity)
                 if((proximity == "near") or (event_stage == "enter")):
-                    print(TAG, "user close to thee door, open the door")
-                    # get room num
-                    room_cmd = """SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" %(minor)
-                    room = database.getData(room_cmd)
-                    # print(TAG, "room=", room)
-                    room_num = room[0]['result'][0]['room_num']
-                    print(TAG, "room_num=", room_num)
-                    unlock_entry = self.unlock_api + "/" + room_num
-                    secret_key = "XxABgB71B2zssFGRcz3BrMZdJsb5G5TQ~#J0UDsDVyfkBBe$taZVetc3q-i_PL8_ST3cETapN7KutBVHFJRxKd86Kj4DUeoGPR8p#HK5ykKx5fjcp03G)E2C_IMp*C9w"
-                    unlock_header = {"Authorization": secret_key}
-                    unlock_body = {
-                        "guest_req":"checkin",
-                        "secret_key":"9qn1a2MTswD52m6PfU1kdLgfJK4NDoem!HRjRng!F_8AAv*c!*bOCLVxOSj9-XKZ",
-                        "one_id":one_id
-                    }
-                    unlock_res = requests.post(unlock_entry, json=unlock_body, headers=unlock_header, verify=False)
-                    print(TAG, "unlock_res=", unlock_res)
-                    self.send_msg(one_id, "เปิดประตู")
+                    #get covid status
+                    covid_res = self.get_covid_rec(one_id)
+                    if(covid_res[0]['len'] == 0):
+                        self.send_msg(one_id, "กรุณาทำ Covid trcking ก่อนเข้าพื้นที่ค่ะ")
+                        return module.success()
+                    self.door_open(minor, one_id)
+
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
                     print(TAG, "user was enter")
