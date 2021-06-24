@@ -78,9 +78,22 @@ class Hooking(Resource):
             print('test async')
 
         if('uuid' in data):
+            async def diss(lis):
+                x = []
+                for i in lis:
+                    x.append(i + 1)
+                return x
+
+
+            async def main():
+                lis = [1, 2, 3, 4]
+                res = await diss(lis)
+                return res
+
+
             loop = asyncio.get_event_loop()
-            loop.run_until_complete(tes_async())
-            loop.close()
+            res = loop.run_until_complete(main())
+            print("this is res" + res)
 
             # update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             # update_body = {
@@ -165,6 +178,4 @@ class Hooking(Resource):
             "len": 0,
             "result": "testing"
         }
-    
-    if __name__ == '__post__':
-        post()
+
