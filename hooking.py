@@ -3,7 +3,7 @@
 from flask_restful import Resource
 from flask import request
 import requests 
-from requests import async
+import asyncio
 from database import Database
 from module import Module
 import urllib3
@@ -74,88 +74,89 @@ class Hooking(Resource):
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
                 print("debug onechat response :" + json.dumps(sendmessage.json()))
 
+        def tes_async():
+            print('test async')
 
         if('uuid' in data):
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(tes_async())
+            loop.close()
+            
+            # update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
+            # update_body = {
+            #                     "event_stage":data['event_stage'],
+            #                     "major":data['major'],
+            #                     "minor":data['minor'],
+            #                     "platform":data['platform'],
+            #                     "rssi":data['rssi'],
+            #                     "timestamp":data['timestamp'],
+            #                     "user_latitude":data['user_latitude'],
+            #                     "user_longitude":data['user_longitude'],
+            #                     "uuid":data['uuid'],
+            #                     "one_id": data['oneid']
+            #               }
+
+
+
+            # update = requests.post(update_url, json=update_body, verify=False)
+            # print("updateLocation response :" + json.dumps(update.json()))
+
+            # sendmessage_body = {
+            #                         "to": data['oneid'],
+            #                         "bot_id": self.beaconbot_id,
+            #                         "type": "text",
+            #                         "message": "update_location" + "\n" + 
+            #                                    "update success !!" + "\n" +
+            #                                    "---------------------------" + "\n" +
+            #                                    "uuid : " + data['uuid'] + "\n" +
+            #                                    "major : " + data['major'] + "\n" + 
+            #                                    "minor : " + data['minor'] + "\n" +
+            #                                    "rssi : " + str(data['rssi']) + "\n" +
+            #                                    "User_lat : " + str(data['user_latitude']) + "\n" +
+            #                                    "User_lng : " + str(data['user_longitude']) + "\n" +
+            #                                    "event_stage : " + data['event_stage'] + "\n" +
+            #                                    "proximity :  " + data['proximity'],
+            #                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #                     }
+            # sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            # print("debug onechat response :" + json.dumps(sendmessage.json()))
+
 
             
-            update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
-            update_body = {
-                                "event_stage":data['event_stage'],
-                                "major":data['major'],
-                                "minor":data['minor'],
-                                "platform":data['platform'],
-                                "rssi":data['rssi'],
-                                "timestamp":data['timestamp'],
-                                "user_latitude":data['user_latitude'],
-                                "user_longitude":data['user_longitude'],
-                                "uuid":data['uuid'],
-                                "one_id": data['oneid']
-                          }
-
-            def test_response (response):
-                print(7777777777777777777777)
-                print(response.url)
-
-            action_item = async.get(update_url, hooks = {'response' : test_response})
-            update = requests.post(update_url, json=update_body, verify=False)
-            print("updateLocation response :" + json.dumps(update.json()))
-
-            sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "update_location" + "\n" + 
-                                               "update success !!" + "\n" +
-                                               "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "User_lat : " + str(data['user_latitude']) + "\n" +
-                                               "User_lng : " + str(data['user_longitude']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-            sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-            print("debug onechat response :" + json.dumps(sendmessage.json()))
-
-
-            
-            if 'android' in data['platform']:
-                sendmessage_body = {
-                                        "to": data['oneid'],
-                                        "bot_id": self.beaconbot_id,
-                                        "type": "text",
-                                        "message": "สวัสดี" + "\n" + 
-                                               "scan success !!" + "\n" +
-                                               "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + str(data['rssi']) + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                        "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                    }
-            if 'ios' in data['platform']:
-                sendmessage_body = {
-                                    "to": data['oneid'],
-                                    "bot_id": self.beaconbot_id,
-                                    "type": "text",
-                                    "message": "สวัสดี" + "\n" + 
-                                               "scan success !!" + "\n" +
-                                               "---------------------------" + "\n" +
-                                               "uuid : " + data['uuid'] + "\n" +
-                                               "major : " + data['major'] + "\n" + 
-                                               "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + data['rssi'] + "\n" +
-                                               "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
-                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-                                }
-            sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-            print("debug onechat response :" + json.dumps(sendmessage.json()))
+            # if 'android' in data['platform']:
+            #     sendmessage_body = {
+            #                             "to": data['oneid'],
+            #                             "bot_id": self.beaconbot_id,
+            #                             "type": "text",
+            #                             "message": "สวัสดี" + "\n" + 
+            #                                    "scan success !!" + "\n" +
+            #                                    "---------------------------" + "\n" +
+            #                                    "uuid : " + data['uuid'] + "\n" +
+            #                                    "major : " + data['major'] + "\n" + 
+            #                                    "minor : " + data['minor'] + "\n" +
+            #                                    "rssi : " + str(data['rssi']) + "\n" +
+            #                                    "event_stage : " + data['event_stage'] + "\n" +
+            #                                    "proximity :  " + data['proximity'],
+            #                             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #                         }
+            # if 'ios' in data['platform']:
+            #     sendmessage_body = {
+            #                         "to": data['oneid'],
+            #                         "bot_id": self.beaconbot_id,
+            #                         "type": "text",
+            #                         "message": "สวัสดี" + "\n" + 
+            #                                    "scan success !!" + "\n" +
+            #                                    "---------------------------" + "\n" +
+            #                                    "uuid : " + data['uuid'] + "\n" +
+            #                                    "major : " + data['major'] + "\n" + 
+            #                                    "minor : " + data['minor'] + "\n" +
+            #                                    "rssi : " + data['rssi'] + "\n" +
+            #                                    "event_stage : " + data['event_stage'] + "\n" +
+            #                                    "proximity :  " + data['proximity'],
+            #                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+            #                     }
+            # sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         return {
             "type": True,
