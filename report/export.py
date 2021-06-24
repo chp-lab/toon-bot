@@ -15,7 +15,7 @@ import os
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-class Export_excel:
+class Export_excel(Resource):
     TAG = "ExportAsExcel:"
     file_path = "./ibeacon-dev/toon-bot"
     tmp_file_name = ""
