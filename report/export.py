@@ -151,44 +151,45 @@ class Export_excel(Resource):
 
         return True
 
-# def post(self):
-#         result = self.__init__(request.json['head'])
-#         return result
+
+def post(self):
+    result = self.__init__(request.json['filename'], request.json['filepath'])
+    return result
 
 
-def get(self):
-    TAG = "get_timeatt:"
-    module = Module()
-    hooking = Hooking()
+# def get(self):
+#     TAG = "get_timeatt:"
+#     module = Module()
+#     hooking = Hooking()
 
-    auth_key = "Authorization"
-    if(auth_key not in request.headers):
-        return module.unauthorized()
+#     auth_key = "Authorization"
+#     if(auth_key not in request.headers):
+#         return module.unauthorized()
 
-    auth = request.headers.get("Authorization")
+#     auth = request.headers.get("Authorization")
 
-    res = hooking.get_onechat_token(auth)
-    if(res[1] != 200):
-        return res
+#     res = hooking.get_onechat_token(auth)
+#     if(res[1] != 200):
+#         return res
 
-    onechat_token = res[0]['result'][0]['onechat_token']
+#     onechat_token = res[0]['result'][0]['onechat_token']
 
-    prof_res = hooking.get_onechat_profile(onechat_token)
-    print(TAG, "onechat_profile=", prof_res)
-    if(prof_res[1] != 200):
-        return prof_res
+#     prof_res = hooking.get_onechat_profile(onechat_token)
+#     print(TAG, "onechat_profile=", prof_res)
+#     if(prof_res[1] != 200):
+#         return prof_res
 
-    one_id = prof_res[0]['result'][0]['onechat_profie']['data']['one_id']
-    if(not hooking.is_admin(one_id)):
-        return {
-            'type': False,
-            'message': "fail",
-            'error_message': "You are not admin",
-            'result': None
-        }, 401
+#     one_id = prof_res[0]['result'][0]['onechat_profie']['data']['one_id']
+#     if(not hooking.is_admin(one_id)):
+#         return {
+#             'type': False,
+#             'message': "fail",
+#             'error_message': "You are not admin",
+#             'result': None
+#         }, 401
 
-    args = request.args
+#     args = request.args
 
-    export = self.__init__(args)
+#     export = self.__init__(args)
 
-    return export
+#     return export
