@@ -78,58 +78,59 @@ class Hooking(Resource):
             print('test async')
 
         if('uuid' in data):
-            def get_or_create_eventloop():
-                try:
-                    return asyncio.get_event_loop()
-                except RuntimeError as ex:
-                    if "There is no current event loop in thread" in str(ex):
-                        loop = asyncio.new_event_loop()
-                        asyncio.set_event_loop(loop)
-                        return asyncio.get_event_loop()
+            # def get_or_create_eventloop():
+            #     try:
+            #         return asyncio.get_event_loop()
+            #     except RuntimeError as ex:
+            #         if "There is no current event loop in thread" in str(ex):
+            #             loop = asyncio.new_event_loop()
+            #             asyncio.set_event_loop(loop)
+            #             return asyncio.get_event_loop()
 
-            async def diss():
-                update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
-                update_body = {
-                                    "event_stage":data['event_stage'],
-                                    "major":data['major'],
-                                    "minor":data['minor'],
-                                    "platform":data['platform'],
-                                    "rssi":data['rssi'],
-                                    "timestamp":data['timestamp'],
-                                    "user_latitude":data['user_latitude'],
-                                    "user_longitude":data['user_longitude'],
-                                    "uuid":data['uuid'],
-                                    "one_id": data['oneid']
-                            }
-                update = requests.post(update_url, json=update_body, verify=False)
-                return update
+            # async def diss():
+            #     update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
+            #     update_body = {
+            #                         "event_stage":data['event_stage'],
+            #                         "major":data['major'],
+            #                         "minor":data['minor'],
+            #                         "platform":data['platform'],
+            #                         "rssi":data['rssi'],
+            #                         "timestamp":data['timestamp'],
+            #                         "user_latitude":data['user_latitude'],
+            #                         "user_longitude":data['user_longitude'],
+            #                         "uuid":data['uuid'],
+            #                         "one_id": data['oneid']
+            #                 }
+            #     update = requests.post(update_url, json=update_body, verify=False)
+            #     return update
 
 
-            async def main():
-                res = await diss()
-                return res
+            # async def main():
+            #     res = await diss()
+            #     return res
 
+            # loop = get_or_create_eventloop()
+            # res = loop.run_until_complete(main())
+            # print("this is res" + json.dumps(res.json()))
+
+            update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
+            update_body = {
+                                "event_stage":data['event_stage'],
+                                "major":data['major'],
+                                "minor":data['minor'],
+                                "platform":data['platform'],
+                                "rssi":data['rssi'],
+                                "timestamp":data['timestamp'],
+                                "user_latitude":data['user_latitude'],
+                                "user_longitude":data['user_longitude'],
+                                "uuid":data['uuid'],
+                                "one_id": data['oneid']
+                          }
+            update = requests.post(update_url, json=update_body, verify=False)
+            print("updateLocation response :" + json.dumps(update.json()))
+
+            print(777777777)
             
-            loop = get_or_create_eventloop()
-            res = loop.run_until_complete(main())
-            print("this is res" + json.dumps(res.json()))
-
-            # update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
-            # update_body = {
-            #                     "event_stage":data['event_stage'],
-            #                     "major":data['major'],
-            #                     "minor":data['minor'],
-            #                     "platform":data['platform'],
-            #                     "rssi":data['rssi'],
-            #                     "timestamp":data['timestamp'],
-            #                     "user_latitude":data['user_latitude'],
-            #                     "user_longitude":data['user_longitude'],
-            #                     "uuid":data['uuid'],
-            #                     "one_id": data['oneid']
-            #               }
-            # update = requests.post(update_url, json=update_body, verify=False)
-            # print("updateLocation response :" + json.dumps(update.json()))
-
             # sendmessage_body = {
             #                         "to": data['oneid'],
             #                         "bot_id": self.beaconbot_id,
