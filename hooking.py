@@ -87,16 +87,26 @@ class Hooking(Resource):
                         asyncio.set_event_loop(loop)
                         return asyncio.get_event_loop()
 
-            async def diss(lis):
-                x = []
-                for i in lis:
-                    x.append(i + 1)
-                return x
+            async def diss():
+                update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
+                update_body = {
+                                    "event_stage":data['event_stage'],
+                                    "major":data['major'],
+                                    "minor":data['minor'],
+                                    "platform":data['platform'],
+                                    "rssi":data['rssi'],
+                                    "timestamp":data['timestamp'],
+                                    "user_latitude":data['user_latitude'],
+                                    "user_longitude":data['user_longitude'],
+                                    "uuid":data['uuid'],
+                                    "one_id": data['oneid']
+                            }
+                update = requests.post(update_url, json=update_body, verify=False)
+                return update
 
 
             async def main():
-                lis = [1, 2, 3, 4]
-                res = await diss(lis)
+                res = await diss()
                 return res
 
             
@@ -117,9 +127,6 @@ class Hooking(Resource):
             #                     "uuid":data['uuid'],
             #                     "one_id": data['oneid']
             #               }
-
-
-
             # update = requests.post(update_url, json=update_body, verify=False)
             # print("updateLocation response :" + json.dumps(update.json()))
 
