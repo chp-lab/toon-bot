@@ -91,7 +91,6 @@ class Hooking(Resource):
                           }
             update = requests.post(update_url, json=update_body, verify=False)
             print("updateLocation response :" + json.dumps(update.json()))
-            print("this is proximity" + str(type(data['proximity'])) )
             sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
@@ -103,6 +102,8 @@ class Hooking(Resource):
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
                                                "rssi : " + data['rssi'] + "\n" +
+                                               "User_lat : " + str(data['user_latitude']) + "\n" +
+                                               "User_lng : " + str(data['user_longitude']) + "\n" +
                                                "event_stage : " + data['event_stage'] + "\n" +
                                                "proximity :  " + data['proximity'],
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
