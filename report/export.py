@@ -15,18 +15,13 @@ import os
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-# def post(self):
-#     result = self.__init__(request.json['filename'], request.json['filepath'])
-#     return result
-
 class Export_excel(Resource):
     TAG = "ExportAsExcel:"
-    # file_path = "./ibeacon-dev/tmp"
+    file_path = "./ibeacon-dev/tmp"
     tmp_file_name = ""
     new_file_name = "default"
 
-    def __init__(self, file_name):
-        file_path = "./ibeacon-dev/tmp"
+    def __init__(self, file_name, file_path):
         # clear file extension
         self.file_path = self.file_path + "/" + file_path
         if (not os.path.exists(self.file_path)):
@@ -177,3 +172,11 @@ class Export_excel(Resource):
 #     my_excel_file.export_file(my_table)
 #     file_location = my_excel_file.open_file_location("chatpeth")
 #     print(TAG, "Location:", file_location)
+
+    def post(self):
+        excel_file = Export_excel(self.new_file_name)
+        excel_file = self.export_file(request.json['table'])
+        file_location = self.open_file_location("testtest")
+        print("Location: ", file_location)
+
+        return excel_file
