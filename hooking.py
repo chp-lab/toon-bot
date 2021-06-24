@@ -81,7 +81,7 @@ class Hooking(Resource):
             loop = asyncio.get_event_loop()
             loop.run_until_complete(tes_async())
             loop.close()
-            
+
             # update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             # update_body = {
             #                     "event_stage":data['event_stage'],
@@ -165,3 +165,6 @@ class Hooking(Resource):
             "len": 0,
             "result": "testing"
         }
+    
+    if __name__ == '__main__':
+        post()
