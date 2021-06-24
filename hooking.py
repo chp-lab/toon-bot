@@ -102,7 +102,7 @@ class Hooking(Resource):
             
             loop = get_or_create_eventloop()
             res = loop.run_until_complete(main())
-            print("this is res" + res)
+            print("this is res" + json.dumps(res))
 
             # update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             # update_body = {
