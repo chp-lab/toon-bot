@@ -129,27 +129,28 @@ class Hooking(Resource):
             update = requests.post(update_url, json=update_body, verify=False)
             print("updateLocation response :" + json.dumps(update.json()))
 
+
+            sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "update_location" + "\n" + 
+                                               "update success !!" + "\n" +
+                                               "---------------------------" + "\n" +
+                                               "uuid : " + data['uuid'] + "\n" +
+                                               "major : " + data['major'] + "\n" + 
+                                               "minor : " + data['minor'] + "\n" +
+                                               "rssi : " + str(data['rssi']) + "\n" +
+                                               "User_lat : " + str(data['user_latitude']) + "\n" +
+                                               "User_lng : " + str(data['user_longitude']) + "\n" +
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
+            sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat response :" + json.dumps(sendmessage.json()))
+
             print(777777777)
-            
-            # sendmessage_body = {
-            #                         "to": data['oneid'],
-            #                         "bot_id": self.beaconbot_id,
-            #                         "type": "text",
-            #                         "message": "update_location" + "\n" + 
-            #                                    "update success !!" + "\n" +
-            #                                    "---------------------------" + "\n" +
-            #                                    "uuid : " + data['uuid'] + "\n" +
-            #                                    "major : " + data['major'] + "\n" + 
-            #                                    "minor : " + data['minor'] + "\n" +
-            #                                    "rssi : " + str(data['rssi']) + "\n" +
-            #                                    "User_lat : " + str(data['user_latitude']) + "\n" +
-            #                                    "User_lng : " + str(data['user_longitude']) + "\n" +
-            #                                    "event_stage : " + data['event_stage'] + "\n" +
-            #                                    "proximity :  " + data['proximity'],
-            #                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
-            #                     }
-            # sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-            # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
 
             
