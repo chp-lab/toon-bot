@@ -76,21 +76,41 @@ class Hooking(Resource):
 
         if('uuid' in data):
             
-            # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
-            # update_body = {
-            #                     "event_stage":data['event_stage'],
-            #                     "major":data['major'],
-            #                     "minor":data['minor'],
-            #                     "platform":data['platform'],
-            #                     "rssi":data['rssi'],
-            #                     "timestamp":data['timestamp'],
-            #                     "user_latitude":data['user_latitude'],
-            #                     "user_longitude":data['user_longitude'],
-            #                     "uuid":data['uuid']
-            #               }
-            # print(update_body)
-            # update = requests.post(update_url, json=update_body, verify=False)
-            # print("updateLocation response :" + json.dumps(update.json()))
+            update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
+            update_body = {
+                                "event_stage":data['event_stage'],
+                                "major":data['major'],
+                                "minor":data['minor'],
+                                "platform":data['platform'],
+                                "rssi":data['rssi'],
+                                "timestamp":data['timestamp'],
+                                "user_latitude":data['user_latitude'],
+                                "user_longitude":data['user_longitude'],
+                                "uuid":data['uuid'],
+                                "one_id": data['oneid']
+                          }
+            update = requests.post(update_url, json=update_body, verify=False)
+            print("updateLocation response :" + json.dumps(update.json()))
+            sendmessage_body = {
+                                    "to": data['oneid'],
+                                    "bot_id": self.beaconbot_id,
+                                    "type": "text",
+                                    "message": "update_location" + "\n" + 
+                                               "update success !!" + "\n" +
+                                               "---------------------------" + "\n" +
+                                               "uuid : " + data['uuid'] + "\n" +
+                                               "major : " + data['major'] + "\n" + 
+                                               "minor : " + data['minor'] + "\n" +
+                                               "rssi : " + data['rssi'] + "\n" +
+                                               "User_lat : " + data['user_latitude'] + "\n" +
+                                               "User_lng : " + data['user_longitude'] + "\n" +
+                                               "event_stage : " + data['event_stage'] + "\n" +
+                                               "proximity :  " + data['proximity'],
+                                    "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
+                                }
+            sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
+            print("debug onechat response :" + json.dumps(sendmessage.json()))
+
 
             
             if 'android' in data['platform']:
