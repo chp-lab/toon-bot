@@ -2,7 +2,8 @@
 
 from flask_restful import Resource
 from flask import request
-import requests
+import requests 
+from requests import async
 from database import Database
 from module import Module
 import urllib3
@@ -75,6 +76,7 @@ class Hooking(Resource):
 
 
         if('uuid' in data):
+
             
             update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             update_body = {
@@ -89,8 +91,15 @@ class Hooking(Resource):
                                 "uuid":data['uuid'],
                                 "one_id": data['oneid']
                           }
+
+            def test_response (response):
+                print(7777777777777777777777)
+                print(response.url)
+
+            action_item = async.get(update_url, hooks = {'response' : test_response})
             update = requests.post(update_url, json=update_body, verify=False)
             print("updateLocation response :" + json.dumps(update.json()))
+
             sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
