@@ -7,10 +7,10 @@ from module import Module
 from datetime import datetime
 import urllib3
 import json
-from openpyxl import Workbook
-from openpyxl.styles import Font, Fill
-from openpyxl.worksheet.table import Table, TableStyleInfo
-from openpyxl.utils import get_column_letter
+# from openpyxl import Workbook
+# from openpyxl.styles import Font, Fill
+# from openpyxl.worksheet.table import Table, TableStyleInfo
+# from openpyxl.utils import get_column_letter
 import os
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
