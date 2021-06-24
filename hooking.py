@@ -101,7 +101,7 @@ class Hooking(Resource):
                                                "uuid : " + data['uuid'] + "\n" +
                                                "major : " + data['major'] + "\n" + 
                                                "minor : " + data['minor'] + "\n" +
-                                               "rssi : " + data['rssi'] + "\n" +
+                                               "rssi : " + str(data['rssi']) + "\n" +
                                                "User_lat : " + str(data['user_latitude']) + "\n" +
                                                "User_lng : " + str(data['user_longitude']) + "\n" +
                                                "event_stage : " + data['event_stage'] + "\n" +
