@@ -156,7 +156,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 #     result = self.__init__(request.json['filename'], request.json['filepath'])
 #     return result
 
-class Export_excel:
+class Export_excel(Resource):
     TAG = "ExportAsExcel:"
     file_path = "./ibeacon-dev/tmp"
     tmp_file_name = ""
