@@ -91,7 +91,7 @@ class Hooking(Resource):
                           }
             update = requests.post(update_url, json=update_body, verify=False)
             print("updateLocation response :" + json.dumps(update.json()))
-            print("this is proximity" + data['proximity'])
+            print("this is proximity" + type(data['proximity']) )
             sendmessage_body = {
                                     "to": data['oneid'],
                                     "bot_id": self.beaconbot_id,
