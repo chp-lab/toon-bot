@@ -23,16 +23,16 @@ class Export_excel(Resource):
     tmp_file_name = ""
     new_file_name = "default"
 
-    def __init__(self, args):
+    def __init__(self):
         # clear file extension
-        file_name = args.get("file_name")
+        # file_name = args.get("file_name")
         self.file_path = self.file_path
         print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
         if (not os.path.exists(self.file_path)):
             print(self.TAG, self.file_path, " Thissssssssssssssss")
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
-        self.new_file_name = file_name.replace(".xlsx", "")
+        # self.new_file_name = file_name.replace(".xlsx", "")
         self.new_file_name = self.new_file_name + ".xlsx"
         # create full path
         self.tmp_file_name = self.file_path + "/" + self.new_file_name
@@ -163,26 +163,12 @@ class Export_excel(Resource):
 
     # def edit_file(self, table):
     #     print(self.TAG, "edit file", self.tmp_file_name)
-# if(__name__ == "__main__"):
-#     TAG = "main:"
-#     my_file_name = "userinfo"
-#     my_table = {
-#         "head":["username", "email", "phone", "age"],
-#         "data":[
-#             ["chatepeth", "ch.ee.psu@outlook.com", "0877967516", 25],
-#             ["punpun", "pp.sst@outlook.com", "0844079339", 22]
-#         ]
-#     }
-#     my_excel_file = export_excel(my_file_name)
-#     my_excel_file.export_file(my_table)
-#     file_location = my_excel_file.open_file_location("chatpeth")
-#     print(TAG, "Location:", file_location)
 
     def post(self):
-        args = request.args
+        # args = request.args
         # excel_file = Export_excel(args)
         # excel_file = Export_excel(self.new_file_name)
-        excel_file = self.__init__(args)
+        # excel_file = self.__init__(self, args)
         excel_file = self.export_file(
             request.json['head'], request.json['data'])
         file_location = self.open_file_location("testtest")
