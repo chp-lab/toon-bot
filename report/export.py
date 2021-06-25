@@ -42,7 +42,7 @@ class Export_excel(Resource):
 
     # user who open file location
 
-    def open_file_location(self, user):
+    def open_file_location(self):
         # print(self.TAG, "%s$Location:" %(user), self.tmp_file_name)
         return {"file_path": self.file_path, "file_name": self.new_file_name}
 
@@ -183,7 +183,7 @@ class Export_excel(Resource):
             "data": request.json['data']
         }
         excel_file = self.export_file(dataFile)
-        file_location = self.open_file_location("testtest")
+        file_location = self.open_file_location()
         print("Location: ", file_location)
 
-        return excel_file
+        return file_location
