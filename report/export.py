@@ -17,7 +17,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Export_excel(Resource):
     TAG = "ExportAsExcel:"
-    file_path = "./ibeacon-dev/tmp"
+    file_path = "./home/user01/ibeacon-dev/tmp"
+    # file_path = "./ibeacon-dev/tmp"
     tmp_file_name = ""
     new_file_name = "default"
 
