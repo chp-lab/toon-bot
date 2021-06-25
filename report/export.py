@@ -177,7 +177,8 @@ class Export_excel(Resource):
         args = request.args
         excel_file = Export_excel(args)
         # excel_file = Export_excel(self.new_file_name)
-        excel_file = self.export_file(request.json['table'])
+        excel_file = self.export_file(
+            request.json['head'], request.json['data'])
         file_location = self.open_file_location("testtest")
         print("Location: ", file_location)
 
