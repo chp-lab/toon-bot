@@ -23,16 +23,16 @@ class Export_excel(Resource):
     tmp_file_name = ""
     new_file_name = "default"
 
-    def __init__(self, file_name):
+    def __init__(self, args):
         # clear file extension
-        file_name = file_name.get("file_name")
+        file_name = args.get("file_name")
         self.file_path = self.file_path
         print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
         if (not os.path.exists(self.file_path)):
             print(self.TAG, self.file_path, " Thissssssssssssssss")
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
-        self.new_file_name = self.file_name.replace(".xlsx", "")
+        self.new_file_name = file_name.replace(".xlsx", "")
         self.new_file_name = self.new_file_name + ".xlsx"
         # create full path
         self.tmp_file_name = self.file_path + "/" + self.new_file_name
@@ -179,9 +179,10 @@ class Export_excel(Resource):
 #     print(TAG, "Location:", file_location)
 
     def post(self):
-        file_name = request.args
-        excel_file = Export_excel(file_name)
+        args = request.args
+        # excel_file = Export_excel(args)
         # excel_file = Export_excel(self.new_file_name)
+        excel_file = self.__init__(args)
         excel_file = self.export_file(
             request.json['head'], request.json['data'])
         file_location = self.open_file_location("testtest")
