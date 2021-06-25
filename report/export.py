@@ -1,3 +1,4 @@
+from requests.api import head
 from hooking import Hooking
 from flask_restful import Resource
 from flask import request
@@ -53,7 +54,7 @@ class Export_excel(Resource):
         ws = wb.active
         # ws.title = "Sheet"
         # print(self.TAG, "Exporting to", self.tmp_file_name)
-        for col in table:
+        for col in table["head"]:
             print(col)
         try:
             print(self.TAG, "heads=", table["head"])
@@ -172,8 +173,11 @@ class Export_excel(Resource):
         # excel_file = Export_excel(self.new_file_name)
         # excel_file = self.__init__(self, args)
         print("kkkkkkkkkkkkkkkkkkkkk")
-        excel_file = self.export_file(
-            request.json['head'], request.json['data'])
+        dataFile = {
+            "head": request.json['head'],
+            "data": request.json['data']
+        }
+        excel_file = self.export_file(dataFile)
         file_location = self.open_file_location("testtest")
         print("Location: ", file_location)
 
