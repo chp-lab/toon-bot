@@ -20,7 +20,6 @@ class Export_excel(Resource):
     file_path = "/home/user01/ibeacon-dev/tmp"
     # file_path = "./ibeacon-dev/tmp"
     # file_path = "/tmp"
-    file_name = ""
     tmp_file_name = ""
     new_file_name = "default"
 
