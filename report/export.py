@@ -174,7 +174,7 @@ class Export_excel(Resource):
         # excel_file = self.__init__(self, args)
         print("kkkkkkkkkkkkkkkkkkkkk")
         print(request.json)
-        print("sssss"+request.json['head'])
+        print("sssss", request.json['head'])
         print(request.json['data'])
         dataFile = {
             "head": request.json['head'],
