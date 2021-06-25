@@ -34,7 +34,8 @@ class Export_excel(Resource):
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
         # self.new_file_name = file_name.replace(".xlsx", "")
-        self.new_file_name = self.new_file_name + ".xlsx"
+        filename = request.args['file_name']
+        self.new_file_name = filename + ".xlsx"
         # create full path
         self.tmp_file_name = self.file_path + "/" + self.new_file_name
         print(self.tmp_file_name)
@@ -176,6 +177,7 @@ class Export_excel(Resource):
         print(request.json)
         print("sssss", request.json['head'])
         print(request.json['data'])
+
         dataFile = {
             "head": request.json['head'],
             "data": request.json['data']
