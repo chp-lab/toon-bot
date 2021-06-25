@@ -25,7 +25,9 @@ class Export_excel(Resource):
     def __init__(self):
         # clear file extension
         self.file_path = self.file_path
+        print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
         if (not os.path.exists(self.file_path)):
+            print(self.TAG, self.file_path, " Thissssssssssssssss")
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
         self.new_file_name = self.file_name.replace(".xlsx", "")
