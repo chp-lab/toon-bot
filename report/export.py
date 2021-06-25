@@ -23,8 +23,9 @@ class Export_excel(Resource):
     tmp_file_name = ""
     new_file_name = "default"
 
-    def __init__(self):
+    def __init__(self, file_name):
         # clear file extension
+        file_name = file_name.get("file_name")
         self.file_path = self.file_path
         print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
         if (not os.path.exists(self.file_path)):
@@ -178,8 +179,8 @@ class Export_excel(Resource):
 #     print(TAG, "Location:", file_location)
 
     def post(self):
-        args = request.args
-        excel_file = Export_excel(args)
+        file_name = request.args
+        excel_file = Export_excel(file_name)
         # excel_file = Export_excel(self.new_file_name)
         excel_file = self.export_file(
             request.json['head'], request.json['data'])
