@@ -13,6 +13,7 @@ from openpyxl.styles import Font, Fill
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
 import os
+from flask import stream_with_context, Response
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -168,6 +169,19 @@ class Export_excel(Resource):
     # def edit_file(self, table):
     #     print(self.TAG, "edit file", self.tmp_file_name)
 
+    # def download_file(self, file_path, filename):
+    #     tmp_file_name = file_path + "/" + self.new_file_name
+    #     if (not os.path.exists(self.file_path)):
+    #         print(self.TAG, self.file_path, " Thissssssssssssssss")
+    #         os.mkdir(self.file_path)
+    #     wb = Workbook(tmp_file_name)
+    #     wb.add_worksheet('All Data')
+
+    #     for item in values.fetchall():
+    #         wb.write(item)
+    #     wb.close()
+    #     return {"file_path": self.file_path, "file_name": self.new_file_name}
+
     def post(self):
         # args = request.args
         # excel_file = Export_excel(args)
@@ -187,3 +201,8 @@ class Export_excel(Resource):
         print("Location: ", file_location)
 
         return file_location
+
+    # def get(self):
+    #     filename = request.args['file_name']
+    #     filepath = request.args['file_path']
+    #     return Response(stream_with_context(self.download_file(filename, filepath)))
