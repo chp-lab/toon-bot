@@ -39,6 +39,7 @@ class Access_log(Resource):
 
         cmd = """SELECT access_log.one_id, access_log.event, access_log.area_id
         FROM `access_log`
+        LEFT JOIN rooms ON access_log.area_id=rooms.minor
         WHERE %s
         ORDER BY `log_id`  DESC""" % (condition)
 
