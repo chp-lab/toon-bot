@@ -181,6 +181,9 @@ class Export_excel(Resource):
         # for item in values.fetchall():
         #     wb.write(item)
         # wb.close()
+        r = requests.get(tmp_file_name, allow_redirects=True)
+        open(tmp_file_name, 'wb').write(r.content)
+        return "OK"
 
     def post(self):
         # args = request.args
