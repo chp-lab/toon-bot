@@ -22,7 +22,7 @@ class Access_log(Resource):
         one_email = args.get("one_email")
         name = args.get("name")
         event = args.get("event")
-        checkin_area = args.get("checkin_area")
+        area = args.get("area")
         checkout_area = args.get("checkout_area")
         # area_id = args.get("area_id")
 
@@ -37,60 +37,47 @@ class Access_log(Resource):
                 """ AND users.one_email LIKE '%%%s%%' """ % (
                     one_email)
 
+        if(name is not None):
+            print(TAG, "search with name like", name)
+            condition = condition + \
+                """ AND users.name LIKE '%%%s%%' """ % (
+                    name)
+
         if(event is not None):
             print(TAG, "filter event status=", event)
             condition = condition + \
                 """ AND access_log.event='%s' """ % (event)
 
-        if(checkin_area is not None):
-            print(TAG, "check in at like", checkin_area)
-            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
-            FROM rooms
-            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkin_area)
+        if(area is not None):
+            print(TAG, "search with area like", area)
+            condition = condition + \
+                """ AND (rooms.room_num LIKE '%%%s%%' OR rooms.building LIKE '%%%s%%' OR rooms.address LIKE '%%%s%%') """ % (
+                    area)
 
-            matched_area = database.getData(area_cmd)
+        # if(area is not None):
+        #     print(TAG, "area at like", area)
+        #     area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address
+        #     FROM rooms
+        #     WHERE rooms.room_num LIKE '%%%s%%'""" % (area)
 
-            print(TAG, "checkin matched_area=", matched_area)
+        #     matched_area = database.getData(area_cmd)
 
-            if(matched_area[0]['len'] > 0):
-                areas = matched_area[0]['result']
-                area_filter = ""
-                for i in range(len(areas)):
-                    area_minor = areas[i]['minor']
-                    if(i == 0):
-                        area_filter = "access_log.area_id=%s" % (
-                            area_minor)
-                    else:
-                        area_filter = area_filter + \
-                            " OR access_log.area_id=%s" % (area_minor)
-                condition = condition + """ AND (%s) """ % (area_filter)
-            else:
-                condition = condition + """ AND False """
+        #     print(TAG, "checkin matched_area=", matched_area)
 
-        if(checkout_area is not None):
-            print(TAG, "check out at like", checkout_area)
-            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
-            FROM rooms
-            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkout_area)
-
-            matched_area = database.getData(area_cmd)
-
-            print(TAG, "checkout matched_area=", matched_area)
-
-            if(matched_area[0]['len'] > 0):
-                areas = matched_area[0]['result']
-                area_filter = ""
-                for i in range(len(areas)):
-                    area_minor = areas[i]['minor']
-                    if(i == 0):
-                        area_filter = "access_log.area_id=%s" % (
-                            area_minor)
-                    else:
-                        area_filter = area_filter + \
-                            " OR access_log.area_id=%s" % (area_minor)
-                condition = condition + """ AND (%s) """ % (area_filter)
-            else:
-                condition = condition + """ AND False """
+        #     if(matched_area[0]['len'] > 0):
+        #         areas = matched_area[0]['result']
+        #         area_filter = ""
+        #         for i in range(len(areas)):
+        #             area_minor = areas[i]['minor']
+        #             if(i == 0):
+        #                 area_filter = "access_log.area_id=%s" % (
+        #                     area_minor)
+        #             else:
+        #                 area_filter = area_filter + \
+        #                     " OR access_log.area_id=%s" % (area_minor)
+        #         condition = condition + """ AND (%s) """ % (area_filter)
+        #     else:
+        #         condition = condition + """ AND False """
 
         # if(area_id is not None):
         #     print(TAG, "serach with area_id=", area_id)
