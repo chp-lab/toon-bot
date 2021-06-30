@@ -169,18 +169,18 @@ class Export_excel(Resource):
     # def edit_file(self, table):
     #     print(self.TAG, "edit file", self.tmp_file_name)
 
-    # def download_file(self, file_path, filename):
-    #     tmp_file_name = file_path + "/" + self.new_file_name
-    #     if (not os.path.exists(self.file_path)):
-    #         print(self.TAG, self.file_path, " Thissssssssssssssss")
-    #         os.mkdir(self.file_path)
-    #     wb = Workbook(tmp_file_name)
-    #     wb.add_worksheet('All Data')
+    def download_file(self, file_path, file_name):
+        tmp_file_name = file_path + "/" + file_name
+        print("DOWNLOAD ", tmp_file_name, " Thissssssssssssssss here")
+        # if (not os.path.exists(self.file_path)):
+        #     print(self.TAG, self.file_path, " Thissssssssssssssss")
+        #     os.mkdir(self.file_path)
+        # wb = Workbook(tmp_file_name)
+        # wb.add_worksheet('All Data')
 
-    #     for item in values.fetchall():
-    #         wb.write(item)
-    #     wb.close()
-    #     return {"file_path": self.file_path, "file_name": self.new_file_name}
+        # for item in values.fetchall():
+        #     wb.write(item)
+        # wb.close()
 
     def post(self):
         # args = request.args
@@ -202,7 +202,7 @@ class Export_excel(Resource):
 
         return file_location
 
-    # def get(self):
-    #     filename = request.args['file_name']
-    #     filepath = request.args['file_path']
-    #     return Response(stream_with_context(self.download_file(filename, filepath)))
+    def get(self):
+        filename = request.args['file_name']
+        filepath = request.args['file_path']
+        return Response(stream_with_context(self.download_file(filename, filepath)))
