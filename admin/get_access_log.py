@@ -20,7 +20,9 @@ class Access_log(Resource):
 
         one_id = args.get("one_id")
         event = args.get("event")
-        area_id = args.get("area_id")
+        checkin_area = args.get("checkin_area")
+        checkout_area = args.get("checkout_area")
+        # area_id = args.get("area_id")
 
         if(one_id is not None):
             print(TAG, "serach with one_id=", one_id)
@@ -32,13 +34,64 @@ class Access_log(Resource):
             condition = condition + \
                 """ AND access_log.event='%s' """ % (event)
 
-        if(area_id is not None):
-            print(TAG, "serach with area_id=", area_id)
-            condition = condition + \
-                """ AND access_log.area_id='%s' """ % (area_id)
+        if(checkin_area is not None):
+            print(TAG, "check in at like", checkin_area)
+            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
+            FROM rooms
+            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkin_area)
 
-        cmd = """SELECT access_log.one_id, access_log.event, access_log.area_id
+            matched_area = database.getData(area_cmd)
+
+            print(TAG, "checkin matched_area=", matched_area)
+
+            if(matched_area[0]['len'] > 0):
+                areas = matched_area[0]['result']
+                area_filter = ""
+                for i in range(len(areas)):
+                    area_minor = areas[i]['minor']
+                    if(i == 0):
+                        area_filter = "access_log.area_id=%s" % (
+                            area_minor)
+                    else:
+                        area_filter = area_filter + \
+                            " OR access_log.area_id=%s" % (area_minor)
+                condition = condition + """ AND (%s) """ % (area_filter)
+            else:
+                condition = condition + """ AND False """
+
+        if(checkout_area is not None):
+            print(TAG, "check out at like", checkout_area)
+            area_cmd = """SELECT rooms.minor, rooms.room_num, rooms.address 
+            FROM rooms
+            WHERE rooms.room_num LIKE '%%%s%%'""" % (checkout_area)
+
+            matched_area = database.getData(area_cmd)
+
+            print(TAG, "checkout matched_area=", matched_area)
+
+            if(matched_area[0]['len'] > 0):
+                areas = matched_area[0]['result']
+                area_filter = ""
+                for i in range(len(areas)):
+                    area_minor = areas[i]['minor']
+                    if(i == 0):
+                        area_filter = "access_log.area_id=%s" % (
+                            area_minor)
+                    else:
+                        area_filter = area_filter + \
+                            " OR access_log.area_id=%s" % (area_minor)
+                condition = condition + """ AND (%s) """ % (area_filter)
+            else:
+                condition = condition + """ AND False """
+
+        # if(area_id is not None):
+        #     print(TAG, "serach with area_id=", area_id)
+        #     condition = condition + \
+        #         """ AND access_log.area_id='%s' """ % (area_id)
+
+        cmd = """SELECT access_log.one_id, users.one_email, users.name, access_log.event, access_log.created_at, rooms.room_num, rooms.building, rooms.address
         FROM `access_log`
+        LEFT JOIN users ON access_log.one_id=users.one_id
         LEFT JOIN rooms ON access_log.area_id=rooms.minor
         WHERE %s
         ORDER BY `log_id`  DESC""" % (condition)
