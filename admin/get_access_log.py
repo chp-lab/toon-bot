@@ -31,6 +31,12 @@ class Access_log(Resource):
             condition = condition + \
                 """ AND access_log.one_id='%s' """ % (one_id)
 
+        if(one_email is not None):
+            print(TAG, "search with one email like", one_email)
+            condition = condition + \
+                """ AND users.one_email LIKE '%%%s%%' """ % (
+                    one_email)
+
         if(event is not None):
             print(TAG, "filter event status=", event)
             condition = condition + \
