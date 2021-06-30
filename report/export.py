@@ -181,8 +181,8 @@ class Export_excel(Resource):
         # for item in values.fetchall():
         #     wb.write(item)
         # wb.close()
-        url = "http://203.151.164.229:5008/api/v1/report/export/" + tmp_file_name + ".xlsx"
-        print("URL : ", url)
+        # url = "http://203.151.164.229:5008/api/v1/report/export/" + tmp_file_name + ".xlsx"
+        # print("URL : ", url)
         # r = requests.get(url, allow_redirects=True)
         # open(url, 'wb').write(r.content)
         # return "OK"
