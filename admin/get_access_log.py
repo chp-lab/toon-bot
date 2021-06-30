@@ -10,41 +10,31 @@ import json
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-class Timeattendance(Resource):
-    def get_timeattendance(self, args):
-        TAG = "get_timeattendan:"
+class Access_log(Resource):
+    def get_access_log(self, args):
+        TAG = "get_access_log:"
         database = Database()
         module = Module()
 
         condition = """TRUE """
 
-        one_email = args.get("one_email")
         one_id = args.get("one_id")
-        checkin_date = args.get("checkin_date")
-        enter_before = args.get("enter_before")
-        enter_after = args.get("enter_after")
-        out_before = args.get("out_before")
-        out_after = args.get("out_after")
+        one_email = args.get("one_email")
+        name = args.get("name")
+        event = args.get("event")
         checkin_area = args.get("checkin_area")
         checkout_area = args.get("checkout_area")
-        covid_status = args.get("covid_status")
-        month = args.get("month")
-
-        if(one_email is not None):
-            print(TAG, "search with one email like", one_email)
-            condition = condition + \
-                """ AND timeattendance.one_email LIKE '%%%s%%' """ % (
-                    one_email)
+        # area_id = args.get("area_id")
 
         if(one_id is not None):
             print(TAG, "serach with one_id=", one_id)
             condition = condition + \
-                """ AND timeattendance.employee_code='%s' """ % (one_id)
+                """ AND access_log.one_id='%s' """ % (one_id)
 
-        if(checkin_date is not None):
-            print(TAG, "search with date")
+        if(event is not None):
+            print(TAG, "filter event status=", event)
             condition = condition + \
-                """ AND timeattendance.date='%s' """ % (checkin_date)
+                """ AND access_log.event='%s' """ % (event)
 
         if(checkin_area is not None):
             print(TAG, "check in at like", checkin_area)
@@ -62,11 +52,11 @@ class Timeattendance(Resource):
                 for i in range(len(areas)):
                     area_minor = areas[i]['minor']
                     if(i == 0):
-                        area_filter = "timeattendance.checkin_at=%s" % (
+                        area_filter = "access_log.area_id=%s" % (
                             area_minor)
                     else:
                         area_filter = area_filter + \
-                            " OR timeattendance.checkin_at=%s" % (area_minor)
+                            " OR access_log.area_id=%s" % (area_minor)
                 condition = condition + """ AND (%s) """ % (area_filter)
             else:
                 condition = condition + """ AND False """
@@ -87,51 +77,24 @@ class Timeattendance(Resource):
                 for i in range(len(areas)):
                     area_minor = areas[i]['minor']
                     if(i == 0):
-                        area_filter = "timeattendance.checkout_at=%s" % (
+                        area_filter = "access_log.area_id=%s" % (
                             area_minor)
                     else:
                         area_filter = area_filter + \
-                            " OR timeattendance.checkout_at=%s" % (area_minor)
+                            " OR access_log.area_id=%s" % (area_minor)
                 condition = condition + """ AND (%s) """ % (area_filter)
             else:
                 condition = condition + """ AND False """
 
-        if(covid_status is not None):
-            print(TAG, "filter only covid status=", covid_status)
-            condition = condition + \
-                """ AND timeattendance.covid_tracking='%s' """ % (covid_status)
+        # if(area_id is not None):
+        #     print(TAG, "serach with area_id=", area_id)
+        #     condition = condition + \
+        #         """ AND access_log.area_id='%s' """ % (area_id)
 
-        if(month is not None):
-            print(TAG, "filter only month=", month)
-            condition = condition + \
-                """ AND MONTH(timeattendance.date)=%s """ % (month)
-
-        if(enter_before is not None):
-            print(TAG, "search with checkin time before")
-            condition = condition + \
-                """ AND timeattendance.check_in<='%s' """ % (enter_before)
-
-        if(enter_after is not None):
-            print(TAG, "search with checkin time after")
-            condition = condition + \
-                """ AND timeattendance.check_in>'%s' """ % (enter_after)
-
-        if(out_before is not None):
-            print(TAG, "search with checkout time before")
-            condition = condition + \
-                """ AND timeattendance.check_out<'%s' """ % (out_before)
-
-        if(out_after is not None):
-            print(TAG, "search with checkout time after")
-            condition = condition + \
-                """ AND timeattendance.check_out>='%s' """ % (out_after)
-
-        cmd = """SELECT timeattendance.log_id, timeattendance.one_email, timeattendance.employee_code, timeattendance.check_in, timeattendance.check_out, 
-        timeattendance.covid_tracking, timeattendance.date, timeattendance.checkin_at AS this_checkin, timeattendance.checkout_at AS this_checkout,
-        (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkin) AS checkin_area,
-        (SELECT rooms.room_num FROM rooms WHERE rooms.minor=this_checkout) AS checkout_area,
-        timeattendance.latitude, timeattendance.longitude, timeattendance.employee_code AS one_id
-        FROM `timeattendance`
+        cmd = """SELECT access_log.one_id, users.one_email, users.name, access_log.event, access_log.created_at, rooms.room_num, rooms.building, rooms.address
+        FROM `access_log`
+        LEFT JOIN users ON access_log.one_id=users.one_id
+        LEFT JOIN rooms ON access_log.area_id=rooms.minor
         WHERE %s
         ORDER BY `log_id`  DESC""" % (condition)
 
@@ -140,13 +103,8 @@ class Timeattendance(Resource):
         res = database.getData(cmd)
         return res
 
-    # def post(self):
-    #     args = request.args
-    #     timeattendance = self.get_timeattendance(args)
-    #     return timeattendance
-
     def get(self):
-        TAG = "get_timeatt:"
+        TAG = "get_access_log:"
         module = Module()
         hooking = Hooking()
 
@@ -178,6 +136,6 @@ class Timeattendance(Resource):
 
         args = request.args
 
-        timeattendance = self.get_timeattendance(args)
+        access_log = self.get_access_log(args)
 
-        return timeattendance
+        return access_log
