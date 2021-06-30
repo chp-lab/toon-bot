@@ -182,8 +182,9 @@ class Export_excel(Resource):
         #     wb.write(item)
         # wb.close()
         url = "http://203.151.164.229:5008/api/v1/report/export/" + tmp_file_name + ".xlsx"
-        r = requests.get(url, allow_redirects=True)
-        open(url, 'wb').write(r.content)
+        print("URL : ", url)
+        # r = requests.get(url, allow_redirects=True)
+        # open(url, 'wb').write(r.content)
         # return "OK"
 
     def post(self):
@@ -209,4 +210,5 @@ class Export_excel(Resource):
     def get(self):
         filename = request.args['file_name']
         filepath = request.args['file_path']
-        return Response(stream_with_context(self.download_file(filename, filepath)))
+        # return Response(stream_with_context(self.download_file(filename, filepath)))
+        return "OK"
