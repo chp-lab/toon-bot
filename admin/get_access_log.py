@@ -52,8 +52,8 @@ class Access_log(Resource):
             print(TAG, "search with area like", area)
             condition = condition + \
                 """ AND (rooms.room_num LIKE '%%%s%%' """ % (area) + \
-                """  OR rooms.building LIKE '%%%s%%' """ % (area) + \
-                """ OR rooms.address LIKE '%%%s%%') """ % (area)
+                """OR rooms.building LIKE '%%%s%%' """ % (area) + \
+                """OR rooms.address LIKE '%%%s%%') """ % (area)
 
         # if(area is not None):
         #     print(TAG, "area at like", area)
