@@ -171,9 +171,9 @@ class Export_excel(Resource):
     #     print(self.TAG, "edit file", self.tmp_file_name)
 
     def download_file(self, file_path, file_name):
-        self.tmp_file_name = file_path
-        self.tmp_file_name = self.tmp_file_name + "/" + file_name
-        print("DOWNLOAD ", self.tmp_file_name, " Thissssssssssssssss here")
+        self.file_path = file_path
+        self.file_path = self.file_path + "/" + file_name
+        print("DOWNLOAD ", self.file_path, " Thissssssssssssssss here")
         self.new_file = self.tmp_file_name + ".xlsx"
         print("DOWNLOAD ", self.new_file, " Thissssssssssssssss newfileeee")
         # if (not os.path.exists(self.file_path)):
