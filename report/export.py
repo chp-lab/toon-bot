@@ -1,3 +1,4 @@
+from flask.helpers import send_file
 from requests.api import head
 from hooking import Hooking
 from flask_restful import Resource
@@ -172,6 +173,7 @@ class Export_excel(Resource):
     def download_file(self, file_path, file_name):
         tmp_file_name = file_path + "/" + file_name
         print("DOWNLOAD ", tmp_file_name, " Thissssssssssssssss here")
+        new_file = tmp_file_name + ".xlsx"
         # if (not os.path.exists(self.file_path)):
         #     print(self.TAG, self.file_path, " Thissssssssssssssss")
         #     os.mkdir(self.file_path)
@@ -186,6 +188,7 @@ class Export_excel(Resource):
         # r = requests.get(url, allow_redirects=True)
         # open(url, 'wb').write(r.content)
         # return "OK"
+        return send_file(new_file, as_attachment=True)
 
     def post(self):
         # args = request.args
@@ -210,5 +213,9 @@ class Export_excel(Resource):
     def get(self):
         filename = request.args['file_name']
         filepath = request.args['file_path']
+        if filename is not None and filepath is not None:
+            excel_file = self.download_file(filename, filepath)
+            return "OK"
+        else:
+            return "Not OK"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
-        return "OK"
