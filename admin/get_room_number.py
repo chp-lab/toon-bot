@@ -34,7 +34,7 @@ class Room_number(Resource):
         return res
 
     def get(self):
-        TAG = "get_room_number:"
+        # TAG = "get_room_number:"
         # module = Module()
         # hooking = Hooking()
 

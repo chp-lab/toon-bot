@@ -30,9 +30,8 @@ class Export_excel(Resource):
         # clear file extension
         # file_name = args.get("file_name")
         self.file_path = self.file_path
-        print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
+        print(self.TAG, self.file_path, " file_path")
         if (not os.path.exists(self.file_path)):
-            print(self.TAG, self.file_path, " Thissssssssssssssss")
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
         # self.new_file_name = file_name.replace(".xlsx", "")
@@ -180,8 +179,7 @@ class Export_excel(Resource):
         # print("DOWNLOAD ", self.tmp_file_name,
         #       " Thissssssssssssssss tmp_file_name")
         path_name_file = file_path + "/" + file_name + ".xlsx"
-        print("DOWNLOAD ", path_name_file,
-              " Thissssssssssssssss file pathhhh name")
+        print("DOWNLOAD ", path_name_file, "file_name and path_name")
         return send_file(path_name_file, as_attachment=True)
 
     def post(self):
@@ -189,10 +187,9 @@ class Export_excel(Resource):
         # excel_file = Export_excel(args)
         # excel_file = Export_excel(self.new_file_name)
         # excel_file = self.__init__(self, args)
-        print("kkkkkkkkkkkkkkkkkkkkk")
-        print(request.json)
-        print("sssss", request.json['head'])
-        print(request.json['data'])
+        # print(request.json)
+        # print(request.json['head'])
+        # print(request.json['data'])
 
         dataFile = {
             "head": request.json['head'],
@@ -210,6 +207,6 @@ class Export_excel(Resource):
         if filename is not None and filepath is not None:
             excel_file = self.download_file(filepath, filename)
             return excel_file
-        else:
-            return "Not Download file"
+        # else:
+        #     return "Not Download file"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
