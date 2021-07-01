@@ -220,7 +220,7 @@ class Export_excel(Resource):
         filepath = request.args['file_path']
         if filename is not None and filepath is not None:
             excel_file = self.download_file(filepath, filename)
-        #     return excel_file
+            return excel_file
         # else:
         #     return "Not OK"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
