@@ -171,9 +171,10 @@ class Export_excel(Resource):
     #     print(self.TAG, "edit file", self.tmp_file_name)
 
     def download_file(self, file_path, file_name):
-        tmp_file_name = file_path + "/" + file_name
-        print("DOWNLOAD ", tmp_file_name, " Thissssssssssssssss here")
-        new_file = tmp_file_name + ".xlsx"
+        self.tmp_file_name = file_path + "/" + file_name
+        print("DOWNLOAD ", self.tmp_file_name, " Thissssssssssssssss here")
+        self.new_file = self.tmp_file_name + ".xlsx"
+        print("DOWNLOAD ", self.new_file, " Thissssssssssssssss newfileeee")
         # if (not os.path.exists(self.file_path)):
         #     print(self.TAG, self.file_path, " Thissssssssssssssss")
         #     os.mkdir(self.file_path)
@@ -188,7 +189,7 @@ class Export_excel(Resource):
         # r = requests.get(url, allow_redirects=True)
         # open(url, 'wb').write(r.content)
         # return "OK"
-        return send_file(new_file, as_attachment=True)
+        return send_file(self.new_file, as_attachment=True)
 
     def post(self):
         # args = request.args
@@ -215,7 +216,7 @@ class Export_excel(Resource):
         filepath = request.args['file_path']
         if filename is not None and filepath is not None:
             excel_file = self.download_file(filename, filepath)
-            return "OK"
-        else:
-            return "Not OK"
+        #     return excel_file
+        # else:
+        #     return "Not OK"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
