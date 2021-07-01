@@ -179,6 +179,8 @@ class Export_excel(Resource):
         # print("DOWNLOAD ", self.tmp_file_name,
         #       " Thissssssssssssssss tmp_file_name")
         list_filename = os.listdir(file_path)
+        print("DOWNLOAD ", list_filename, "file_name and path_name")
+        print()
         if file_name in list_filename:
             path_name_file = file_path + "/" + file_name + ".xlsx"
             print("DOWNLOAD ", path_name_file, "file_name and path_name")
