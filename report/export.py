@@ -181,7 +181,7 @@ class Export_excel(Resource):
         if os.path.exists(file_path):
             list_filename = os.listdir(file_path)
             new_filename = file_name + ".xlsx"
-            print("DOWNLOAD ", list_filename, "file_name and path_name")
+            print("DOWNLOAD ", list_filename, "list file_name")
             print()
             if new_filename in list_filename:
                 path_name_file = file_path + "/" + new_filename
@@ -217,6 +217,6 @@ class Export_excel(Resource):
         if filename is not None and filepath is not None:
             excel_file = self.download_file(filepath, filename)
             return excel_file
-        else:
-            return "Request Param Not found"
+        # else:
+        #     return "Request Param Not found"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
