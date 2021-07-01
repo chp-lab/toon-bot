@@ -1,3 +1,4 @@
+from flask.helpers import send_file
 from requests.api import head
 from hooking import Hooking
 from flask_restful import Resource
@@ -29,9 +30,8 @@ class Export_excel(Resource):
         # clear file extension
         # file_name = args.get("file_name")
         self.file_path = self.file_path
-        print(self.TAG, self.file_path, " Hereeeeeeeeeeee")
+        print(self.TAG, self.file_path, " file_path")
         if (not os.path.exists(self.file_path)):
-            print(self.TAG, self.file_path, " Thissssssssssssssss")
             os.mkdir(self.file_path)
             # print(self.TAG, file_path, "dir created")
         # self.new_file_name = file_name.replace(".xlsx", "")
@@ -169,28 +169,37 @@ class Export_excel(Resource):
     # def edit_file(self, table):
     #     print(self.TAG, "edit file", self.tmp_file_name)
 
-    # def download_file(self, file_path, filename):
-    #     tmp_file_name = file_path + "/" + self.new_file_name
-    #     if (not os.path.exists(self.file_path)):
-    #         print(self.TAG, self.file_path, " Thissssssssssssssss")
-    #         os.mkdir(self.file_path)
-    #     wb = Workbook(tmp_file_name)
-    #     wb.add_worksheet('All Data')
-
-    #     for item in values.fetchall():
-    #         wb.write(item)
-    #     wb.close()
-    #     return {"file_path": self.file_path, "file_name": self.new_file_name}
+    def download_file(self, file_path, file_name):
+        # self.file_path = file_path
+        # print("DOWNLOAD ", self.file_path, " Thissssssssssssssss file pathhhh")
+        # self.new_file_name = file_name + ".xlsx"
+        # print("DOWNLOAD ", self.new_file_name,
+        #       " Thissssssssssssssss new_file_name")
+        # self.tmp_file_name = self.file_path + "/" + self.new_file_name
+        # print("DOWNLOAD ", self.tmp_file_name,
+        #       " Thissssssssssssssss tmp_file_name")
+        if os.path.exists(file_path):
+            list_filename = os.listdir(file_path)
+            new_filename = file_name + ".xlsx"
+            print("DOWNLOAD ", list_filename, "list file_name")
+            print()
+            if new_filename in list_filename:
+                path_name_file = file_path + "/" + new_filename
+                print("DOWNLOAD ", path_name_file, "file_name and path_name")
+                return send_file(path_name_file, as_attachment=True)
+            else:
+                return "file name not found"
+        else:
+            return "path name not found"
 
     def post(self):
         # args = request.args
         # excel_file = Export_excel(args)
         # excel_file = Export_excel(self.new_file_name)
         # excel_file = self.__init__(self, args)
-        print("kkkkkkkkkkkkkkkkkkkkk")
-        print(request.json)
-        print("sssss", request.json['head'])
-        print(request.json['data'])
+        # print(request.json)
+        # print(request.json['head'])
+        # print(request.json['data'])
 
         dataFile = {
             "head": request.json['head'],
@@ -202,7 +211,12 @@ class Export_excel(Resource):
 
         return file_location
 
-    # def get(self):
-    #     filename = request.args['file_name']
-    #     filepath = request.args['file_path']
-    #     return Response(stream_with_context(self.download_file(filename, filepath)))
+    def get(self):
+        filename = request.args['file_name']
+        filepath = request.args['file_path']
+        if filename is not None and filepath is not None:
+            excel_file = self.download_file(filepath, filename)
+            return excel_file
+        # else:
+        #     return "Request Param Not found"
+        # return Response(stream_with_context(self.download_file(filename, filepath)))

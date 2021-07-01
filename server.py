@@ -15,6 +15,7 @@ from checkin_system_mockup.update_checkout import Check_out
 from users import Users
 from report.export import Export_excel
 from admin.get_access_log import Access_log
+from admin.get_room_number import Room_number
 
 # from monitor import Monitor
 from covid_log import Covid_log
@@ -54,4 +55,5 @@ if (__name__ == "__main__"):
     server.api.add_resource(Users, API_VERSION + "/profile")
     server.api.add_resource(Export_excel, API_VERSION + "/report/export")
     server.api.add_resource(Access_log, API_VERSION + "/admin/get_access_log")
+    server.api.add_resource(Room_number, API_VERSION + "/admin/get_room_number")
     server.app.run(host="0.0.0.0", debug=True, port=5007)
