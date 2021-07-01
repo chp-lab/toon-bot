@@ -14,6 +14,7 @@ from openpyxl.styles import Font, Fill
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
 import os
+from database import Database
 from flask import stream_with_context, Response
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -36,6 +37,12 @@ class Export_excel(Resource):
             # print(self.TAG, file_path, "dir created")
         # self.new_file_name = file_name.replace(".xlsx", "")
         filename = request.args['file_name']
+        if(filename == None):
+            database = Database()
+            cmd = """SELECT CURRENT_TIMESTAMP as file_name FROM users"""
+            res = database.getData(cmd)
+            my_file_name = res[0]['result'][0]['file_name']
+            filename = "report_" + my_file_name
         self.new_file_name = filename + ".xlsx"
         # create full path
         self.tmp_file_name = self.file_path + "/" + self.new_file_name
