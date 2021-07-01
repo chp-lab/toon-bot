@@ -179,10 +179,11 @@ class Export_excel(Resource):
         # print("DOWNLOAD ", self.tmp_file_name,
         #       " Thissssssssssssssss tmp_file_name")
         list_filename = os.listdir(file_path)
+        new_filename = file_name + ".xlsx"
         print("DOWNLOAD ", list_filename, "file_name and path_name")
         print()
-        if file_name in list_filename:
-            path_name_file = file_path + "/" + file_name + ".xlsx"
+        if new_filename in list_filename:
+            path_name_file = file_path + "/" + new_filename
             print("DOWNLOAD ", path_name_file, "file_name and path_name")
             return send_file(path_name_file, as_attachment=True)
         else:
