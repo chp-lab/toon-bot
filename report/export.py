@@ -172,10 +172,13 @@ class Export_excel(Resource):
 
     def download_file(self, file_path, file_name):
         self.file_path = file_path
-        self.file_path = self.file_path + "/" + file_name
-        print("DOWNLOAD ", self.file_path, " Thissssssssssssssss here")
-        self.new_file = self.tmp_file_name + ".xlsx"
-        print("DOWNLOAD ", self.new_file, " Thissssssssssssssss newfileeee")
+        print("DOWNLOAD ", self.file_path, " Thissssssssssssssss file pathhhh")
+        self.new_file_name = file_name + ".xlsx"
+        print("DOWNLOAD ", self.new_file_name,
+              " Thissssssssssssssss new_file_name")
+        self.tmp_file_name = self.file_path + "/" + self.new_file_name
+        print("DOWNLOAD ", self.tmp_file_name,
+              " Thissssssssssssssss tmp_file_name")
         # if (not os.path.exists(self.file_path)):
         #     print(self.TAG, self.file_path, " Thissssssssssssssss")
         #     os.mkdir(self.file_path)
@@ -190,7 +193,7 @@ class Export_excel(Resource):
         # r = requests.get(url, allow_redirects=True)
         # open(url, 'wb').write(r.content)
         # return "OK"
-        return send_file(self.new_file, as_attachment=True)
+        return send_file(self.tmp_file_name, as_attachment=True)
 
     def post(self):
         # args = request.args
