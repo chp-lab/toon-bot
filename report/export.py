@@ -178,9 +178,13 @@ class Export_excel(Resource):
         # self.tmp_file_name = self.file_path + "/" + self.new_file_name
         # print("DOWNLOAD ", self.tmp_file_name,
         #       " Thissssssssssssssss tmp_file_name")
-        path_name_file = file_path + "/" + file_name + ".xlsx"
-        print("DOWNLOAD ", path_name_file, "file_name and path_name")
-        return send_file(path_name_file, as_attachment=True)
+        list_filename = os.listdir(file_path)
+        if file_name in list_filename:
+            path_name_file = file_path + "/" + file_name + ".xlsx"
+            print("DOWNLOAD ", path_name_file, "file_name and path_name")
+            return send_file(path_name_file, as_attachment=True)
+        else:
+            return "file name not found"
 
     def post(self):
         # args = request.args
@@ -207,6 +211,6 @@ class Export_excel(Resource):
         if filename is not None and filepath is not None:
             excel_file = self.download_file(filepath, filename)
             return excel_file
-        # else:
-        #     return "Not Download file"
+        else:
+            return "Request Param Not found"
         # return Response(stream_with_context(self.download_file(filename, filepath)))
