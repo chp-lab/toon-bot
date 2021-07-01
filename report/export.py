@@ -178,16 +178,19 @@ class Export_excel(Resource):
         # self.tmp_file_name = self.file_path + "/" + self.new_file_name
         # print("DOWNLOAD ", self.tmp_file_name,
         #       " Thissssssssssssssss tmp_file_name")
-        list_filename = os.listdir(file_path)
-        new_filename = file_name + ".xlsx"
-        print("DOWNLOAD ", list_filename, "file_name and path_name")
-        print()
-        if new_filename in list_filename:
-            path_name_file = file_path + "/" + new_filename
-            print("DOWNLOAD ", path_name_file, "file_name and path_name")
-            return send_file(path_name_file, as_attachment=True)
+        if os.path.exists(file_path):
+            list_filename = os.listdir(file_path)
+            new_filename = file_name + ".xlsx"
+            print("DOWNLOAD ", list_filename, "file_name and path_name")
+            print()
+            if new_filename in list_filename:
+                path_name_file = file_path + "/" + new_filename
+                print("DOWNLOAD ", path_name_file, "file_name and path_name")
+                return send_file(path_name_file, as_attachment=True)
+            else:
+                return "file name not found"
         else:
-            return "file name not found"
+            return "path name not found"
 
     def post(self):
         # args = request.args
