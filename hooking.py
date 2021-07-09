@@ -75,6 +75,7 @@ class Hooking(Resource):
 
 
         if('uuid' in data):
+            print(777777)
             update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             update_body = {
                                 "event_stage":data['event_stage'],
