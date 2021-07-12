@@ -37,7 +37,7 @@ class Export_excel(Resource):
             # print(self.TAG, file_path, "dir created")
         # self.new_file_name = file_name.replace(".xlsx", "")
         filename = request.args['file_name']
-        if((filename == None) or (filename == "undefined")):
+        if((filename == None) or (filename == "undefined") or (filename == 'null')):
             database = Database()
             cmd = """SELECT CURRENT_TIMESTAMP as file_name FROM users"""
             res = database.getData(cmd)
