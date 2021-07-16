@@ -27,6 +27,10 @@ class Module():
         else:
             return False
 
+    def getArg(self, args, key):
+        TAG = "getArg:"
+        return args.get(key)
+
     def unauthorized(self):
         return {
                    'type': False,
