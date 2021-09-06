@@ -99,66 +99,66 @@ class Hooking(Resource):
     #     return res
 
       
-    # def post(self):
-    #     TAG = "Hooking:"
-    #     data = request.json
-    #     print(TAG, "data=", data)
-    #     print(TAG, request.headers)
-    #     database = Database()
-    #     module = Module()
+#     def post(self):
+#         TAG = "Hooking:"
+#         data = request.json
+#         print(TAG, "data=", data)
+#         print(TAG, request.headers)
+#         database = Database()
+#         module = Module()
 
-    #     print("this is data :" + json.dumps(data))
-    #     print("this is header :"+request.headers)
+#         print("this is data :" + json.dumps(data))
+#         print("this is header :"+request.headers)
 
-    #     # auth_key = "Authorization"
-    #     # if(auth_key not in request.headers):
-    #     #     return module.unauthorized()
+#         # auth_key = "Authorization"
+#         # if(auth_key not in request.headers):
+#         #     return module.unauthorized()
 
-    #     auth = request.headers.get("Authorization")
-    #     print(TAG, "auth=", auth)
-    #     payload = {
-    #         "bot_id":self.bot_id,
-    #         "source":auth
-    #     }
+#         auth = request.headers.get("Authorization")
+#         print(TAG, "auth=", auth)
+#         payload = {
+#             "bot_id":self.bot_id,
+#             "source":auth
+#         }
 
-    #     r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.headers, json=payload)
-    #     print(TAG, "response code=", r.status_code)
-    #     print(TAG, r.json())
+#         r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.headers, json=payload)
+#         print(TAG, "response code=", r.status_code)
+#         print(TAG, r.json())
 
-        # checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
-        # checkcovid_body = {
-        #                     "oneid": "12643514984"
-        #                   }
-        # checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
-        # print("type of :" + str(type(checkcovid)))
-        # print("this is transform : " + str(type(checkcovid.json())))
-        # print("this is jsondump type : " + str(type(json.dumps(checkcovid.json()))))
+#         checkcovid_url = 'https://hr-management.inet.co.th:5000/detail_user_data'
+#         checkcovid_body = {
+#                             "oneid": "12643514984"
+#                           }
+#         checkcovid = requests.post(checkcovid_url, json=checkcovid_body, verify=False)
+#         print("type of :" + str(type(checkcovid)))
+#         print("this is transform : " + str(type(checkcovid.json())))
+#         print("this is jsondump type : " + str(type(json.dumps(checkcovid.json()))))
 
-        # print("this is covid result : " + json.dumps(checkcovid.json()))
-        # print("len of covid result : " + json.dumps(len(checkcovid.json())))
-        # print("debug onechat response :" + json.dumps(checkcovid.json()))
-        # print(len(checkcovid))
-        # [print(len(x)) for x in checkcovid]
-        # [print(len(checkcovid))]
-        # [print(x) for x in checkcovid]
-        # if(checkcovid[127]["check_date"] == "2021-06-10" ):
-	        # print(" Status Is "+ checkcovid[127]["status"])
-        # print(len(checkcovid.text))
-        # for i in range(len(checkcovid)):{
-        #     print("i = ",i, "data is ",checkcovid.json[i])
-        # }
-        # print(checkcovid[]["check_date"])
-        # if ("uuid" in data):
-        #     print("this is one_id : " + data['oneid'])
+#         print("this is covid result : " + json.dumps(checkcovid.json()))
+#         print("len of covid result : " + json.dumps(len(checkcovid.json())))
+#         print("debug onechat response :" + json.dumps(checkcovid.json()))
+#         print(len(checkcovid))
+#         [print(len(x)) for x in checkcovid]
+#         [print(len(checkcovid))]
+#         [print(x) for x in checkcovid]
+#         if(checkcovid[127]["check_date"] == "2021-06-10" ):
+# 	        print(" Status Is "+ checkcovid[127]["status"])
+#         print(len(checkcovid.text))
+#         for i in range(len(checkcovid)):{
+#             print("i = ",i, "data is ",checkcovid.json[i])
+#         }
+#         print(checkcovid[]["check_date"])
+#         if ("uuid" in data):
+#             print("this is one_id : " + data['oneid'])
         
         
 
-        # if ('event' in data):
-        #     print(data['event'])
-        #     if(data['event'] == 'greeting'):
-        #         print('this is greeting')
+#         if ('event' in data):
+#             print(data['event'])
+#             if(data['event'] == 'greeting'):
+#                 print('this is greeting')
 
-        '''if ('event' in data):
+        if ('event' in data):
             print(data['event'])
             if(data["event"]=='message' and data['message']['text']=='Hi'):
                 sendmessage_body = {
@@ -169,7 +169,7 @@ class Hooking(Resource):
                                     "custom_notification": "ตอบกลับข้อความคุณครับ"
                                 }
                 sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                print("debug onechat response :" + json.dumps(sendmessage.json()))'''
+                print("debug onechat response :" + json.dumps(sendmessage.json()))
 
         # sendmessage_headers = {"Authorization": self.onechat_dev_token}
         # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
@@ -184,26 +184,26 @@ class Hooking(Resource):
         # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
     #petdy_iBEACON
-        '''if('uuid' in data):
-            # update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
-            # update_body = {
-            #                     "event_stage":data['event_stage'],
-            #                     "major":data['major'],
-            #                     "minor":data['minor'],
-            #                     "platform":data['platform'],
-            #                     "rssi":data['rssi'],
-            #                     "timestamp":data['timestamp'],
-            #                     "user_latitude":data['user_latitude'],
-            #                     "user_longitude":data['user_longitude'],
-            #                     "uuid":data['uuid']
-            #               }
-            # print(update_body)
-            # update = requests.post(update_url, json=update_body, verify=False)
-            # print("updateLocation response :" + json.dumps(update.json()))
+        if('uuid' in data):
+            update_url = 'https://petdy-dev.one.th/api/beacon_update_location'
+            update_body = {
+                                "event_stage":data['event_stage'],
+                                "major":data['major'],
+                                "minor":data['minor'],
+                                "platform":data['platform'],
+                                "rssi":data['rssi'],
+                                "timestamp":data['timestamp'],
+                                "user_latitude":data['user_latitude'],
+                                "user_longitude":data['user_longitude'],
+                                "uuid":data['uuid']
+                          }
+            print(update_body)
+            update = requests.post(update_url, json=update_body, verify=False)
+            print("updateLocation response :" + json.dumps(update.json()))
 
-            # sendmessage_headers = {"Authorization": self.onechat_dev_token}
-            # sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
-            # sendmessage_body = {}
+            sendmessage_headers = {"Authorization": self.onechat_dev_token}
+            sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
+            sendmessage_body = {}
             if 'android' in data['platform']:
                 sendmessage_body = {
                                         "to": data['oneid'],
@@ -237,8 +237,8 @@ class Hooking(Resource):
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
             print("debug onechat response :" + json.dumps(sendmessage.json()))
         
-        User_Profile = self.get_userprofile(data['source']['one_id'])
-        print(User_Profile)'''
+#         User_Profile = self.get_userprofile(data['source']['one_id'])
+#         print(User_Profile)
         # self.get_userprofile_body = {
         #         "oneid": "12643514984"
         #     }
