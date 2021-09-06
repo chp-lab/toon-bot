@@ -35,14 +35,13 @@ class Hooking(Resource):
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
     sendmessage_body ={}
 
-    def post(self):
-        TAG = "Hooking:"
-        data = request.json
-        print(TAG, "data=", data)
-        print(TAG, request.headers)
-        database = Database()
-        print("this is data :" + json.dumps(data))
-
+#     def post(self):
+#         TAG = "Hooking:"
+#         data = request.json
+#         print(TAG, "data=", data)
+#         print(TAG, request.headers)
+#         database = Database()
+#         print("this is data :" + json.dumps(data))
 #         quick_reply_url = 'https://chat-api.one.th/message/api/v1/push_quickreply'
 #         quick_reply_body = {
 # 	                        "to": data['source']['user_id'],
@@ -99,16 +98,16 @@ class Hooking(Resource):
     #     return res
 
       
-#     def post(self):
-#         TAG = "Hooking:"
-#         data = request.json
-#         print(TAG, "data=", data)
-#         print(TAG, request.headers)
-#         database = Database()
-#         module = Module()
+    def post(self):
+        TAG = "Hooking:"
+        data = request.json
+        print(TAG, "data=", data)
+        print(TAG, request.headers)
+        database = Database()
+        module = Module()
 
-#         print("this is data :" + json.dumps(data))
-#         print("this is header :"+request.headers)
+        print("this is data :" + json.dumps(data))
+        print("this is header :"+request.headers)
 
 #         # auth_key = "Authorization"
 #         # if(auth_key not in request.headers):
