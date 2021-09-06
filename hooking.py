@@ -30,7 +30,7 @@ class Hooking(Resource):
 
     # check_out_api = "http://203.151.164.229:5009/api/v1/check_out"
     # check_out_body = {}
-    # headers = {"Authorization": onechat_dev_token, "Content-Type": "application/json"}
+    headers = {"Authorization": onechat_dev_token, "Content-Type": "application/json"}
     sendmessage_headers = {"Authorization": onechat_dev_token}
     sendmessage_url = 'https://chat-api.one.th/message/api/v1/push_message'
     sendmessage_body ={}
