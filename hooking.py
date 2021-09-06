@@ -43,21 +43,21 @@ class Hooking(Resource):
         database = Database()
         print("this is data :" + json.dumps(data))
 
-        quick_reply_url = 'https://chat-api.one.th/message/api/v1/push_quickreply'
-        quick_reply_body = {
-	                        "to": data['source']['user_id'],
-	                        "bot_id": self.beaconbot_id,
-	                        "message": "โปรดเข้าไปที่ site",
-	                        "quick_reply": [   {"label" : "ลงทะเบียน",
-                                                "type" : "webview",
-                                                "url" : "https://google.co.th/",
-                                                "size" : "full",
-                                                "sign" : "false",
-                                                "onechat_token" : "true"
-                                            }]
-                         }
-        quick_out = requests.post(quick_reply_url, json=quick_reply_body,headers=self.headers, verify=False)
-        print("debug onechat response :" + json.dumps(quick_out.json()))
+#         quick_reply_url = 'https://chat-api.one.th/message/api/v1/push_quickreply'
+#         quick_reply_body = {
+# 	                        "to": data['source']['user_id'],
+# 	                        "bot_id": self.beaconbot_id,
+# 	                        "message": "โปรดเข้าไปที่ site",
+# 	                        "quick_reply": [   {"label" : "ลงทะเบียน",
+#                                                 "type" : "webview",
+#                                                 "url" : "https://google.co.th/",
+#                                                 "size" : "full",
+#                                                 "sign" : "false",
+#                                                 "onechat_token" : "true"
+#                                             }]
+#                          }
+#         quick_out = requests.post(quick_reply_url, json=quick_reply_body,headers=self.headers, verify=False)
+#         print("debug onechat response :" + json.dumps(quick_out.json()))
 
     # def menu_send(self, user_id, bot_id):
     #     TAG = "menu_send:"
