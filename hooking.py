@@ -75,7 +75,6 @@ class Hooking(Resource):
 
 
         if('uuid' in data):
-            print(777777)
             update_url = 'http://203.151.164.230:9977/api/beacon_update_location'
             update_body = {
                                 "event_stage":data['event_stage'],
@@ -107,7 +106,8 @@ class Hooking(Resource):
                                                "User_lat : " + str(data['user_latitude']) + "\n" +
                                                "User_lng : " + str(data['user_longitude']) + "\n" +
                                                "event_stage : " + data['event_stage'] + "\n" +
-                                               "proximity :  " + data['proximity'],
+                                               "proximity :  " + data['proximity']+ "\n" +
+                                               "accuracy : " +data['accuracy'],  
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
