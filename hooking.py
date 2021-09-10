@@ -107,7 +107,7 @@ class Hooking(Resource):
                                                "User_lng : " + str(data['user_longitude']) + "\n" +
                                                "event_stage : " + data['event_stage'] + "\n" +
                                                "proximity :  " + data['proximity']+ "\n" +
-                                               "accuracy : " +data['accuracy'],  
+                                               "accuracy : " + str(data['accuracy']),  
                                     "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                                 }
             sendmessage = requests.post(self.sendmessage_url, json=sendmessage_body, headers=self.sendmessage_headers, verify=False)
