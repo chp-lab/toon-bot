@@ -156,7 +156,7 @@ class Hooking(Resource):
 
     def menu_send(self, one_id):
         TAG = "menu_send:"
-        web_vue_url1 = "http://onesmartaccess.ddns.net:8081"
+        web_vue_url1 = "https://www.giantiot.com:9000/"
         msg = "ให้ช่วยอะไรดี"
         payload = [
                     {
