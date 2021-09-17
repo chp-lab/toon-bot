@@ -52,7 +52,7 @@ class Hooking(Resource):
             return False
 
     def get_message(self, key):
-        print("this is KEY" + str(key))
+        # print("this is KEY" + str(key))
         database = Database()
         sql = """SELECT message FROM bot_message WHERE bot_message.message_keys ='%d'""" %(key)
         message = database.getData(sql)
@@ -63,7 +63,7 @@ class Hooking(Resource):
         cmd = """SELECT users.one_email FROM users WHERE users.one_email='%s' """ %(one_email)
         database = Database()
         res = database.getData(cmd)
-        print(TAG, "res=", res)
+        # print(TAG, "res=", res)
         if(res[0]['len'] > 0):
             return True
         else:
@@ -74,7 +74,7 @@ class Hooking(Resource):
         cmd = """SELECT users.one_id FROM users WHERE users.one_id='%s' """ %(one_id)
         database = Database()
         res = database.getData(cmd)
-        print(TAG, "res=", res)
+        # print(TAG, "res=", res)
         if(res[0]['len'] > 0):
             return True
         else:
@@ -83,7 +83,7 @@ class Hooking(Resource):
     def add_new_user(self, email, name, one_id):
         TAG = "add_new_user:"
         database = Database()
-        print(TAG, "add user to our system")
+        # print(TAG, "add user to our system")
         sql = """INSERT INTO `users` (`one_email`, `name`, `one_id`) VALUES ('%s', '%s', '%s')""" \
               % (email, name, one_id)
         insert = database.insertData(sql)
@@ -108,7 +108,7 @@ class Hooking(Resource):
             "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
         }
 
-        print(TAG, "payload=", payload)
+        # print(TAG, "payload=", payload)
         r = requests.post(self.sendmessage_url, json=payload, headers=self.sendmessage_headers, verify=False)
         return r
 
@@ -119,7 +119,7 @@ class Hooking(Resource):
         WHERE timeattendance.employee_code='%s' AND timeattendance.date=CURRENT_DATE""" %(one_id)
         database = Database()
         res = database.getData(cmd)
-        print(TAG, res)
+        # print(TAG, res)
         if(res[0]['len'] == 0):
             return False
         else:
@@ -131,7 +131,7 @@ class Hooking(Resource):
         cmd = """SELECT rooms.address FROM `rooms` WHERE rooms.minor=%s AND rooms.major=%s""" %(minor, major)
         res = database.getData(cmd)
 
-        print(TAG, "res=", res)
+        # print(TAG, "res=", res)
         return res
 
     def is_area_exist(self, major, minor):
@@ -175,12 +175,12 @@ class Hooking(Resource):
                         "onechat_token": "true"
                     })
         res = self.send_quick_reply(one_id, msg, payload)
-        print(TAG, "res=", res)
+        # print(TAG, "res=", res)
 
     def get_my_rec(self, one_id):
         TAG = "get_my_rec:"
         database = Database()
-        print(TAG, "get data")
+        # print(TAG, "get data")
         cmd = """SELECT timeattendance.check_in, timeattendance.date, timeattendance.checkin_at, rooms.address 
         FROM `timeattendance`
         LEFT JOIN rooms ON timeattendance.checkin_at=rooms.minor
@@ -193,7 +193,7 @@ class Hooking(Resource):
         module = Module()
         onechat_token = auth.split()
 
-        print(TAG, "auth=", auth)
+        # print(TAG, "auth=", auth)
 
         if(len(onechat_token) < 2):
             return module.wrongAPImsg()
@@ -210,14 +210,14 @@ class Hooking(Resource):
     def get_onechat_profile(self, auth):
         TAG = "get_onechat_profile:"
         module = Module()
-        print(TAG, "auth=", auth)
+        # print(TAG, "auth=", auth)
         payload = {
             "bot_id":  self.beaconbot_id,
             "source": auth
         }
 
         r = requests.post(self.onechat_uri + "/manage/api/v1/getprofile", headers=self.sendmessage_headers, json=payload)
-        print(TAG, "response code=", r.status_code)
+        # print(TAG, "response code=", r.status_code)
         # print(TAG, r.json())
 
         json_res = r.json()
@@ -245,7 +245,7 @@ class Hooking(Resource):
 
         role = res[0]['result'][0]['role']
 
-        print(TAG, "role=", role)
+        # print(TAG, "role=", role)
 
         if(role is None):
             return False
@@ -256,7 +256,7 @@ class Hooking(Resource):
 
     def package_forward(self, package, uri):
         TAG = "package_forward:"
-        print(TAG, "forward to dev")
+        # print(TAG, "forward to dev")
         try:
             r = requests.post(uri, json=package, verify=False)
             print(TAG, "forward status=", r.status_code)
@@ -266,13 +266,13 @@ class Hooking(Resource):
     def door_open(self, minor, one_id):
         TAG = "door_open:"
         database = Database()
-        print(TAG, "user close to thee door, open the door")
+        # print(TAG, "user close to thee door, open the door")
         # get room num
         room_cmd = """SELECT rooms.room_num FROM rooms WHERE rooms.minor=%s""" % (minor)
         room = database.getData(room_cmd)
         # print(TAG, "room=", room)
         room_num = room[0]['result'][0]['room_num']
-        print(TAG, "room_num=", room_num)
+        # print(TAG, "room_num=", room_num)
         unlock_entry = self.unlock_api + "/" + room_num
         secret_key = "XxABgB71B2zssFGRcz3BrMZdJsb5G5TQ~#J0UDsDVyfkBBe$taZVetc3q-i_PL8_ST3cETapN7KutBVHFJRxKd86Kj4DUeoGPR8p#HK5ykKx5fjcp03G)E2C_IMp*C9w"
         unlock_header = {"Authorization": secret_key}
@@ -282,7 +282,7 @@ class Hooking(Resource):
             "one_id": one_id
         }
         unlock_res = requests.post(unlock_entry, json=unlock_body, headers=unlock_header, verify=False)
-        print(TAG, "unlock_res=", unlock_res)
+        # print(TAG, "unlock_res=", unlock_res)
         self.send_msg(one_id, "เปิดประตู " + room_num)
 
     def get_covid_rec(self, one_id):
@@ -297,7 +297,7 @@ class Hooking(Resource):
     def post(self):
         TAG = "Hooking:"
         data = request.json
-        print(TAG, "data=", data)
+        # print(TAG, "data=", data)
         print(TAG, request.headers)
         database = Database()
         module = Module()
@@ -313,12 +313,12 @@ class Hooking(Resource):
                 dissplay_name = data['source']['display_name']
 
                 recv_msg = data['message']['text']
-                print(TAG, "recv_msg=", recv_msg)
+                # print(TAG, "recv_msg=", recv_msg)
 
                 one_email = data['source']['email']
                 if(not self.is_user_exist(one_email)):
                     add_user = self.add_new_user(one_email, dissplay_name, one_id)
-                    print(TAG, "add=new_user=", add_user)
+                    # print(TAG, "add=new_user=", add_user)
                     self.send_msg(one_id, "ยินดีให้บริการค่ะ")
                     return module.success()
 
@@ -353,19 +353,19 @@ class Hooking(Resource):
                 one_email = data['source']['email']
                 if(not self.is_user_exist(one_email)):
                     add_user = self.add_new_user(one_email, dissplay_name, one_id)
-                    print(TAG, "add=new_user=", add_user)
+                    # print(TAG, "add=new_user=", add_user)
                     self.send_msg(one_id, "ขอบคุณที่เพิ่มเพื่อนค่ะ")
                 return module.success()
 
         if('uuid' in data):
-            print(TAG, "event=", data)
+            # print(TAG, "event=", data)
             one_id = data['oneid']
             event_stage = data['event_stage']
             lat = data['user_latitude']
             long = data['user_longitude']
             rssi = data["rssi"]
             proximity = data['proximity']
-            print(TAG, "one_id=", one_id)
+            # print(TAG, "one_id=", one_id)
 
             if(one_id == ''):
                 admin_one_id = "6271993808"
@@ -388,18 +388,18 @@ class Hooking(Resource):
             }
             user_profile = requests.post(self.get_userprofile_api, json=self.get_userprofile_body, verify=False)
             # print("this is user profile : "  + json.dumps(user_profile.json()["result"][0]["one_id"]))
-            print(TAG, "user_profile=", user_profile)
+            # print(TAG, "user_profile=", user_profile)
 
             # daily = self.check_daily(one_id, datetime.today().strftime('%Y-%m-%d'))
 
             # record to access log
             if ((event_stage == 'enter')):
-                print(TAG, "record to access log")
+                # print(TAG, "record to access log")
                 rec = self.record_to_log(one_id, event_stage, minor)
 
             if((event_stage == 'enter') or (event_stage == 'proximity_change')):
                 # open the door
-                print(TAG, "proximity=", proximity)
+                # print(TAG, "proximity=", proximity)
                 # if((proximity == "near") and (event_stage == 'proximity_change')):
                 #     # #get covid status
                 #     covid_res = self.get_covid_rec(one_id)
@@ -408,7 +408,7 @@ class Hooking(Resource):
 
                 # do slow job first
                 if (self.is_entred(one_id) and (event_stage == 'enter')):
-                    print(TAG, "user was enter")
+                    # print(TAG, "user was enter")
                     building = self.get_area(major, minor)
                     greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
                     self.send_msg(one_id, greeting_msg)
@@ -423,12 +423,13 @@ class Hooking(Resource):
                     return module.success()
 
                 chekcovid = requests.post(self.covid_api, json=covid_body, verify=False)
-                print(TAG, "covid respoens code=", chekcovid.status_code)
+                # print(TAG, "covid respoens code=", chekcovid.status_code)
                 covid_filter = filter(self.date_filter, chekcovid.json())
 
                 #check is it first time user enter the area
                 # if (self.is_entred(one_id)):
                 #     print(TAG, "user was enter")
+
                 #     building = self.get_area(major, minor)
                 #     greeting_msg = """ยินดีต้อนรับสู่ %s""" %(building[0]['result'][0]['address'])
                 #     self.send_msg(one_id, greeting_msg)
@@ -458,7 +459,7 @@ class Hooking(Resource):
                             "long": long
                         }
                         insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
-                        print("this is insert_user :" + json.dumps(insert_user.json()))
+                        # print("this is insert_user :" + json.dumps(insert_user.json()))
                         message_db = self.get_message(2)
                         self.sendmessage_body = {
                                 "to": one_id,
@@ -469,7 +470,7 @@ class Hooking(Resource):
                         }
 
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                        print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        # print("debug onechat response :" + json.dumps(sendmessage.json()))
                         self.sendmessage_body = {
                                 "to": one_id,
                                 "bot_id": self.beaconbot_id,
@@ -478,10 +479,10 @@ class Hooking(Resource):
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                        print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                         message_db = self.get_message(3)
-                        print(message_db[0]['result'][0])
+                        # print(message_db[0]['result'][0])
 
                         greeting_msg = """ยินดีต้อนรับสู่ %s""" % (building_address)
                         self.sendmessage_body = {
@@ -492,7 +493,7 @@ class Hooking(Resource):
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                        print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        # print("debug onechat response :" + json.dumps(sendmessage.json()))
                         self.door_open(minor, one_id)
                         return module.success()
 
@@ -500,7 +501,7 @@ class Hooking(Resource):
                         # print("debug onechat response :" + json.dumps(sendmessage.json()))
                     elif covid_status['status'] == None:
                         message_db = self.get_message(4)
-                        print(message_db[0]['result'][0])
+                        # print(message_db[0]['result'][0])
                         self.sendmessage_body = {
                                 "to": one_id,
                                 "bot_id": self.beaconbot_id,
@@ -509,7 +510,7 @@ class Hooking(Resource):
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                        print("debug onechat response :" + json.dumps(sendmessage.json()))
+                        # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
             elif data['event_stage'] == 'leave':
                 self.check_out_body = {
@@ -518,7 +519,7 @@ class Hooking(Resource):
                     "minor": minor
                 }
                 checkout = requests.post(self.check_out_api, json=self.check_out_body, verify=False)
-                print("this is checkout :" + json.dumps(checkout.json()))
+                # print("this is checkout :" + json.dumps(checkout.json()))
                 rec = self.record_to_log(one_id, event_stage, minor)
 
                 building = self.get_area(major, minor)
@@ -532,7 +533,7 @@ class Hooking(Resource):
                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                 }
                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
-                print("debug onechat response :" + json.dumps(sendmessage.json()))
+                # print("debug onechat response :" + json.dumps(sendmessage.json()))
 
                 return module.success()
         return module.success()

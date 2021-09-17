@@ -92,7 +92,7 @@ class Access_log(Resource):
         WHERE %s
         ORDER BY `log_id`  DESC""" % (condition)
 
-        print("Command in search: ", cmd)
+        # print("Command in search: ", cmd)
 
         res = database.getData(cmd)
         return res
