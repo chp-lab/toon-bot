@@ -28,7 +28,7 @@ class Room_number(Resource):
         WHERE %s
         """ % (condition)
 
-        print("Command in search: ", cmd)
+        # print("Command in search: ", cmd)
 
         res = database.getData(cmd)
         return res
