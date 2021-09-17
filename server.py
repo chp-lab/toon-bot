@@ -58,4 +58,4 @@ if (__name__ == "__main__"):
     server.api.add_resource(Room_number, API_VERSION + "/admin/get_room_number")
     # server.app.run(host="0.0.0.0", debug=True, port=5007)
     context = ('/etc/letsencrypt/live/www.giantiot.com/fullchain.pem', '/etc/letsencrypt/live/www.giantiot.com/privkey.pem')
-    server.app.run(host="www.giantiot.com", debug=True, ssl_context=context, port=5008)
+    server.app.run(host="www.giantiot.com", debug=False, ssl_context=context, port=5008)
