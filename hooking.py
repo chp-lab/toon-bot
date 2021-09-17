@@ -169,7 +169,8 @@ class Hooking(Resource):
         if(self.is_admin(one_id)):
             payload.append({
                         "label": "Admin",
-                        "type": "link",
+                        "type": "webview",
+                        "size": "full",
                         "url": web_vue_url1,
                         "sign": "false",
                         "onechat_token": "true"
