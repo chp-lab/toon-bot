@@ -471,9 +471,9 @@ class Hooking(Resource):
 
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
                         # print("debug onechat response :" + json.dumps(sendmessage.json()))
-                        covid_st_emoji = "💚"
+                        covid_st_emoji = "ผ่าน 💚"
                         if(covid_status['status'] != "green"):
-                            covid_st_emoji = "❤"
+                            covid_st_emoji = "ไม่ผ่าน ❤"
                         self.sendmessage_body = {
                                 "to": one_id,
                                 "bot_id": self.beaconbot_id,
