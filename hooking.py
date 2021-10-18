@@ -459,7 +459,7 @@ class Hooking(Resource):
                             "long": long
                         }
                         insert_user = requests.post(self.check_in_api, json=self.check_in_body, verify=False)
-                        # print("this is insert_user :" + json.dumps(insert_user.json()))
+                        print("this is insert_user :" + json.dumps(insert_user.json()))
                         message_db = self.get_message(2)
                         self.sendmessage_body = {
                                 "to": one_id,
@@ -474,11 +474,14 @@ class Hooking(Resource):
                         covid_st_emoji = "ผ่าน 💚"
                         if(covid_status['status'] != "green"):
                             covid_st_emoji = "ไม่ผ่าน ❤"
+                        
+                        res_msg = "สถานะ covid tracking ของคุณคือ " + covid_st_emoji
+                        
                         self.sendmessage_body = {
                                 "to": one_id,
                                 "bot_id": self.beaconbot_id,
                                 "type": "text",
-                                "message": "สถานะ covid tracking ของคุณคือ " + covid_st_emoji,
+                                "message": res_msg,
                                 "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                         }
                         sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
@@ -532,7 +535,7 @@ class Hooking(Resource):
                         "to": one_id,
                         "bot_id": self.beaconbot_id,
                         "type": "text",
-                        "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ " + building_address,
+                        "message": "อย่าลืมรักษาระยะห่างและล้างมือบ่อยๆ นะคะ " + covid_st_emoji + building_address,
                         "custom_notification": "เปิดอ่านข้อความใหม่จากทางเรา"
                 }
                 sendmessage = requests.post(self.sendmessage_url, json=self.sendmessage_body, headers=self.sendmessage_headers, verify=False)
